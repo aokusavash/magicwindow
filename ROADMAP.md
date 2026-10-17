@@ -40,6 +40,14 @@ Recorded during the October 17 walk; these are directions for future previews, n
 
 Suggested planning implication: include a representative wider street composition and visual quality review in the early art-and-animation comparison. Reassess perceived walking pace in that composition. The final style and quality benchmark still need exploration with the user.
 
+## Initial visual direction
+
+The user selected a Japanese town with the visual atmosphere of Spirited Away as the starting point. Treat this as an initial art reference to explore, alongside the requested richer architecture and wider street framing.
+
+Suggested visual qualities for the first comparison: richly painted backgrounds, layered and intricately detailed shopfronts, weathered wood, tiled roofs, plants, and warm light. These are interpretations to review, not individually confirmed requirements.
+
+This reference does not by itself change the established ordinary-life premise or approve fantasy events, specific film characters, or a final animation technique. Pixel sprites and illustrated movable characters remain candidates until evaluated against the same street view and family-and-dog example.
+
 ## First agreed experiment: the family and the new dog
 
 Status: agreed as the first concrete test case; not implemented.
