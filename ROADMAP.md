@@ -27,6 +27,19 @@ The prototype in dist/index.html draws scenery and people procedurally on a canv
 
 It does not yet implement a persistent evolving neighborhood, an AI director, generated asset production, or automatic capability expansion. Its existing captions and repeating story are provisional and differ from the direction above.
 
+## Initial prototype feedback
+
+Recorded during the October 17 walk; these are directions for future previews, not implemented changes.
+
+- The high-level concept works. Preserve the appealing everyday pedestrian movement and ambient character.
+- Pedestrians feel slightly slow. Try approximately 25–30% faster walking as an initial comparison, not a final fixed value.
+- The street framing feels too close. Try approximately 30% wider framing, revealing one or two additional buildings. The visual outcome matters more than an exact camera calculation: expose more neighborhood rather than merely shrinking the existing canvas.
+- Current artwork is adequate for the proof of concept but too basic for the living-room installation. The goal is a charming city street with beautiful, intricately detailed buildings.
+- Establish an explicit visual quality benchmark before settling on one consistent style and producing many assets. Art quality is a core requirement, not only final polish.
+- Evaluate building detail alongside wider framing so people and observable changes remain readable across a room.
+
+Suggested planning implication: include a representative wider street composition and visual quality review in the early art-and-animation comparison. Reassess perceived walking pace in that composition. The final style and quality benchmark still need exploration with the user.
+
 ## First agreed experiment: the family and the new dog
 
 Status: agreed as the first concrete test case; not implemented.
