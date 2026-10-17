@@ -42,7 +42,7 @@ Suggested planning implication: include a representative wider street compositio
 
 ## Initial visual direction
 
-The user selected a Japanese town with the visual atmosphere of Spirited Away as the starting point. Treat this as an initial art reference to explore, alongside the requested richer architecture and wider street framing.
+The user selected a rural Japanese town with the visual atmosphere of Spirited Away as the starting point, explicitly distinguishing it from downtown Tokyo. The setting should feel like a small town rather than a dense modern urban center. Treat this as an initial art reference to explore, alongside the requested richer architecture and wider street framing.
 
 Suggested visual qualities for the first comparison: richly painted backgrounds, layered and intricately detailed shopfronts, weathered wood, tiled roofs, plants, and warm light. These are interpretations to review, not individually confirmed requirements.
 
