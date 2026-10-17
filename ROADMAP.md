@@ -58,6 +58,22 @@ A fixed-camera, layered 2D scene with reusable character animation is the provis
 
 Generating a plausible story, producing coherent artwork, and implementing reliable behavior are distinct problems. An attractive generated image alone does not supply a working interaction. Automated checks can catch structural failures; visual coherence and unattended publication need empirical testing, with human review during early development.
 
+## Agreed review loop for new additions
+
+The system may periodically propose a small batch of new animations, variations, or interactions and attempt to produce them. Daily or weekly cadence was discussed as a possibility; no cadence or automation has been configured.
+
+The initial workflow is: propose the change, generate the required artwork and behavior, preview it, obtain human approval, then release it. New additions require human visual review before entering the displayed world. Existing approved routines continue while proposals await review.
+
+Start with a simple repository checklist for each candidate rather than assuming a review dashboard already exists:
+
+- [ ] Proposal describes the visible change and any lasting world effects.
+- [ ] Required assets and behavior are prepared.
+- [ ] Preview demonstrates the addition in context and relevant movement cases.
+- [ ] Human reviewer approves its appearance and behavior.
+- [ ] Approved addition is released.
+
+The family-and-dog comparison is the first test case for this process. A release follows approval; this planning conversation does not approve unseen generated additions.
+
 ## Candidate progression after the first experiment
 
 Order and scope remain open.
