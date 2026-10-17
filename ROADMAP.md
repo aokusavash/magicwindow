@@ -126,6 +126,12 @@ Examples include a gift for a resident, a small statue, or an amusement machine 
 
 Direct control of characters or playing an embedded game is outside this concept. Input method and review interface remain undecided.
 
+## Display platform investigation
+
+Avoiding an external display computer is a product goal worth testing. The documentation spike in [Samsung TV feasibility](SAMSUNG-TV-SPIKE.md) finds a packaged Samsung Tizen Web application plausible, while a simple remotely hosted website wrapper faces explicit submission restrictions.
+
+Next platform experiment: package the current scene and test installation, animation performance, remote controls, state recovery, passive-viewing/screensaver behavior, and supported startup behavior. No TV app has yet been built or physically tested, and store acceptance is unconfirmed. An HDMI computer remains a fallback rather than an assumed requirement.
+
 ## Questions still open
 
 - Final art style, scene composition, character scale, and depth of movement.
