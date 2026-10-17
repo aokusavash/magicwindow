@@ -107,6 +107,25 @@ Order and scope remain open.
 6. Trial generated assets and new capabilities through previews and checks before introduction.
 7. Prepare the living-room installation and evaluate whether it remains pleasant over extended use.
 
+## Candidate simulation and presentation refinements
+
+- Explore a near-side-on street view with shallow depth to simplify consistent movement and compositing.
+- Consider gentle slopes as part of the walking paths. Stairs and more complex elevation changes need separate animation work.
+- Evaluate richly painted scenery separately from character animation; an attractive still does not establish the final animated rendering approach.
+- Investigate a finite population of persistent, visually recognizable residents with saved routines, relationships, preferences, and circumstances.
+- Separate persistent world data, routine scheduling, occasional AI planning, and on-screen animation. Offscreen residents do not require continuous rendering or individual continuous LLM calls.
+- Investigate scheduled roadmap reviews separately from unattended coding runs. Scheduling alone does not establish a working integration with a coding runner. Reviewable changes and previews remain the goal.
+
+## Future possibility: contributions to the neighborhood
+
+Priority: exploratory, beyond the immediate visual and simulation experiments.
+
+An optional contribution mechanism could introduce gifts, decorations, or new objects into the neighborhood. Residents would respond through their existing routines and supported interactions, while the display remains ambient.
+
+Examples include a gift for a resident, a small statue, or an amusement machine inside a shop. Adding a decorative object is simpler than introducing an object that requires a new behavior. New assets and interactions would follow the proposal, preview, and human-review workflow before release.
+
+Direct control of characters or playing an embedded game is outside this concept. Input method and review interface remain undecided.
+
 ## Questions still open
 
 - Final art style, scene composition, character scale, and depth of movement.
