@@ -23,6 +23,24 @@ Agreed during the October 19 walk. This sets the immediate priority ahead of the
 - **Future-ready foundation:** phase-one activity may be chosen procedurally from prepared possibilities. Define places, paths, entrances, and reusable actions, and keep activity selection separate from animation so a later director can choose actions using persistent identities and world history. This is an architectural direction, not a reason to build the full director now.
 - **Art feasibility:** preserve the high visual quality the user liked. Detailed scenery can be mostly static, with separately prepared interactive elements and foreground layers where needed. Actual compatibility still requires testing people, entrances, scale, and movement together. A restaurant-entry test is a candidate technical experiment, not the entire product goal or an approved final scene.
 
+## Neighborhood places: current direction
+
+Further October 19 discussion: optimize the limited street frontage for **visual variety, coziness, and things children find interesting**. Do not frame the choice primarily as everyday errands or reproduce the real-world proportion of restaurants. Four or five buildings is a working composition guess, not a fixed limit.
+
+- The user likes a flower-and-produce shop: colorful plants and outdoor displays provide a different visual texture and activity.
+- Include a restaurant, with a ramen shop as the leading idea. A visible counter could show seated customers eating, with reusable motions varied by appearance and timing. Exact layout and animation have not been implemented or approved.
+- A small dessert shop is a favored additional candidate, perhaps ice cream or mochi. It can add playful color and child-interest without occupying a large frontage. Exact dessert type remains open.
+- A bus stop is a promising example of visual variety: a larger moving vehicle and varied groups arriving and departing, potentially including schoolchildren. The user offered it as an illustration, not a settled implementation requirement.
+- A school gate or side street, bakery, repair shop, and homes remain possibilities rather than committed building choices.
+
+## Future idea: a mountain revealed on clear days
+
+Explicitly deferred by the user on October 19; not a phase-one requirement and not implemented.
+
+A distinctive far-distant mountain, perhaps Fuji-like, is usually obscured by cloud or haze. On rare exceptionally clear days it becomes sharply visible, beautiful, and worth pointing out. Its purpose is the natural variation of living somewhere beautiful: familiar on ordinary days, occasionally striking. Keep it a supporting backdrop within the neighborhood-dominant composition.
+
+A candidate approach is a separate distant-scenery layer with gradually changing haze/cloud occlusion, using Seattle cloud cover and reported visibility as approximate cues. Reports do not establish actual mountain-specific visibility, and tuning remains necessary. Keeping the distant scenery separate should make later addition relatively contained, but effort is not yet validated. Leave an appropriate sightline in future composition studies without prioritizing this effect over the core street.
+
 ## Repository workflow
 
 Agreed October 19: this is a solo project for now. Commit tangible batches of work and settled decisions directly to main; no pull-request process is needed. Agreement in conversation is sufficient. Use small, descriptive, reversible checkpoints and appropriate verification, and keep this roadmap current so fresh chats do not depend on an inaccessible earlier conversation. Source commits and release of changes to the displayed world are separate; the existing visual-review workflow for new displayed additions still applies.
