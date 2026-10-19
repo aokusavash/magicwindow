@@ -83,6 +83,10 @@ Gather what the family enjoys looking at, what they notice, whether people/actio
 
 ## Future ideas and later vision
 
+Scope clarification from the user: brainstorming is a way to preserve possibilities, not a request to add every idea to the scene. The street risks becoming crowded; keep unselected establishments optional and avoid expanding the initial composition simply because more ideas were mentioned.
+
+- **Street vendors, explicitly deferred:** possible taiyaki or takoyaki stalls, a seasonal roasted-sweet-potato cart/truck, or a compact yatai-style food stall. These were discussed as examples after the user suggested street food. Preserve them as future options only; none is selected or required for the initial street. Revisit if more activity or frontage is wanted later.
+
 - **Clear-day mountain reveal:** a distant peak usually hidden by haze/cloud becomes striking on very clear days. Explicitly deferred; keep distant scenery separable and a possible sightline, but do not prioritize the effect now.
 - **Bus stop:** a larger moving vehicle, arrivals/departures, and varied groups including possible schoolchildren; discuss placement and desired prominence before treating it as required.
 - **Additional user-suggested establishments:** a Japanese convenience store (konbini), offering recognizable Japanese character and frequent customer arrivals/departures; a cozy, relaxing bookstore; and a cute coffee shop with customers seated indoors, by the window, or out front. Compare their visual character and activities against the other candidates when choosing the limited remaining frontage. None has been selected for implementation.
