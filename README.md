@@ -20,16 +20,18 @@ Open http://localhost:8000. Use the page's weather, time, next-day, and fullscre
 
 ## Creative direction
 
+See [ROADMAP.md](ROADMAP.md) for the current phase-one target and later vision. Phase one focuses on a beautiful, living neighborhood with local daylight and Seattle weather; persistent characters and an AI director can follow later. The current prototype does not yet meet that target.
+
 - Worth glancing at as ambient art, with pedestrians, traffic, weather, and recognizable places.
 - Follow the household's local day/night cycle, even if the setting evokes Tokyo or Paris. Very quiet from midnight to 5 AM.
 - Recurring characters and small, visible stories that children can recognize over days.
 - Eventually use a director to coordinate routines, events, and character behavior. Dynamic AI planning is an idea, not an implemented feature.
 - Weather currently uses a manual demo toggle. Real local weather is a future addition.
-- Aim for a Raspberry Pi running a fullscreen browser over HDMI. Samsung Art Mode and a TV app-store release are unnecessary.
+- Investigate a packaged Samsung TV app; an HDMI computer remains a fallback. See [SAMSUNG-TV-SPIKE.md](SAMSUNG-TV-SPIKE.md). No TV installation has yet been validated.
 
 ## Iterating by voice
 
-Describe the outcome you want—for example, “make the street rainy at night” or “have schoolchildren arrive around three.” The agent can inspect this repository, make changes, check them, and publish a new preview when requested. Keep changes small enough to judge visually and preserve a Git checkpoint for each useful iteration.
+Describe the outcome you want—for example, “make the street rainy at night” or “have schoolchildren arrive around three.” The agent can inspect this repository, make changes, check them, and publish a new preview when requested. Keep changes small enough to judge visually and preserve a Git checkpoint for each useful iteration. This is a solo project: commit agreed decisions and tangible batches directly to main without pull requests. Conversation is sufficient agreement; do not add a separate commit-approval ceremony. Save durable decisions in ROADMAP.md. Committing source does not automatically deploy a change.
 
 Source repository: https://github.com/aokusavash/magicwindow
 

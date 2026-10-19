@@ -1,6 +1,6 @@
 # Magic Window roadmap
 
-Working notes from the October 17, 2026 design conversation. This roadmap is deliberately adaptable before the living-room installation.
+Working notes from the October 17 and October 19, 2026 design conversations. This roadmap is deliberately adaptable before the living-room installation.
 
 ## Purpose and working style
 
@@ -9,6 +9,23 @@ Magic Window is a persistent window into a neighborhood with a life of its own. 
 Development is also an experiment in what AI can and cannot reliably do. Dog walks of roughly 45–60 minutes can be sustained design and technical conversations, with decisions captured here and concrete implementation tasks emerging from them. Progress is not limited to one tiny change per walk.
 
 "Launch" means installing it in the living room. Broad changes are welcome before then; continuity and smaller increments become more valuable afterward. The aim is to develop something interesting over the coming weeks, without a fixed delivery date.
+
+## Phase one: a beautiful living neighborhood
+
+Agreed during the October 19 walk. This sets the immediate priority ahead of the earlier family-and-dog continuity experiment. These are product targets, not implemented changes.
+
+- **Success test:** the user's daughters or wife enjoy voluntarily watching for more than five minutes, ideally around ten, noticing details and activity. The scene should feel aesthetically pleasing and more interesting than a still picture without manufacturing constant excitement.
+- **Scope:** establish the art style, overall ambiance, believable varied ambient activity, local day/night cycle, and real local weather. Recurring character identities, persistent stories, and an AI director remain part of the future vision and are not prerequisites for phase one.
+- **Setting and framing:** retain the rural Japanese neighborhood direction. Buildings, streets, and people occupy most of the frame; around 80 percent or more is an initial guess to adjust visually. Mountains, forest, and sky are supporting background rather than the main view. The user welcomed a fixed, slightly raised, mostly side-on view with readable shopfronts, entrances, walking areas, and some shallow depth.
+- **Art exploration:** compare multiple visual directions, including different pixel-art treatments and non-pixel illustration. A four-panel concept survey was generated and shown in the October 19 chat: cozy pixel, detailed pixel, painted animation, and storybook. The user wants input from their daughters. No style has been selected; these are still-image concepts, not animation-ready layered assets. The comparison image has not yet been checked into this repository.
+- **Activity level:** a relaxed, steady trickle rather than a tourist crowd. Rough daytime target is 10–12 visible people, perhaps roughly twice that during morning commuting, and close to nobody in the middle of the night. These are visual starting points, not exact quotas. Activity can include lingering or visiting places as well as crossing the scene.
+- **Local conditions:** daylight follows the household's actual local day/night cycle, initially Seattle. Weather should reflect actual Seattle conditions rather than independent fictional weather, within the spatial and update limits of weather reports. This requires a future integration; the current prototype still uses a manual demo toggle.
+- **Future-ready foundation:** phase-one activity may be chosen procedurally from prepared possibilities. Define places, paths, entrances, and reusable actions, and keep activity selection separate from animation so a later director can choose actions using persistent identities and world history. This is an architectural direction, not a reason to build the full director now.
+- **Art feasibility:** preserve the high visual quality the user liked. Detailed scenery can be mostly static, with separately prepared interactive elements and foreground layers where needed. Actual compatibility still requires testing people, entrances, scale, and movement together. A restaurant-entry test is a candidate technical experiment, not the entire product goal or an approved final scene.
+
+## Repository workflow
+
+Agreed October 19: this is a solo project for now. Commit tangible batches of work and settled decisions directly to main; no pull-request process is needed. Agreement in conversation is sufficient. Use small, descriptive, reversible checkpoints and appropriate verification, and keep this roadmap current so fresh chats do not depend on an inaccessible earlier conversation. Source commits and release of changes to the displayed world are separate; the existing visual-review workflow for new displayed additions still applies.
 
 ## Confirmed experience direction
 
@@ -50,7 +67,7 @@ This reference does not by itself change the established ordinary-life premise o
 
 ## First agreed experiment: the family and the new dog
 
-Status: agreed as the first concrete test case; not implemented.
+Status: agreed on October 17 as a concrete test case; not implemented. The October 19 phase-one decision prioritizes art, ambiance, and ambient activity first; persistent family-and-dog development can follow.
 
 An existing child and parent regularly walk along the street. On a later day the family has a dog, which joins their walk and remains part of their routine.
 
@@ -93,13 +110,13 @@ Start with a simple repository checklist for each candidate rather than assuming
 - [ ] Human reviewer approves its appearance and behavior.
 - [ ] Approved addition is released.
 
-The family-and-dog comparison is the first test case for this process. A release follows approval; this planning conversation does not approve unseen generated additions.
+The family-and-dog comparison remains a candidate test case for this process after the initial art-and-ambiance work. A release follows approval; this planning conversation does not approve unseen generated additions.
 
 ## Candidate progression after the first experiment
 
-Order and scope remain open.
+Order and scope remain open. The October 19 phase-one plan above now takes priority; this list preserves the longer-term candidates.
 
-1. Choose a visual and animation approach using the family-and-dog comparison.
+1. Choose a visual and animation approach, informed by the art survey and movement tests; the family-and-dog comparison can provide a later continuity test.
 2. Establish recognizable recurring residents and reliable everyday routines.
 3. Add saved world changes and demonstrate one development that persists across days and restarts.
 4. Apply the no-text presentation and household timing to the evolving experience.
@@ -134,7 +151,7 @@ Next platform experiment: package the current scene and test installation, anima
 
 ## Questions still open
 
-- Final art style, scene composition, character scale, and depth of movement.
+- Final art style, exact composition and character scale, and depth of movement within the agreed neighborhood-dominant view.
 - Persistence, hosting, generation services, costs, and generation cadence.
 - How much autonomous permanent change is desirable, and how to prevent visual clutter or incoherent growth.
 - Which checks are sufficient for generated assets and interactions, and when human review can be reduced.
