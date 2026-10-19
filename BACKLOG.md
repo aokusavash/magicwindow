@@ -10,6 +10,19 @@ A saved backlog is not an execution service. No unattended coding runner or sche
 
 “Ready” means sufficiently specified to attempt, not completed or released. “Waiting” names a real dependency. “Future” preserves an idea without making it an immediate requirement. Review of new displayed art and behavior remains distinct from committing source.
 
+## Next build-session kickoff
+
+At the end of the October 19 walk, the user asked how to begin work from their computer. No further product decision is needed before starting the ready items above.
+
+1. Open this repository in an active coding session and read README.md, AGENTS.md, ROADMAP.md, and this queue.
+2. Begin with the fuller, independently viewable art survey and a grounded audit of the existing prototype. The ten-minute activity plan is also ready work.
+3. Prepare reviewable outputs, commit useful batches directly to main, and record what was completed or blocked here.
+4. Ask for family feedback on the art survey before committing to a final style or producing a large set of final assets. Art feedback is not a prerequisite for the audit or further art exploration.
+5. Use the shortlisted style for a representative movement/lighting/weather test. Evaluate an engine if the audit supports it; Phaser is a candidate, not an adopted dependency.
+6. Keep real weather integration, display-device testing, and later director/persistence work at their stated dependencies. Source commits do not automatically authorize publishing new displayed additions.
+
+Nothing in this kickoff note launches a background task. No between-walk coding executor has been started from this conversation. The active desktop coding session is the practical next execution entry point.
+
 ## Phase-one target
 
 A cozy, beautiful rural Japanese neighborhood that the user's daughters or wife voluntarily enjoy watching for more than five minutes, ideally about ten. Rich architecture, readable people, believable varied ambient activity, household-local daylight, and real Seattle weather are the focus. Permanent character identities and AI-directed stories can follow.
@@ -82,6 +95,8 @@ Dependency: a coherent animated scene.
 Gather what the family enjoys looking at, what they notice, whether people/actions remain readable, and where repetition becomes obvious. The target is voluntary enjoyment, not a demand for constant excitement. Revise density, pace, composition, and activity from actual feedback.
 
 ## Future ideas and later vision
+
+- **Small shrine or temple, explicitly deferred:** the user suggested a small shrine/temple with a quiet offering or incense-related interaction, and confirmed it belongs in future ideas. No addition to the initial street is approved or required.
 
 Scope clarification from the user: brainstorming is a way to preserve possibilities, not a request to add every idea to the scene. The street risks becoming crowded; keep unselected establishments optional and avoid expanding the initial composition simply because more ideas were mentioned.
 
