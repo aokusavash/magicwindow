@@ -31,6 +31,7 @@ Further October 19 discussion: optimize the limited street frontage for **visual
 - Include a restaurant, with a ramen shop as the leading idea. A visible counter could show seated customers eating, with reusable motions varied by appearance and timing. Exact layout and animation have not been implemented or approved.
 - A small dessert shop is a favored additional candidate, perhaps ice cream or mochi. It can add playful color and child-interest without occupying a large frontage. Exact dessert type remains open.
 - A bus stop is a promising example of visual variety: a larger moving vehicle and varied groups arriving and departing, potentially including schoolchildren. The user offered it as an illustration, not a settled implementation requirement.
+- Further user-suggested candidates: a Japanese convenience store (konbini), for its recognizable Japanese character and frequent arrivals/departures; a bookstore, for coziness and a relaxing atmosphere; and a coffee shop, for a cute, visually appealing frontage and people sitting inside, by windows, or out front. These are alternatives for remaining frontage, not three additional approved buildings.
 - A school gate or side street, bakery, repair shop, and homes remain possibilities rather than committed building choices.
 
 ## Future idea: a mountain revealed on clear days

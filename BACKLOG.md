@@ -85,6 +85,7 @@ Gather what the family enjoys looking at, what they notice, whether people/actio
 
 - **Clear-day mountain reveal:** a distant peak usually hidden by haze/cloud becomes striking on very clear days. Explicitly deferred; keep distant scenery separable and a possible sightline, but do not prioritize the effect now.
 - **Bus stop:** a larger moving vehicle, arrivals/departures, and varied groups including possible schoolchildren; discuss placement and desired prominence before treating it as required.
+- **Additional user-suggested establishments:** a Japanese convenience store (konbini), offering recognizable Japanese character and frequent customer arrivals/departures; a cozy, relaxing bookstore; and a cute coffee shop with customers seated indoors, by the window, or out front. Compare their visual character and activities against the other candidates when choosing the limited remaining frontage. None has been selected for implementation.
 - **Additional frontage:** bakery, repair shop, school gate/side street, homes and domestic details are possibilities, not settled building choices.
 - **Persistent residents and world memory:** recognizable identities, routines, relationships, and changes that survive restarts.
 - **Family and new dog:** retain the earlier continuity/animation test; it is no longer the prerequisite for phase one.
