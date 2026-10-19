@@ -31,6 +31,8 @@ See [ROADMAP.md](ROADMAP.md) for the current phase-one target and later vision. 
 
 ## Iterating by voice
 
+Walks are for exploring ideas, reviewing outputs, and setting direction; active build sessions can work through the resulting queue. See [BACKLOG.md](BACKLOG.md) for ready tasks, dependencies, and future ideas. Saving a backlog does not start an unattended coding session.
+
 Describe the outcome you want—for example, “make the street rainy at night” or “have schoolchildren arrive around three.” The agent can inspect this repository, make changes, check them, and publish a new preview when requested. Keep changes small enough to judge visually and preserve a Git checkpoint for each useful iteration. This is a solo project: commit agreed decisions and tangible batches directly to main without pull requests. Conversation is sufficient agreement; do not add a separate commit-approval ceremony. Save durable decisions in ROADMAP.md. Committing source does not automatically deploy a change.
 
 Source repository: https://github.com/aokusavash/magicwindow

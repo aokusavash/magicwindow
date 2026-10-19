@@ -41,6 +41,10 @@ A distinctive far-distant mountain, perhaps Fuji-like, is usually obscured by cl
 
 A candidate approach is a separate distant-scenery layer with gradually changing haze/cloud occlusion, using Seattle cloud cover and reported visibility as approximate cues. Reports do not establish actual mountain-specific visibility, and tuning remains necessary. Keeping the distant scenery separate should make later addition relatively contained, but effort is not yet validated. Leave an appropriate sightline in future composition studies without prioritizing this effect over the core street.
 
+## Walk-to-build cycle
+
+Agreed October 19: use walks to discuss many ideas, collect feedback, and prepare a substantial queue of concrete work. Implementation sessions can then produce iterations and reviewable outputs between walks, potentially over the following day or two, with later walks reviewing and advancing the product. See [BACKLOG.md](BACKLOG.md) for ready items, dependencies, and future ideas. This is the desired working rhythm, not a configured unattended coding system; continuing work requires an active execution task/session. No background coding schedule has been set up.
+
 ## Repository workflow
 
 Agreed October 19: this is a solo project for now. Commit tangible batches of work and settled decisions directly to main; no pull-request process is needed. Agreement in conversation is sufficient. Use small, descriptive, reversible checkpoints and appropriate verification, and keep this roadmap current so fresh chats do not depend on an inaccessible earlier conversation. Source commits and release of changes to the displayed world are separate; the existing visual-review workflow for new displayed additions still applies.
