@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Magic Window — movement study</title>
+  <link rel="stylesheet" href="study.css">
+</head>
+<body>
+  <main>
+    <header><p class="eyebrow">Magic Window · review study</p><h1>One town, two ways to move.</h1><p>Compare the same family, dog, camera, and walking route. Artwork and motion are provisional.</p></header>
+    <nav aria-label="Animation comparison">
+      <button type="button" id="pixel" aria-pressed="false">Pixel characters</button>
+      <button type="button" id="cutout" aria-pressed="true">Movable illustrated parts</button>
+      <button type="button" id="pace" aria-pressed="true">Pace: +27.5%</button>
+      <button type="button" id="pause">Pause</button>
+      <button type="button" id="fullscreen">View without controls</button>
+    </nav>
+    <canvas id="world" width="1600" height="900" role="img" aria-label="A painted rural Japanese street with an animated parent, child, and dog"></canvas>
+    <p id="status" role="status">Loading the town…</p>
+    <footer>The family pauses and changes direction so you can inspect the leash and feet. Fullscreen contains the scene only. This is a review sample, separate from the live prototype.</footer>
+  </main>
+  <script src="motion.js"></script>
+  <script src="study.js"></script>
+</body>
+</html>

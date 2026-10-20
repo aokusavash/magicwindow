@@ -46,3 +46,9 @@ python3 -m http.server 8000 --directory dist
 ```
 
 GitHub is the source home for ongoing work; keep the Sites source synchronized when publishing.
+
+## Technical studies
+
+The separate `/studies/` page compares pixel and illustrated movable-part characters against a near-side-on painted town. It includes a family-and-dog movement rehearsal, a pace comparison, and a text-free fullscreen view. This earlier technical experiment does not select the phase-one art style or replace the original `/` prototype.
+
+See [the implementation preview](IMPLEMENTATION-PREVIEW.md) for scope, verification, and limits. Run `node tools/check_study.cjs` for movement and event checks. Run `python3 tools/export_study.py` for a single-file offline preview, or `python3 tools/package_tv.py` for an **unsigned** offline Samsung widget. Signing and physical-TV testing are still required.

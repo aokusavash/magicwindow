@@ -1,6 +1,6 @@
 # Magic Window build backlog
 
-Updated October 19, 2026. This queue supports a walk → build → review cycle. See [ROADMAP.md](ROADMAP.md) for product decisions and [AGENTS.md](AGENTS.md) for working instructions.
+Updated October 20, 2026. This queue supports a walk → build → review cycle. See [ROADMAP.md](ROADMAP.md) for product decisions and [AGENTS.md](AGENTS.md) for working instructions.
 
 ## How to use this queue
 
@@ -115,6 +115,7 @@ Scope clarification from the user: brainstorming is a way to preserve possibilit
 
 ## Completed checkpoints
 
+- October 20: recovered and completed the earlier movement-and-Samsung technical batch after an interrupted asset upload. The `/studies/` page now compares procedural pixel and articulated illustrated characters, family/dog leash movement, and original versus faster pacing. Offline HTML export and unsigned Samsung widget preparation are available; see [implementation preview](IMPLEMENTATION-PREVIEW.md). Motion/event checks and canvas-rendered frame inspection were completed. No browser/physical-TV validation, signed installation, deployment, or final style selection is claimed. This is not the full art survey or varied ten-minute phase-one scene, which remain the ready priorities above.
 - Current prototype and earlier design roadmap existed before this walk.
 - October 19: generated and displayed an initial four-style art comparison in the conversation; no style selected.
 - October 19: committed phase-one targets and the direct-to-main workflow.

@@ -90,7 +90,7 @@ This reference does not by itself change the established ordinary-life premise o
 
 ## First agreed experiment: the family and the new dog
 
-Status: agreed on October 17 as a concrete test case; not implemented. The October 19 phase-one decision prioritizes art, ambiance, and ambient activity first; persistent family-and-dog development can follow.
+Status: a movement-only technical rehearsal is now built; see [implementation preview](IMPLEMENTATION-PREVIEW.md). Story continuity and persistent family development remain unimplemented. The October 19 phase-one decision still prioritizes art, ambiance, and ambient activity first; this earlier rehearsal does not select a final art style or replace that priority.
 
 An existing child and parent regularly walk along the street. On a later day the family has a dog, which joins their walk and remains part of their routine.
 
@@ -170,7 +170,7 @@ Direct control of characters or playing an embedded game is outside this concept
 
 Avoiding an external display computer is a product goal worth testing. The documentation spike in [Samsung TV feasibility](SAMSUNG-TV-SPIKE.md) finds a packaged Samsung Tizen Web application plausible, while a simple remotely hosted website wrapper faces explicit submission restrictions.
 
-Next platform experiment: package the current scene and test installation, animation performance, remote controls, state recovery, passive-viewing/screensaver behavior, and supported startup behavior. No TV app has yet been built or physically tested, and store acceptance is unconfirmed. An HDMI computer remains a fallback rather than an assumed requirement.
+An initial unsigned development widget now packages the movement study with local artwork and code. Next platform experiment: sign it and test installation, animation performance, remote controls, state recovery, passive-viewing/screensaver behavior, and supported startup behavior. No physical-TV testing or store submission has been completed. An HDMI computer remains a fallback rather than an assumed requirement.
 
 ## Questions still open
 
