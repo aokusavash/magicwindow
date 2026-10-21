@@ -16,7 +16,9 @@ October 21 user decision: try the ambitious painted-animation direction first, w
 
 The existing October 20 movement study is a technical rehearsal, not evidence that the new visual-quality target has been met. Consult its implementation notes and reuse useful foundations, preserving the existing prototype and unrelated work. Phaser is still a candidate, not a selected dependency.
 
-### Next ready batch: a small painted scene in motion
+### First painted scene built: awaiting visual review
+
+Status October 21: the initial feasibility preview has been implemented at `/painted/`, with actual browser checks and screenshot inspection. See [PAINTED-FEASIBILITY.md](PAINTED-FEASIBILITY.md) for scope and limitations. The next work is visual feedback and targeted motion/lighting refinement, not another initial-preference gate. The criteria below remain the reference for evaluating the preview.
 
 - Use a representative rural Japanese street section consistent with the neighborhood-dominant view and agreed shop direction. Preserve the quality that made the still appealing.
 - Prepare clean scenery, separate moving elements, and foreground/entrance masks rather than animating a flattened concept image as though its painted people were usable sprites.
@@ -25,7 +27,7 @@ The existing October 20 movement study is a technical rehearsal, not evidence th
 - Include a lighting/weather comparison sufficient to identify baked shadows/highlights and asset-preparation needs; this need not implement live weather.
 - Verify grounding, scale, consistent identity, matching light/style, foreground ordering, and readability at TV scale. Report actual checks and remaining visual concerns.
 - Outcome: a reviewable feasibility preview and a clear assessment of what works, what needs another iteration, and whether to continue painted animation or test storybook. Do not manufacture a pass based only on code checks.
-- Generating novel assets and arbitrary interactions is a separate later capability test. No new motion preview has been built as part of this documentation update.
+- Generating novel assets and arbitrary interactions is a separate later capability test. The earlier preference-recording update did not implement motion; the subsequent October 21 build now provides the initial preview described above.
 
 ## Next build-session kickoff
 
@@ -55,7 +57,7 @@ Visual variety and coziness guide business selection, rather than a realistic bu
 The initial preference is now known. Prioritize the painted feasibility preview; independent painted/storybook studies can support it. Further pixel comparisons are optional fallback work, not a prerequisite.
 
 - Produce a small, labeled design survey spanning coarse/cozy pixel art, detailed pixel art, painted animation, and illustrated storybook art.
-- A first four-panel comparison already exists in the October 19 conversation. It has not been checked into the repository. Recover and preserve it if accessible; do not claim it is available from this repo.
+- A first four-panel comparison already exists in the October 19 conversation. It is now preserved at `art/reference/style-survey.png` as part of the October 21 feasibility build.
 - Next useful outputs are independently viewable widescreen studies, maintaining comparable viewpoint, daylight, character scale, and frontage so style is the main variable.
 - Reflect the emerging flower/produce, ramen, and compact dessert-shop direction, while leaving unselected frontage flexible.
 - Keep doorways, paths, and small people legible from TV distance. Preserve high visual quality; do not assume a detailed image is automatically animation-ready.
@@ -133,6 +135,8 @@ Scope clarification from the user: brainstorming is a way to preserve possibilit
 - **Optional contributions:** gifts, objects, and resident responses, as an exploratory later possibility.
 
 ## Completed checkpoints
+
+- October 21: built the first painted feasibility preview at `/painted/`, preserved the original survey, and added a standalone export. Desktop/mobile Chromium checks, pure activity checks, and earlier-study regressions passed. Generated gait consistency and baked afternoon lighting remain known artistic limitations; no final visual approval, live weather connection, runtime asset generation, or physical-TV validation is claimed. See [PAINTED-FEASIBILITY.md](PAINTED-FEASIBILITY.md).
 
 - October 20: recovered and completed the earlier movement-and-Samsung technical batch after an interrupted asset upload. The `/studies/` page now compares procedural pixel and articulated illustrated characters, family/dog leash movement, and original versus faster pacing. Offline HTML export and unsigned Samsung widget preparation are available; see [implementation preview](IMPLEMENTATION-PREVIEW.md). Motion/event checks and canvas-rendered frame inspection were completed. No browser/physical-TV validation, signed installation, deployment, or final style selection is claimed. This is not the full art survey or varied ten-minute phase-one scene, which remain the ready priorities above.
 - Current prototype and earlier design roadmap existed before this walk.

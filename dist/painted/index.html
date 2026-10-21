@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3eee4">
+  <title>Magic Window — Painted animation study</title>
+  <meta name="description" content="A small painted neighborhood in motion. An interactive art and animation feasibility study for Magic Window.">
+  <link rel="stylesheet" href="painted.css">
+</head>
+<body>
+  <main>
+    <header><a href="/" class="brand">Magic Window<span>A neighborhood with a life of its own</span></a><span class="edition">Painted animation · Study 01</span></header>
+    <section class="view" aria-label="Animated painted Japanese neighborhood">
+      <canvas id="world" width="1600" height="900" role="img" aria-label="A hand-painted Japanese street with two animated residents, a working restaurant entrance, and moving steam."></canvas>
+      <p class="loading" id="loading" role="status">Opening the window…</p>
+    </section>
+    <section class="review" aria-label="Preview controls">
+      <div class="intro"><h1>A little street, coming to life.</h1><p>Watch the residents pass, pause, and visit the ramen shop. Try the entrance test to look more closely.</p></div>
+      <div class="controls">
+        <div class="group" role="group" aria-label="Lighting and weather study"><button data-look="afternoon" aria-pressed="true">Afternoon</button><button data-look="evening" aria-pressed="false">Evening</button><button data-look="rain" aria-pressed="false">Rain</button></div>
+        <div class="group actions"><button id="pause">Pause</button><button id="entrance">Entrance test</button><button id="variation">New variation</button><button id="fullscreen">Fullscreen</button></div>
+      </div>
+      <p id="status" class="status" aria-live="polite">Preparing the painted scenery and residents.</p>
+      <details><summary>What this study tests</summary><p>Generated painted scenery and two generated walking cycles, combined with variable activity timing, doorway masking, contact shadows, and animated steam. The scene runs in your browser; it is not a prerecorded video.</p><p>Afternoon, evening, and rain are manual visual studies. Live Seattle weather, a full neighborhood population, new-asset generation during playback, and evolving stories are not connected. Evening uses a lighting treatment of the afternoon artwork, so baked sunlight remains a known limitation.</p><p>The original prototype and earlier <a href="/studies/">movement study</a> are available separately.</p></details>
+    </section>
+    <footer><span>Take your time. Notice the little things.</span><span>Art direction & movement feasibility</span></footer>
+  </main>
+  <script src="world.js"></script><script src="frames.js"></script><script src="painted.js"></script>
+</body>
+</html>

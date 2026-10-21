@@ -49,6 +49,12 @@ python3 -m http.server 8000 --directory dist
 
 GitHub is the source home for ongoing work; keep the Sites source synchronized when publishing.
 
+## Painted animation feasibility preview
+
+The first painted-animation study is now built at `/painted/`: two generated walking cycles, variable resident routines, a restaurant entrance, a cook, steam, and manual lighting/rain studies. It is a review preview, separate from the original prototype. See [PAINTED-FEASIBILITY.md](PAINTED-FEASIBILITY.md) for findings and limits. The original style survey is preserved at [art/reference/style-survey.png](art/reference/style-survey.png).
+
+Run `node tools/check_painted.cjs` for activity checks and `python3 tools/export_painted.py` for a single-file offline export. Generated pose consistency and convincing relighting still need visual iteration; no live weather or runtime generation service is claimed.
+
 ## Technical studies
 
 The separate `/studies/` page compares pixel and illustrated movable-part characters against a near-side-on painted town. It includes a family-and-dog movement rehearsal, a pace comparison, and a text-free fullscreen view. This earlier technical experiment does not select the phase-one art style or replace the original `/` prototype.
