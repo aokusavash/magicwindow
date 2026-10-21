@@ -1,6 +1,6 @@
 # Magic Window build backlog
 
-Updated October 20, 2026. This queue supports a walk → build → review cycle. See [ROADMAP.md](ROADMAP.md) for product decisions and [AGENTS.md](AGENTS.md) for working instructions.
+Updated October 21, 2026. This queue supports a walk → build → review cycle. See [ROADMAP.md](ROADMAP.md) for product decisions and [AGENTS.md](AGENTS.md) for working instructions.
 
 ## How to use this queue
 
@@ -10,14 +10,31 @@ A saved backlog is not an execution service. No unattended coding runner or sche
 
 “Ready” means sufficiently specified to attempt, not completed or released. “Waiting” names a real dependency. “Future” preserves an idea without making it an immediate requirement. Review of new displayed art and behavior remains distinct from committing source.
 
+## Current priority: painted-animation feasibility
+
+October 21 user decision: try the ambitious painted-animation direction first, with storybook as a close alternative. Both are preferred over defaulting to pixel art for ease; all four remain acceptable if evidence guides a change. This experimental choice removes the need to wait for an initial style preference before preparing a small painted study. Final visual acceptance and release remain separate.
+
+The existing October 20 movement study is a technical rehearsal, not evidence that the new visual-quality target has been met. Consult its implementation notes and reuse useful foundations, preserving the existing prototype and unrelated work. Phaser is still a candidate, not a selected dependency.
+
+### Next ready batch: a small painted scene in motion
+
+- Use a representative rural Japanese street section consistent with the neighborhood-dominant view and agreed shop direction. Preserve the quality that made the still appealing.
+- Prepare clean scenery, separate moving elements, and foreground/entrance masks rather than animating a flattened concept image as though its painted people were usable sprites.
+- Show genuinely animated walking and one simple visible shop interaction/occlusion, plus modest environmental motion such as steam. Begin with enough people to test the method; the eventual full scene still targets the agreed population rhythm.
+- Vary route/timing/action choices to show dynamic behavior with reusable assets. Do not pass off a looping video or sliding still character as proof of the intended system.
+- Include a lighting/weather comparison sufficient to identify baked shadows/highlights and asset-preparation needs; this need not implement live weather.
+- Verify grounding, scale, consistent identity, matching light/style, foreground ordering, and readability at TV scale. Report actual checks and remaining visual concerns.
+- Outcome: a reviewable feasibility preview and a clear assessment of what works, what needs another iteration, and whether to continue painted animation or test storybook. Do not manufacture a pass based only on code checks.
+- Generating novel assets and arbitrary interactions is a separate later capability test. No new motion preview has been built as part of this documentation update.
+
 ## Next build-session kickoff
 
 At the end of the October 19 walk, the user asked how to begin work from their computer. No further product decision is needed before starting the ready items above.
 
 1. Open this repository in an active coding session and read README.md, AGENTS.md, ROADMAP.md, and this queue.
-2. Begin with the fuller, independently viewable art survey and a grounded audit of the existing prototype. The ten-minute activity plan is also ready work.
+2. As of October 21, begin with the painted-animation feasibility batch above, grounded in an audit of the existing prototype and technical study. The ten-minute activity plan remains ready supporting work.
 3. Prepare reviewable outputs, commit useful batches directly to main, and record what was completed or blocked here.
-4. Ask for family feedback on the art survey before committing to a final style or producing a large set of final assets. Art feedback is not a prerequisite for the audit or further art exploration.
+4. The user has supplied the initial style preference: painted animation first, storybook second. Seek feedback on the motion result before committing to a final production method or producing a large asset set.
 5. Use the shortlisted style for a representative movement/lighting/weather test. Evaluate an engine if the audit supports it; Phaser is a candidate, not an adopted dependency.
 6. Keep real weather integration, display-device testing, and later director/persistence work at their stated dependencies. Source commits do not automatically authorize publishing new displayed additions.
 
@@ -33,7 +50,9 @@ Visual variety and coziness guide business selection, rather than a realistic bu
 
 ## Ready for an active work session
 
-### Develop independently viewable art options
+### Supporting art studies (no longer a blocking four-way survey)
+
+The initial preference is now known. Prioritize the painted feasibility preview; independent painted/storybook studies can support it. Further pixel comparisons are optional fallback work, not a prerequisite.
 
 - Produce a small, labeled design survey spanning coarse/cozy pixel art, detailed pixel art, painted animation, and illustrated storybook art.
 - A first four-panel comparison already exists in the October 19 conversation. It has not been checked into the repository. Recover and preserve it if accessible; do not claim it is available from this repo.
@@ -66,7 +85,7 @@ Visual variety and coziness guide business selection, rather than a realistic bu
 
 ### Validate a shortlisted style in motion
 
-Dependency: one or more family-selected art directions and appropriately prepared assets.
+Initial art preference supplied October 21: painted animation, with storybook as the alternative. Preparing the necessary assets is part of the next ready feasibility batch above; this item is no longer blocked on an initial preference.
 
 Produce a representative neighborhood preview showing readable movement and ambient activity with layered scenery. A visible entrance/counter can test integration, but the goal is the overall living-scene experience. Judge character scale, perspective, motion quality, and visual coherence; one attractive still does not establish those.
 
@@ -117,7 +136,8 @@ Scope clarification from the user: brainstorming is a way to preserve possibilit
 
 - October 20: recovered and completed the earlier movement-and-Samsung technical batch after an interrupted asset upload. The `/studies/` page now compares procedural pixel and articulated illustrated characters, family/dog leash movement, and original versus faster pacing. Offline HTML export and unsigned Samsung widget preparation are available; see [implementation preview](IMPLEMENTATION-PREVIEW.md). Motion/event checks and canvas-rendered frame inspection were completed. No browser/physical-TV validation, signed installation, deployment, or final style selection is claimed. This is not the full art survey or varied ten-minute phase-one scene, which remain the ready priorities above.
 - Current prototype and earlier design roadmap existed before this walk.
-- October 19: generated and displayed an initial four-style art comparison in the conversation; no style selected.
+- October 19: generated and displayed an initial four-style art comparison in the conversation; no style selected at that time.
+- October 21: user chose painted animation as the lead feasibility direction, storybook as a close alternative, and an ambitious motion test ahead of defaulting to pixel art. Recorded the decision and advanced the bounded feasibility batch; no new animation or deployment is claimed.
 - October 19: committed phase-one targets and the direct-to-main workflow.
 - October 19: committed shop-selection direction and deferred the clear-day mountain idea.
 - October 19: created this actionable backlog and recorded the between-walk workflow. No unattended executor has been configured.

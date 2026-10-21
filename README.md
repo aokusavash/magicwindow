@@ -20,6 +20,8 @@ Open http://localhost:8000. Use the page's weather, time, next-day, and fullscre
 
 ## Creative direction
 
+Current art priority (October 21): test **painted animation** first, with storybook as a close alternative. The next checkpoint is a small coherent animated scene that preserves the concept artwork's appeal; the final production method is not yet proven. See the roadmap and backlog for the feasibility criteria.
+
 See [ROADMAP.md](ROADMAP.md) for the current phase-one target and later vision. Phase one focuses on a beautiful, living neighborhood with local daylight and Seattle weather; persistent characters and an AI director can follow later. The current prototype does not yet meet that target.
 
 - Worth glancing at as ambient art, with pedestrians, traffic, weather, and recognizable places.

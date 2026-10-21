@@ -1,6 +1,6 @@
 # Magic Window roadmap
 
-Working notes from the October 17 and October 19, 2026 design conversations. This roadmap is deliberately adaptable before the living-room installation.
+Working notes from the October 17, October 19, and October 21, 2026 design conversations. This roadmap is deliberately adaptable before the living-room installation.
 
 ## Purpose and working style
 
@@ -17,11 +17,21 @@ Agreed during the October 19 walk. This sets the immediate priority ahead of the
 - **Success test:** the user's daughters or wife enjoy voluntarily watching for more than five minutes, ideally around ten, noticing details and activity. The scene should feel aesthetically pleasing and more interesting than a still picture without manufacturing constant excitement.
 - **Scope:** establish the art style, overall ambiance, believable varied ambient activity, local day/night cycle, and real local weather. Recurring character identities, persistent stories, and an AI director remain part of the future vision and are not prerequisites for phase one.
 - **Setting and framing:** retain the rural Japanese neighborhood direction. Buildings, streets, and people occupy most of the frame; around 80 percent or more is an initial guess to adjust visually. Mountains, forest, and sky are supporting background rather than the main view. The user welcomed a fixed, slightly raised, mostly side-on view with readable shopfronts, entrances, walking areas, and some shallow depth.
-- **Art exploration:** compare multiple visual directions, including different pixel-art treatments and non-pixel illustration. A four-panel concept survey was generated and shown in the October 19 chat: cozy pixel, detailed pixel, painted animation, and storybook. The user wants input from their daughters. No style has been selected; these are still-image concepts, not animation-ready layered assets. The comparison image has not yet been checked into this repository.
+- **Art exploration:** compare multiple visual directions, including different pixel-art treatments and non-pixel illustration. A four-panel concept survey was generated and shown in the October 19 chat: cozy pixel, detailed pixel, painted animation, and storybook. The user wants input from their daughters. At that point no style had been selected. On October 21 the user chose painted animation as the lead feasibility direction, with storybook as the close alternative (see below). These are still-image concepts, not animation-ready layered assets. The comparison image has not yet been checked into this repository.
 - **Activity level:** a relaxed, steady trickle rather than a tourist crowd. Rough daytime target is 10–12 visible people, perhaps roughly twice that during morning commuting, and close to nobody in the middle of the night. These are visual starting points, not exact quotas. Activity can include lingering or visiting places as well as crossing the scene.
 - **Local conditions:** daylight follows the household's actual local day/night cycle, initially Seattle. Weather should reflect actual Seattle conditions rather than independent fictional weather, within the spatial and update limits of weather reports. This requires a future integration; the current prototype still uses a manual demo toggle.
 - **Future-ready foundation:** phase-one activity may be chosen procedurally from prepared possibilities. Define places, paths, entrances, and reusable actions, and keep activity selection separate from animation so a later director can choose actions using persistent identities and world history. This is an architectural direction, not a reason to build the full director now.
 - **Art feasibility:** preserve the high visual quality the user liked. Detailed scenery can be mostly static, with separately prepared interactive elements and foreground layers where needed. Actual compatibility still requires testing people, entrances, scale, and movement together. A restaurant-entry test is a candidate technical experiment, not the entire product goal or an approved final scene.
+
+## Art direction: painted animation first
+
+Agreed October 21, 2026, after reviewing the four-style survey. The user finds painted animation and storybook the most beautiful, magical, and ambitious directions, slightly preferring painted animation. Lead with painted animation for a bounded feasibility study; retain storybook as a close alternative. Pixel styles remain acceptable fallbacks if evidence warrants reconsideration, rather than the default merely because they look easier. This chooses an experimental direction, not approval of unseen final assets or a claim that the production pipeline is solved.
+
+The comparison labels are descriptive, not rigid technical categories. In the existing sheet, painted animation emphasizes soft edges, atmospheric light, material richness, and depth; storybook emphasizes visible ink contours, paper-like texture, and a flatter illustrative finish. Both can use layered 2D scenery with frame-based or articulated character animation. The first test can retain painterly scenery with readable, simplified character shapes; exact animation method remains to be evaluated.
+
+The next meaningful checkpoint is a small coherent animated scene that preserves the still artwork's appeal: a representative street section with separately prepared layers, at least one genuinely articulated or frame-animated walking character (not just a still sprite sliding across), a visible shop interaction/occlusion, and modest environmental movement. A lighting/weather study should expose baked-lighting limitations. Vary activity timing/routes using reusable behaviors to demonstrate dynamic activity, rather than presenting a prerecorded video as a simulated world.
+
+Check character identity, body motion, contact with the ground, scale/perspective, lighting, occlusion, and readability at the intended TV size. Prepare only enough assets to establish feasibility before mass-producing the neighborhood. Keep animation quality, dynamic behavior selection, and generation of new assets as separate claims: a coherent animation does not demonstrate arbitrary on-demand creation of new interactions. No new feasibility scene was implemented by recording this decision.
 
 ## Neighborhood places: current direction
 
@@ -59,7 +69,7 @@ Agreed October 19: this is a solo project for now. Commit tangible batches of wo
 - More noticeable developments should tend toward household-local morning hours of approximately 7–9 and evening hours of approximately 5–9. These are opportunities, not a quota of events. Ordinary ambient activity continues outside them, with overnight quiet.
 - Changes may last for days or become permanent. A flower shop could gradually begin selling books and remain a flower-and-book shop, with corresponding objects and customer behavior.
 - Visible consequences can outlast the moment that introduced them, so observation need not happen at an exact time.
-- Art style is open. Pixel art was an initial assumption, not a requirement.
+- Painted animation is the lead feasibility direction as of October 21, with storybook a close alternative. Final production style depends on the animation test; pixel art is an acceptable fallback.
 
 ## Current implementation
 
@@ -174,7 +184,7 @@ An initial unsigned development widget now packages the movement study with loca
 
 ## Questions still open
 
-- Final art style, exact composition and character scale, and depth of movement within the agreed neighborhood-dominant view.
+- Whether the painted-animation feasibility test meets the visual benchmark; final production style, exact composition, character scale, and depth of movement.
 - Persistence, hosting, generation services, costs, and generation cadence.
 - How much autonomous permanent change is desirable, and how to prevent visual clutter or incoherent growth.
 - Which checks are sufficient for generated assets and interactions, and when human review can be reduced.
