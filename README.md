@@ -51,9 +51,9 @@ GitHub is the source home for ongoing work; keep the Sites source synchronized w
 
 ## Painted animation feasibility preview
 
-The first painted-animation study is now built at `/painted/`: two generated walking cycles, variable resident routines, a restaurant entrance, a cook, steam, and manual lighting/rain studies. It is a review preview, separate from the original prototype. See [PAINTED-FEASIBILITY.md](PAINTED-FEASIBILITY.md) for findings and limits. The original style survey is preserved at [art/reference/style-survey.png](art/reference/style-survey.png).
+Study 02 is now built at `/painted/`: two painted characters share a reusable rig with planted-foot walking, persistent bags, rear/front turns, hand-to-handle door contact, a warm interior, and a flower-smelling interaction. Entrance, flower, and close-up controls make those behaviors easy to review. A cook, steam, and manual lighting/rain studies remain. It is a review preview, separate from the original prototype. See [PAINTED-FEASIBILITY.md](PAINTED-FEASIBILITY.md) for findings and limits. The original style survey is preserved at [art/reference/style-survey.png](art/reference/style-survey.png).
 
-Run `node tools/check_painted.cjs` for activity checks and `python3 tools/export_painted.py` for a single-file offline export. Generated pose consistency and convincing relighting still need visual iteration; no live weather or runtime generation service is claimed.
+Run `node tools/check_painted.cjs` for activity checks and `python3 tools/export_painted.py` for a single-file offline export. Joint deformation, turns, and convincing relighting still need visual iteration; no live weather or runtime generation service is claimed.
 
 ## Technical studies
 

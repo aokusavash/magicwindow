@@ -5,26 +5,26 @@
   <meta name="theme-color" content="#f3eee4">
   <title>Magic Window — Painted animation study</title>
   <meta name="description" content="A small painted neighborhood in motion. An interactive art and animation feasibility study for Magic Window.">
-  <link rel="stylesheet" href="painted.css">
+  <link rel="stylesheet" href="painted.css?v=2">
 </head>
 <body>
   <main>
-    <header><a href="/" class="brand">Magic Window<span>A neighborhood with a life of its own</span></a><span class="edition">Painted animation · Study 01</span></header>
+    <header><a href="/" class="brand">Magic Window<span>A neighborhood with a life of its own</span></a><span class="edition">Painted animation · Study 02</span></header>
     <section class="view" aria-label="Animated painted Japanese neighborhood">
       <canvas id="world" width="1600" height="900" role="img" aria-label="A hand-painted Japanese street with two animated residents, a working restaurant entrance, and moving steam."></canvas>
       <p class="loading" id="loading" role="status">Opening the window…</p>
     </section>
     <section class="review" aria-label="Preview controls">
-      <div class="intro"><h1>A little street, coming to life.</h1><p>Watch the residents pass, pause, and visit the ramen shop. Try the entrance test to look more closely.</p></div>
+      <div class="intro"><h1>A little street, coming to life.</h1><p>A pause by the flowers. A hand on the door. Watch the residents, or take a closer look.</p></div>
       <div class="controls">
         <div class="group" role="group" aria-label="Lighting and weather study"><button data-look="afternoon" aria-pressed="true">Afternoon</button><button data-look="evening" aria-pressed="false">Evening</button><button data-look="rain" aria-pressed="false">Rain</button></div>
-        <div class="group actions"><button id="pause">Pause</button><button id="entrance">Entrance test</button><button id="variation">New variation</button><button id="fullscreen">Fullscreen</button></div>
+        <div class="group actions"><button id="pause">Pause</button><button id="entrance">Entrance test</button><button id="flower">Flower test</button><button id="closeup">Close-up: off</button><button id="variation">New variation</button><button id="fullscreen">Fullscreen</button></div>
       </div>
       <p id="status" class="status" aria-live="polite">Preparing the painted scenery and residents.</p>
-      <details><summary>What this study tests</summary><p>Generated painted scenery and two generated walking cycles, combined with variable activity timing, doorway masking, contact shadows, and animated steam. The scene runs in your browser; it is not a prerecorded video.</p><p>Afternoon, evening, and rain are manual visual studies. Live Seattle weather, a full neighborhood population, new-asset generation during playback, and evolving stories are not connected. Evening uses a lighting treatment of the afternoon artwork, so baked sunlight remains a known limitation.</p><p>The original prototype and earlier <a href="/studies/">movement study</a> are available separately.</p></details>
+      <details><summary>What this study tests</summary><p>Two painted characters share continuous walking and reaching motion, with separate body parts and bags. Feet plant during each stance; the body rises and falls over them. The resident turns away to approach the shop, reaches for its handle, moves it with her hand, and steps into a painted interior. She also bends to smell the flowers.</p><p>Use Close-up to follow either resident. This is still an animation experiment: joint seams, turns, and contact choreography need visual judgment. Afternoon, evening, and rain are manual studies; live Seattle weather, a full population, runtime artwork generation, and evolving stories are not connected. Evening still inherits baked sunlight from the afternoon painting.</p><p>The original prototype and earlier <a href="/studies/">movement study</a> are available separately.</p></details>
     </section>
     <footer><span>Take your time. Notice the little things.</span><span>Art direction & movement feasibility</span></footer>
   </main>
-  <script src="world.js"></script><script src="frames.js"></script><script src="painted.js"></script>
+  <script src="world.js?v=2"></script><script src="frames.js"></script><script src="rig-frames.js?v=2"></script><script src="rig.js?v=2"></script><script src="painted.js?v=2"></script>
 </body>
 </html>

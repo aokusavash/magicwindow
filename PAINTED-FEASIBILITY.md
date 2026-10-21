@@ -1,3 +1,48 @@
+# Painted animation: reusable-rig revision
+
+Current revision: Study 02, October 21, 2026. Review `/painted/`. The original prototype and earlier movement study are unchanged. The first-build report below is archived context; current residents no longer use its generated walk-cycle frames.
+
+## User feedback motivating this revision
+
+The first attempt had inconsistent or missing bag artwork, insufficient passing/swing poses, apparent moonwalking and sliding, no convincing weight transfer, profile-only movement into depth, a door that opened without visible touch, and a black interior. The user requested further iteration and a flower-smelling interaction, and correctly identified the scaling problem of independent per-character action sheets.
+
+## Implemented in Study 02
+
+- Two painted character-part atlases plus replacement clothing bodies; one shared procedural skeleton and action logic for both residents. The generated first-attempt sheets remain in source as references, but are not loaded for resident movement.
+- Continuous stance and swing phases with bent-knee passing poses, foot clearance, opposite arm movement, and body rise/fall derived from weight transfer. Stance targets remain fixed in world space while the body advances.
+- Props are separate persistent objects: the tote attaches to the near hand, the red crossbody bag attaches to the body with a rendered strap. No pose depends on a generator remembering to redraw the bag.
+- Separate side, rear, and front heads and clothing views. Turns precede movement toward and away from the doorway. Rear/front leg projection is handled separately to avoid exaggerated sideways knee bends.
+- An explicit reach, grip, slide, release sequence. The arm uses a two-bone target solver; the near hand and moving door handle share the same target position throughout opening and closing. It is choreographed contact, not a force-based physics simulation.
+- A painted warm restaurant interior behind the opening, a threshold, foreground jamb masking, and a short turn into the interior before the resident goes out of view. The door stays open during the visit and is closed by the resident after leaving; it does not slide unattended while she is hidden.
+- A flower interaction: settle, bend knees and torso, lower/tilt the head toward a blossom target, pause with subtle breathing, and recover before walking on.
+- Flower test and a cycling Close-up control for the resident, neighbor, and full street. Entrance/flower tests follow the resident if close-up was active.
+
+The cook still uses the original two serving poses. Lighting/rain are unchanged manual studies, with the same baked-sunlight limitations. Live weather, a director, runtime art generation, and the full phase-one population remain unimplemented.
+
+## Reuse model and limits
+
+Independent action sheets scale roughly as characters × actions × directions, not exponentially. With a compatible shared rig, character-specific art and shared action controllers are largely separated. Adding a character requires painted body parts/views, attachment metadata, and fitting. Adding an action can reuse those parts and target solvers across compatible characters.
+
+This does not make arbitrary actions free. Very different bodies need retargeting; hands, facial expressions, clothing deformation, bikes, seating, and unusual perspectives may need new art and constraints. This revision uses rigid painted pieces, not mesh-deformed clothing or a professional skeletal authoring system. Joint overlaps and the limited three-view turning treatment are still visible at close range. A narrowed frontal clothing piece is used for side movement because generated side clothing retained a baked sleeve. These are artistic production issues to evaluate rather than hide behind passing geometry tests.
+
+## Checks for this revision
+
+- `node tools/check_painted.cjs`: repeated planted-foot checks during travel; swing clearance; body rise/fall; hand-to-handle agreement during opening/closing; persistent bag attachment and render calls across all visible poses; rear/front approach views; face proximity to the flower target; seeded variation and continuous activity routes.
+- `node tools/check_study.cjs`: earlier study regression checks remain passing.
+- `python3 tools/check_painted_browser.py` against an already running local server: desktop and mobile Chromium, no page errors, pause, variations, entrance/flower/close-up controls, lighting controls, reduced-motion startup, missing-artwork failure, and a fully embedded export loaded with external requests blocked.
+- Browser screenshots inspected, then corrected for joint gaps and exaggerated rear-view knee spread. The optional close-up intentionally magnifies limitations. No physical-TV or other-browser-engine validation is claimed.
+- Checks establish structural properties and interaction controls; they do not establish that the character motion meets the user's artistic quality bar.
+
+## Reproduction
+
+The app remains buildless Canvas/JavaScript. `rig.js` contains the shared pose and drawing code; `world.js` schedules target-driven actions; `rig-frames.js` stores measured atlas bounds. PNG source assets remain unchanged in `dist/painted/assets/rig/`. `python3 tools/measure_rig_parts.py` remeasures the largest connected alpha component in each cell without retouching images (Pillow, NumPy, and SciPy are optional production-tool dependencies, not runtime dependencies). `python3 tools/export_painted.py` embeds the current scripts, styles, and assets in a standalone HTML preview.
+
+Next checkpoint: review walking, the persistent tote, body weight, flower behavior, and hand contact in Close-up. Further mesh deformation, turn poses, and action tuning should follow observed visual weaknesses. Reverting to mass-generating independent action sheets is not the default approach.
+
+---
+
+## Archived first-build report
+
 # Painted animation: first feasibility build
 
 Built October 21, 2026. Review `/painted/`; the original `/` prototype and earlier `/studies/` remain separate. This is an experiment for visual review, not the finished living-room experience.

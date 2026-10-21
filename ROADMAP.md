@@ -33,6 +33,12 @@ The next meaningful checkpoint is a small coherent animated scene that preserves
 
 Check character identity, body motion, contact with the ground, scale/perspective, lighting, occlusion, and readability at the intended TV size. Prepare only enough assets to establish feasibility before mass-producing the neighborhood. Keep animation quality, dynamic behavior selection, and generation of new assets as separate claims: a coherent animation does not demonstrate arbitrary on-demand creation of new interactions. Recording the preference itself did not implement the scene. A subsequent October 21 build now provides the first painted feasibility preview at `/painted/`; see [PAINTED-FEASIBILITY.md](PAINTED-FEASIBILITY.md) for what works, browser checks, and limitations. Generated walk-cycle consistency and day/night relighting remain to be improved; visual acceptance is pending.
 
+## Animation feedback and shared-rig iteration
+
+On October 21 the user reviewed the first painted preview and identified disappearing/inconsistent props, incomplete stride phases and sliding, missing rear views, an untouched automatically opening door, and an unconvincing black interior. They requested another iteration and a flower-smelling action, and proposed reusing actions through composable character parts rather than generating every character/action combination independently.
+
+Study 02 at `/painted/` now tests that direction: shared continuous walking and target-driven arm poses, separate persistent bags, front/rear/side views, coordinated hand/door contact, a painted interior, and the flower action. See [PAINTED-FEASIBILITY.md](PAINTED-FEASIBILITY.md) for current evidence and limits. This is a rigid-part 2D rig, not completed mesh deformation or proof of unrestricted action generation. Keep reusable character art, shared actions, and scene-specific contact targets separate as the project develops.
+
 ## Neighborhood places: current direction
 
 Further October 19 discussion: optimize the limited street frontage for **visual variety, coziness, and things children find interesting**. Do not frame the choice primarily as everyday errands or reproduce the real-world proportion of restaurants. Four or five buildings is a working composition guess, not a fixed limit.

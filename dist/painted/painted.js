@@ -6,13 +6,15 @@
   var supplied = Number(params.get('seed')), seed = params.has('seed') && Number.isFinite(supplied) ? supplied >>> 0 : newSeed();
   var world = M.build(seed), seconds = 0, last = 0, loaded = false, failed = false;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches, paused = reduced;
-  var look = 'afternoon', tone = 0, wet = 0, dirty = true, background = new Image(), sheets = {}, idle = new Image();
+  var look = 'afternoon', tone = 0, wet = 0, dirty = true, background = new Image(), idle = new Image();
+  var rigImages = {}, drawRig, interior = new Image(), closeup = '';
   var status = document.getElementById('status'), loading = document.getElementById('loading');
   var drops = [], rng = M.random(8128);
   for (var i = 0; i < 150; i++) drops.push({ x: rng() * 1900, y: rng() * 1100, v: 400 + rng() * 320, length: 11 + rng() * 15, alpha: .12 + rng() * .18 });
   function ellipse(x, y, rx, ry, color) { ctx.fillStyle = color; ctx.beginPath(); ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2); ctx.fill(); }
   function asset(src) { return new Promise(function (resolve, reject) { var image = new Image(); image.onload = function () { resolve(image); }; image.onerror = function () { reject(new Error(src)); }; image.src = src; }); }
   function updatePause() { document.getElementById('pause').textContent = paused ? 'Play' : 'Pause'; document.getElementById('pause').setAttribute('aria-pressed', String(paused)); }
+  function setCloseup(value){closeup=value;document.getElementById('closeup').textContent='Close-up: '+(closeup||'off');dirty=true;}
   function setLook(value) {
     if (!['afternoon', 'evening', 'rain'].includes(value)) return;
     look = value; dirty = true;
@@ -31,31 +33,25 @@
     ctx.save();
     if (p.clip) { ctx.beginPath(); ctx.rect(M.door.x + 2, M.door.y + 3, M.door.width - 4, M.door.height - 1); ctx.clip(); }
     if (!p.clip) ellipse(p.x, p.y + 1, p.height * .14, 3, 'rgba(44,39,27,.22)');
-    if (!p.moving) sprite(idle, window.PaintedFrames.idle[p.id === 'resident' ? 0 : 1], p);
-    else {
-      var frames = window.PaintedFrames[p.id], index = Math.floor(p.gait * frames.length) % frames.length;
-      sprite(sheets[p.id], frames[index], p);
-    }
+    drawRig(p);
     ctx.restore();
   }
   function restaurantDoor(p, afterPeople) {
     var d = M.door, open = p.door;
-    if (open < .001) return;
-    ctx.save();ctx.beginPath();ctx.rect(d.x, d.y, d.width, d.height);ctx.clip();
     if (!afterPeople) {
-      var g = ctx.createLinearGradient(d.x, 0, d.x + d.width, 0);g.addColorStop(0, '#1c1b17');g.addColorStop(1, '#493827');
-      ctx.fillStyle = g;ctx.fillRect(d.x, d.y, d.width, d.height);
-      ctx.fillStyle = '#83684a';ctx.fillRect(d.x, d.y + d.height - 8, d.width, 8);
-    } else {
-      // The actual painted shutter slides within its opening. Jambs stay fixed.
-      ctx.drawImage(background, d.x / M.width * background.width, d.y / M.height * background.height,
-        d.width / M.width * background.width, d.height / M.height * background.height,
-        d.x - d.width * open, d.y, d.width, d.height);
-      ctx.fillStyle = 'rgba(30,24,16,.35)';ctx.fillRect(d.x - d.width * open + d.width - 2, d.y, 2, d.height);
-    }
-    ctx.restore();
-    if (afterPeople) {
-      // Narrow frame strips occlude bodies as they cross the threshold.
+      if (open > .001) {
+        ctx.save();ctx.beginPath();ctx.rect(d.x, d.y, d.width, d.height);ctx.clip();
+        ctx.drawImage(interior, d.x, d.y, d.width, d.height);
+        ctx.fillStyle = 'rgba(24,19,11,.22)';ctx.fillRect(d.x,d.y,4,d.height);
+        ctx.drawImage(background, d.x / M.width * background.width, d.y / M.height * background.height,
+          d.width / M.width * background.width, d.height / M.height * background.height,
+          d.x - d.width * open, d.y, d.width, d.height);
+        ctx.restore();
+      }
+      var hx = d.handleX - d.width * open;
+      ctx.fillStyle = '#443728';ctx.fillRect(hx-3,d.handleY-11,6,22);
+      ctx.fillStyle = '#b89559';ctx.fillRect(hx-1,d.handleY-9,3,18);
+    } else if (open > .001) {
       [d.x - 3, d.x + d.width - 1].forEach(function (x) {
         ctx.drawImage(background, x / M.width * background.width, d.y / M.height * background.height,
           4 / M.width * background.width, d.height / M.height * background.height, x, d.y, 4, d.height);
@@ -117,7 +113,14 @@
     var people = world.at(seconds), customer = people[0];
     restaurantDoor(customer, false);cook();
     people.sort(function (a, b) { return a.y - b.y; }).forEach(resident);
-    restaurantDoor(customer, true);atmosphere();dirty = false;
+    restaurantDoor(customer, true);atmosphere();
+    if(closeup){
+      var focus=people.find(function(p){return p.id===closeup;})||customer;
+      var sw=480,sh=270,fx=focus.hidden?100:focus.x,fy=focus.hidden?620:focus.y-focus.height*.44;
+      var sx=Math.max(0,Math.min(M.width-sw,fx-sw/2)),sy=Math.max(0,Math.min(M.height-sh,fy-sh/2));
+      ctx.drawImage(canvas,sx,sy,sw,sh,0,0,M.width,M.height);
+    }
+    dirty = false;
   }
   function animate(now) {
     var dt = last ? Math.min((now - last) / 1000, .1) : 0;last = now;
@@ -133,7 +136,9 @@
   }
   document.querySelectorAll('[data-look]').forEach(function (button) { button.onclick = function () { setLook(button.dataset.look); }; });
   document.getElementById('pause').onclick = function () { paused = !paused;updatePause();dirty = true; };
-  document.getElementById('entrance').onclick = function () { seconds = world.entranceTime;paused = false;updatePause();dirty = true;status.textContent = 'Entrance test · follow the woman to the doorway at the far left of the ramen shop.'; };
+  document.getElementById('entrance').onclick = function () { seconds = world.entranceTime;paused = false;updatePause();if(closeup)setCloseup('resident');dirty = true;status.textContent = 'Entrance test · follow the woman to the doorway at the far left of the ramen shop.'; };
+  document.getElementById('flower').onclick = function () { seconds=world.flowerTime;paused=false;updatePause();if(closeup)setCloseup('resident');dirty=true;status.textContent='Flower test · watch the resident settle, bend toward the blossoms, and stand up again.'; };
+  document.getElementById('closeup').onclick = function () { setCloseup(closeup===''?'resident':closeup==='resident'?'neighbor':''); };
   document.getElementById('variation').onclick = function () { seed = newSeed();world = M.build(seed);seconds = 0;dirty = true;status.textContent = 'New variation · changed walking speeds, pauses, and later shop visits.'; };
   document.getElementById('fullscreen').onclick = function () {
     var p = document.fullscreenElement ? document.exitFullscreen && document.exitFullscreen() : canvas.requestFullscreen && canvas.requestFullscreen();
@@ -141,12 +146,13 @@
   };
   document.addEventListener('visibilitychange', function () { last = 0;dirty = true; });
   window.PaintedStudy = {
-    state: function () { return { loaded: loaded, failed: failed, seconds: seconds, seed: seed, paused: paused, look: look, residents: world.at(seconds), entranceTime: world.entranceTime }; },
-    inspect: function (t, value) { if (Number.isFinite(t)) seconds = Math.max(0, t);paused = true;updatePause();if (value) setLook(value);tone = look === 'evening' ? 1 : look === 'rain' ? .36 : 0;wet = look === 'rain' ? 1 : 0;dirty = true;draw(); }
+    state: function () { return { loaded: loaded, failed: failed, seconds: seconds, seed: seed, paused: paused, look: look, closeup: closeup, residents: world.at(seconds), entranceTime: world.entranceTime, flowerTime:world.flowerTime }; },
+    inspect: function (t, value, focus) { if (Number.isFinite(t)) seconds = Math.max(0, t);paused = true;updatePause();if (value) setLook(value);if(focus!==undefined)setCloseup(focus);tone = look === 'evening' ? 1 : look === 'rain' ? .36 : 0;wet = look === 'rain' ? 1 : 0;dirty = true;draw(); }
   };
   updatePause();
-  Promise.all([asset('assets/street.png'), asset('assets/resident-walk.png'), asset('assets/neighbor-walk.png'), asset('assets/idle.png')]).then(function (images) {
-    background = images[0];sheets.resident = images[1];sheets.neighbor = images[2];idle = images[3];loaded = true;
+  Promise.all([asset('assets/street.png'),asset('assets/idle.png'),asset('assets/rig/resident.png'),asset('assets/rig/neighbor.png'),asset('assets/rig/torsos.png'),asset('assets/rig/interior.png')]).then(function (images) {
+    background=images[0];idle=images[1];rigImages.resident=images[2];rigImages.neighbor=images[3];rigImages.torsos=images[4];interior=images[5];
+    drawRig=window.PaintedRig.renderer(ctx,rigImages,window.PaintedRigFrames.parts,window.PaintedRigFrames.torsos);loaded=true;
     loading.hidden = true;status.textContent = reduced ? 'Ready · paused to respect reduced-motion preferences. Press Play to explore.' : 'Ready · two painted residents with variable routines. Weather presets are visual studies.';
     draw();
   }).catch(function () { failed = true;loading.textContent = 'The artwork could not load. Please reload to try again.';status.textContent = 'Some artwork is missing or unavailable; the preview has not started.'; });
