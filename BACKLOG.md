@@ -29,6 +29,12 @@ Status October 21: the initial feasibility preview has been implemented at `/pai
 - Outcome: a reviewable feasibility preview and a clear assessment of what works, what needs another iteration, and whether to continue painted animation or test storybook. Do not manufacture a pass based only on code checks.
 - Generating novel assets and arbitrary interactions is a separate later capability test. The earlier preference-recording update did not implement motion; the subsequent October 21 build now provides the initial preview described above.
 
+### Current blocker: convincing character construction
+
+Study 03 `/painted/walking/` records the user's disjointed-body feedback and a bounded continuous-mesh comparison. Whole-figure references, mesh metadata, conservative walking, A/B controls and checks are implemented. Visual acceptance failed: legs distort from overlapping source artwork, and large reaches stretch clothing. The interaction scene keeps its rigid rig with small gait/joint repairs.
+
+Ready next batch: prepare and calibrate one genuinely layered, underpainted character, then review contact, passing and turn poses before producing more residents/actions. Preserve style and action reuse; add corrective artwork where the shared rig cannot maintain the silhouette. Do not treat more automated geometry checks as proof of animation quality.
+
 ## Next build-session kickoff
 
 At the end of the October 19 walk, the user asked how to begin work from their computer. No further product decision is needed before starting the ready items above.

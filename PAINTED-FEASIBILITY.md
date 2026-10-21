@@ -1,3 +1,19 @@
+# Study 03: connected-surface walking experiment
+
+October 21, 2026. The user found Study 02 visibly assembled from separately animated parts. That is a construction problem, not simply a shortage of frames. The rigid piece rotations expose joint transitions, disconnected shoulders/neck, and an overly bent supporting leg.
+
+Review the separate `/painted/walking/` comparison. It uses newly generated whole-figure painted references and a measured, weighted Canvas triangle mesh. The controls compare connected painting and rigid cutouts using the same underlying pose and timing, with both characters selectable. Pause preserves the exact pose when switching treatments. Bags remain independent props. The original `/` stays unchanged, and `/painted/` retains its full interaction rig.
+
+**Outcome: not yet visually successful.** Keeping the upper painting together improves the torso silhouette, but the side-view legs overlap in the source image and cannot separate cleanly under deformation. Cloth stretches and mesh artifacts remain. Broad mesh deformation also failed for door-reaching poses; that trial was not integrated into the interaction scene. Arm motion in the walking comparison is deliberately restrained rather than presented as solved.
+
+Small corrections retained in the shared rig: shorter stride, lower swing-foot clearance, quieter arm swing, proper shoe-to-ankle offset when placing the pelvis, corrected limb pivots, and a neck bridge. These improve the mechanical setup but do not resolve the user's artistic objection by themselves.
+
+The next production experiment should use **one carefully prepared, layered character**, with hidden areas underpainted behind limbs, calibrated pivots, smooth local skin weights, and authored contact/passing poses. Blend shared actions on that construction, with corrective drawings for difficult bends and view changes. Do not generate the whole population yet. Runtime activity selection can remain procedural; achieving coherent drawing and motion is the current bottleneck. A specialist skeletal renderer may help tooling/performance later, but cannot manufacture missing artwork or fix unreviewed weights.
+
+Reproduction: `python3 tools/build_painted_skin.py` measures unchanged source PNGs and writes `skin-data.js` (optional Pillow/NumPy/SciPy production dependencies). `skin.js` deforms and renders the triangles at runtime without a new app dependency. `node tools/check_skin.cjs` checks finite deformations and normalized weights through walking poses; `python3 tools/check_walking_browser.py` checks loading, comparison controls, pause, mobile/reduced-motion behavior and missing assets. The desktop timing in that report is a one-character diagnostic, not evidence of TV or full-population performance. Geometry/browser checks are not artistic acceptance.
+
+---
+
 # Painted animation: reusable-rig revision
 
 Current revision: Study 02, October 21, 2026. Review `/painted/`. The original prototype and earlier movement study are unchanged. The first-build report below is archived context; current residents no longer use its generated walk-cycle frames.

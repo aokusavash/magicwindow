@@ -39,6 +39,10 @@ On October 21 the user reviewed the first painted preview and identified disappe
 
 Study 02 at `/painted/` now tests that direction: shared continuous walking and target-driven arm poses, separate persistent bags, front/rear/side views, coordinated hand/door contact, a painted interior, and the flower action. See [PAINTED-FEASIBILITY.md](PAINTED-FEASIBILITY.md) for current evidence and limits. This is a rigid-part 2D rig, not completed mesh deformation or proof of unrestricted action generation. Keep reusable character art, shared actions, and scene-specific contact targets separate as the project develops.
 
+## Connected character construction: current blocker
+
+Further October 21 feedback: the articulated residents read as separately moving body parts. Study 03 at `/painted/walking/` compares a continuous painted surface against rigid pieces. It improves torso continuity but fails to separate overlapping painted legs cleanly; large reaches also distort. It has not replaced the full interaction rig or met the visual-quality bar. Next, prepare one properly layered/underpainted character with calibrated weights and authored pose corrections before expanding population or actions. Procedural activity and reusable controls remain viable; art preparation and motion quality remain unproven.
+
 ## Neighborhood places: current direction
 
 Further October 19 discussion: optimize the limited street frontage for **visual variety, coziness, and things children find interesting**. Do not frame the choice primarily as everyday errands or reproduce the real-world proportion of restaurants. Four or five buildings is a working composition guess, not a fixed limit.

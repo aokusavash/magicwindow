@@ -55,6 +55,8 @@ Study 02 is now built at `/painted/`: two painted characters share a reusable ri
 
 Run `node tools/check_painted.cjs` for activity checks and `python3 tools/export_painted.py` for a single-file offline export. Joint deformation, turns, and convincing relighting still need visual iteration; no live weather or runtime generation service is claimed.
 
+Current motion-construction experiment: [walking comparison](https://little-world-window.racing-dog-8718.chatgpt.site/painted/walking/). The connected torso is promising, but overlapping legs distort; this is an unfinished diagnostic, not a solved replacement for the interaction rig. See the feasibility report for the next asset-preparation step.
+
 ## Technical studies
 
 The separate `/studies/` page compares pixel and illustrated movable-part characters against a near-side-on painted town. It includes a family-and-dog movement rehearsal, a pace comparison, and a text-free fullscreen view. This earlier technical experiment does not select the phase-one art style or replace the original `/` prototype.
