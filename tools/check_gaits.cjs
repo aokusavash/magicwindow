@@ -31,6 +31,9 @@ for(const key of ['stroll','everyday','brisk'])for(const dir of [-1,1]){
   }
   assert(overlap&&heelSeen&&pushSeen&&bendSeen);
   assert(Math.max(...hips)-Math.min(...hips)>1);
+  // The root of both legs is slightly behind the torso; alignment is mirrored.
+  const aligned=gaits.pose(point(0,key,dir),meshes);
+  assert(Math.abs((aligned.legs[0].hip.x+aligned.legs[1].hip.x)/2-(aligned.hips.x-dir*182*.025))<1e-8);
   // No pop when a foot changes between ground support and swing.
   const g=gaits.profiles[key],cycle=2*182*g.step/g.speed;
   for(const phase of [0,g.duty,.5,(g.duty+.5)%1]){
@@ -39,5 +42,17 @@ for(const key of ['stroll','everyday','brisk'])for(const dir of [-1,1]){
     assert(Math.abs(a.hips.y-b.hips.y)<.02);
     a.legs.forEach((l,i)=>['foot','knee','toe'].forEach(k=>assert(Math.hypot(l[k].x-b.legs[i][k].x,l[k].y-b.legs[i][k].y)<.02)));
   }
+  // Catch the hard pelvis support switch: position continuity alone missed it.
+  const dt=cycle/4000;let ys=[],arms=[];
+  for(let i=0;i<=4000;i++){
+    const p=point(i*dt,key,dir),q=gaits.pose(p,meshes);ys.push(q.hips.y);arms.push(q.arms[0].angle);
+    if(i%100===0)require('../dist/painted/walking/layered.js').arms.forEach(m=>assert(skin.deform(m,p,q).every(v=>Number.isFinite(v.x)&&Number.isFinite(v.y))));
+  }
+  let velocityJump=0;
+  for(let i=1;i<4000;i++)velocityJump=Math.max(velocityJump,Math.abs((ys[i+1]-2*ys[i]+ys[i-1])/dt));
+  assert(velocityJump<1,`${key} support transfer changes velocity abruptly: ${velocityJump}`);
+  assert(Math.max(...arms)-Math.min(...arms)>.2);
+  const off=[0,.2,.4].map(t=>gaits.pose({...point(t,key,dir),armSwing:false},meshes).arms[0].angle);
+  assert(off.every(a=>Math.abs(a)<1e-8));
 }
-console.log('Three gaits: grounded support, planted heel/ball contacts, toe flex, low clearance, double support, body motion, finite meshes, and transition continuity pass in both directions.');
+console.log('Three gaits: planted contacts, toe flex, low clearance, double support, smooth support transfer, mirrored hip alignment, connected arm meshes/toggle, and transition continuity pass in both directions.');

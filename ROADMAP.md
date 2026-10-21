@@ -47,6 +47,8 @@ Further feedback on Study 03 specifically favored the subtle vertical body motio
 
 Study 04 feedback was positive overall but noted stiff feet and a hiking-like stride. Study 05 now compares three profiles on the same art first: Stroll, Everyday and Brisk, with ground-support overlap, lower clearance, heel-to-toe roll and forefoot flex. Prefer choosing motion before generating many people, then test retargeting across a few body types. The user has not yet selected a preferred gait; naturalness is still under visual review. Arms and full-interaction integration remain later work.
 
+Study 05 feedback: all three walks and foot roll were promising, but transitions felt jolty and the legs looked slightly too far forward. Study 06 smooths swing acceleration and pelvis support transfer, shifts leg roots/paths backward by 2.5% of body height, and tests complete painted arms with restrained opposing swing and elbow lag. Arm motion is switchable. The gait family remains under visual review; do not equate structural checks with natural movement or expand the population yet.
+
 ## Neighborhood places: current direction
 
 Further October 19 discussion: optimize the limited street frontage for **visual variety, coziness, and things children find interesting**. Do not frame the choice primarily as everyday errands or reproduce the real-world proportion of restaurants. Four or five buildings is a working composition guess, not a fixed limit.

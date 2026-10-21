@@ -15,7 +15,8 @@ for (const [i, mesh] of meshes.entries()) {
     const q = rig.pose(p), points = skin.deform(mesh, p, q);
     assert(points.every(v => Number.isFinite(v.x) && Number.isFinite(v.y)));
     // The actual rendered upper-leg edge must rotate, not just the shin.
-    const a = points[2 * 7 + 3], b = points[8 * 7 + 3];
+    const sampleIndex = ratio => mesh.vertices.findIndex(v => Math.abs(v[1]/mesh.box.height-ratio)<.001 && Math.abs(v[0]/mesh.box.width-.5)<.001);
+    const a = points[sampleIndex(.10)], b = points[sampleIndex(.35)];
     angles.push(Math.atan2(b.x-a.x,b.y-a.y));
     hips.push(q.hips.y);
   }

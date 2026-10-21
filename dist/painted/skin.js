@@ -4,7 +4,7 @@
     var h=p.height,side=p.view==='side',dir=p.direction;
     var headAngle=p.bend*.4;
     var list=[[q.hips,q.shoulders],[q.head,{x:q.head.x+dir*Math.sin(headAngle)*h*.07,y:q.head.y-Math.cos(headAngle)*h*.07}]];
-    q.arms.forEach(function(a){var dx=a.hand.x-a.elbow.x,dy=a.hand.y-a.elbow.y,d=Math.hypot(dx,dy)||1;list.push([a.shoulder,a.elbow],[a.elbow,a.hand],[a.hand,{x:a.hand.x+dx/d*h*.035,y:a.hand.y+dy/d*h*.035}]);});
+    q.arms.forEach(function(a){var dx=a.hand.x-a.elbow.x,dy=a.hand.y-a.elbow.y,d=Math.hypot(dx,dy)||1;list.push([a.shoulder,a.elbow],[a.elbow,a.hand],[a.hand,a.tip||{x:a.hand.x+dx/d*h*.035,y:a.hand.y+dy/d*h*.035}]);});
     q.legs.forEach(function(l,index){
       var rest=mesh.bones[index?13:10],length=Math.hypot(rest[1][0]-rest[0][0],rest[1][1]-rest[0][1])*h/(mesh.referenceHeight||mesh.box.height);
       var foot=side?[l.foot,l.ball||{x:l.foot.x+dir*length,y:l.foot.y}]:[{x:l.foot.x,y:l.foot.y-length},l.foot];

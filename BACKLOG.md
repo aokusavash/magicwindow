@@ -37,6 +37,8 @@ Study 04 now supplies independent complete leg paintings for one resident at the
 
 Study 05 responds to stiff feet/hiking feedback with a three-stride comparison on the same resident, including heel/toe roll, lower lift, and support overlap. It preserves earlier treatment controls, adds half-speed and phone stacking, and is ready for motion preference feedback. After selection, refine shoe/ankle and resting arms, then trial the shared gait on two or three body types before mass asset generation. No preferred gait has been selected yet.
 
+Study 06 addresses the next review: all three walks were promising but jolty, with slightly forward legs. Softer acceleration/support transfer, a mirrored 2.5% backward root adjustment and complete painted arm layers are implemented in the walking comparison. Arm swing is switchable. Next visual checkpoint is motion softness, waist alignment and coherent shoulder/sleeve motion before retargeting more people.
+
 ## Next build-session kickoff
 
 At the end of the October 19 walk, the user asked how to begin work from their computer. No further product decision is needed before starting the ready items above.

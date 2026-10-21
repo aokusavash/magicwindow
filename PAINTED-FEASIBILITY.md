@@ -1,3 +1,19 @@
+# Study 06: softer timing, hip alignment, and arm swing
+
+October 21, 2026. The user liked all three strides and the foot-roll improvement, but found reversals jolty/robotic and the legs slightly too far forward. They also suggested arm swing as the next step toward convincing motion.
+
+Updated `/painted/walking/` retains Stroll, Everyday and Brisk. It now opens in single Everyday view to reduce rendering work when judging softness; the three-way comparison remains available. The swing now matches position, velocity and acceleration at its joins, with a clearance curve that also eases out of and into contact. Foot-pivot and forefoot transitions during swing are blended. A smooth conservative support envelope replaces the abrupt maximum used to place the pelvis; this retains reachability and body rise/fall while removing the support-switch velocity cusp. Leg roots and foot paths are shifted backward by 2.5% of body height relative to the torso, mirrored with direction. Planted heel/ball contacts remain stationary in world space.
+
+A new generated upper-body atlas (`assets/skin/resident-arms.png`) supplies the torso/head and two complete painted arm layers. Arms use smooth shoulder oscillation, opposite to the corresponding leg, with a small elbow bend and phase lag. The joint deformation blends within a continuous arm painting rather than exposing separate upper/lower-arm cutouts. The Arm swing toggle compares moving and resting arms using the same artwork. The previous-stride reference retains its old upper-body treatment. This is a walking-only experiment; door/flower scenes and the original prototype keep their existing implementations.
+
+The mesh sampling was reduced where extra subdivisions did not add needed shape control, lowering Canvas draw calls while retaining the continuous silhouette. Close-up sleeve/waist joins and the replacement upper-body proportions still need visual review; passing geometry checks do not establish artistic acceptance. No physical-TV performance claim is made.
+
+Checks: updated gait tests retain ground-contact, reachability, toe flex and transition checks; add mirrored root-offset checks, arm swing/rest and finite arm-mesh checks, plus a dense pelvis-velocity check that catches the former support-switch cusp (position continuity alone did not). At 4,000 samples/cycle, the peak per-sample change in pelvis velocity fell from approximately 26/41/61 px/s to 0.23/0.32/0.63 px/s for Stroll/Everyday/Brisk; this is a numerical comparison, not a perceptual smoothness score. Existing layered/skin/full-interaction geometry checks pass. Browser checks include the arm toggle, the new asset's failure state, paused comparisons, mobile stacking/reduced motion, and earlier controls. Support and passing-pose screenshots were inspected.
+
+Next review: whether transitions feel softer at normal speed, whether the legs now sit under the torso, and whether restrained arm motion helps without reintroducing a puppet-like silhouette. No preferred gait has been selected.
+
+---
+
 # Study 05: stride and foot-roll comparison
 
 October 21, 2026. The user found Study 04 promising, with stiff feet and an overly deliberate/hiking stride. They asked about comparing multiple people or continuing to tune one. This batch compares **three strides on the same character/artwork first**, avoiding appearance and body-proportion differences while choosing the movement. After motion review, retarget the preferred family of strides onto a small set of different bodies.

@@ -4,11 +4,11 @@
   var scene=document.createElement('canvas');scene.width=1600;scene.height=900;
   var brush=scene.getContext('2d',{alpha:false}),seconds=0,last=0,loaded=false,failed=false;
   var stacked=matchMedia('(max-width:760px)').matches;
-  var person='resident',surface='layered',gait='everyday',compare=true,slow=false,closeup=true;
+  var person='resident',surface='layered',gait='everyday',compare=false,slow=false,closeup=true,armSwing=true;
   var paused=matchMedia('(prefers-reduced-motion: reduce)').matches,dirty=true,images={},drawSkin,drawParts,drawLayered,cost=[];
   var loading=document.getElementById('loading'),profiles=window.PaintedGaits.profiles;
   function asset(src){return new Promise(function(resolve,reject){var im=new Image();im.onload=function(){resolve(im);};im.onerror=reject;im.src=src;});}
-  function point(t,key){var speed=profiles[key].speed,dir=person==='resident'?-1:1;return {id:person,gait:key,x:800+dir*t*speed,y:person==='resident'?746:730,height:person==='resident'?182:178,baseHeight:person==='resident'?182:178,direction:dir,distance:t*speed+120,travelX:dir,travelY:0,view:'side',turnScale:1,walkWeight:1,bend:0,breath:0,grip:0,phase:'walking'};}
+  function point(t,key){var speed=profiles[key].speed,dir=person==='resident'?-1:1;return {id:person,gait:key,armSwing:armSwing,x:800+dir*t*speed,y:person==='resident'?746:730,height:person==='resident'?182:178,baseHeight:person==='resident'?182:178,direction:dir,distance:t*speed+120,travelX:dir,travelY:0,view:'side',turnScale:1,walkWeight:1,bend:0,breath:0,grip:0,phase:'walking'};}
   function prop(p,q){
     var atlas=window.PaintedRigFrames.parts[p.id],b=atlas[7],x=q.bag.x,y=q.bag.y,w=p.height*.18,h=p.height*.14;
     if(p.id==='neighbor'){
@@ -55,6 +55,8 @@
     document.getElementById('closeup').textContent=compare||closeup?'View full street':'Close-up';
     document.getElementById('compare').textContent=compare?'View one walk':'Compare three walks';
     document.getElementById('compare').setAttribute('aria-pressed',String(compare));
+    document.getElementById('arms').setAttribute('aria-pressed',String(armSwing));
+    document.getElementById('arms').disabled=surface!=='layered'||(!compare&&gait==='previous');
     document.getElementById('slow').setAttribute('aria-pressed',String(slow));
     document.getElementById('status').textContent=(compare?'Three strides, same person and artwork. Cameras follow each walk.':profiles[gait].label+' · '+(surface==='layered'?'Whole-leg layers':'Earlier artwork treatment'))+(slow?' · Half-speed playback.':' · Normal speed.');
   }
@@ -64,17 +66,18 @@
   document.querySelectorAll('[data-gait]').forEach(function(b){b.onclick=function(){gait=b.dataset.gait;surface='layered';person='resident';compare=false;update();dirty=true;};});
   document.getElementById('compare').onclick=function(){compare=!compare;if(compare){surface='layered';person='resident';}update();dirty=true;};
   document.getElementById('pause').onclick=function(){paused=!paused;dirty=true;update();};
+  document.getElementById('arms').onclick=function(){armSwing=!armSwing;dirty=true;update();};
   document.getElementById('slow').onclick=function(){slow=!slow;update();};
   document.getElementById('closeup').onclick=function(){if(compare){compare=false;closeup=false;}else closeup=!closeup;dirty=true;update();};
   document.getElementById('restart').onclick=function(){seconds=0;dirty=true;};
   window.addEventListener('resize',function(){stacked=matchMedia('(max-width:760px)').matches;dirty=true;});
   document.addEventListener('visibilitychange',function(){last=0;});
-  window.WalkingStudy={state:function(){return {loaded:loaded,failed:failed,seconds:seconds,person:person,surface:surface,gait:gait,compare:compare,slow:slow,paused:paused,closeup:closeup,averageDrawMs:cost.length?cost.reduce(function(a,b){return a+b;},0)/cost.length:0};},inspect:function(t,who,method,key){seconds=t;if(who)person=who;if(method)surface=method;if(key)gait=key;if(surface!=='layered')gait='previous';if(surface==='layered')person='resident';compare=false;paused=true;update();dirty=true;draw();}};
-  Promise.all([asset('../assets/street.png'),asset('../assets/rig/resident.png'),asset('../assets/rig/neighbor.png'),asset('../assets/rig/torsos.png'),asset('../assets/skin/resident.png'),asset('../assets/skin/neighbor.png'),asset('../assets/skin/resident-layered.png')]).then(function(a){
+  window.WalkingStudy={state:function(){return {loaded:loaded,failed:failed,seconds:seconds,person:person,surface:surface,gait:gait,armSwing:armSwing,compare:compare,slow:slow,paused:paused,closeup:closeup,averageDrawMs:cost.length?cost.reduce(function(a,b){return a+b;},0)/cost.length:0};},inspect:function(t,who,method,key){seconds=t;if(who)person=who;if(method)surface=method;if(key)gait=key;if(surface!=='layered')gait='previous';if(surface==='layered')person='resident';compare=false;paused=true;update();dirty=true;draw();}};
+  Promise.all([asset('../assets/street.png'),asset('../assets/rig/resident.png'),asset('../assets/rig/neighbor.png'),asset('../assets/rig/torsos.png'),asset('../assets/skin/resident.png'),asset('../assets/skin/neighbor.png'),asset('../assets/skin/resident-layered.png'),asset('../assets/skin/resident-arms.png')]).then(function(a){
     images={background:a[0],resident:a[1],neighbor:a[2],torsos:a[3]};
     drawParts=window.PaintedRig.renderer(brush,images,window.PaintedRigFrames.parts,window.PaintedRigFrames.torsos);
     drawSkin=window.PaintedSkin.renderer(brush,{resident:a[4],neighbor:a[5]},window.PaintedSkinData);
-    drawLayered=window.PaintedLayered.renderer(brush,a[6]);loaded=true;loading.hidden=true;update();draw();
+    drawLayered=window.PaintedLayered.renderer(brush,a[6],a[7]);loaded=true;loading.hidden=true;update();draw();
   }).catch(function(){failed=true;loading.textContent='The artwork could not load. Please reload to try again.';});
   update();requestAnimationFrame(tick);
 })();
