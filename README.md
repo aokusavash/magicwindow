@@ -55,7 +55,7 @@ Study 02 is now built at `/painted/`: two painted characters share a reusable ri
 
 Run `node tools/check_painted.cjs` for activity checks and `python3 tools/export_painted.py` for a single-file offline export. Joint deformation, turns, and convincing relighting still need visual iteration; no live weather or runtime generation service is claimed.
 
-Current motion-construction experiment: [walking comparison](https://little-world-window.racing-dog-8718.chatgpt.site/painted/walking/). The connected torso is promising, but overlapping legs distort; this is an unfinished diagnostic, not a solved replacement for the interaction rig. See the feasibility report for the next asset-preparation step.
+Current motion-construction experiment: [walking comparison](https://little-world-window.racing-dog-8718.chatgpt.site/painted/walking/). Study 04 adds independently painted full legs for one resident, addressing frozen thighs while preserving body rise/fall. The previous distorted painting remains selectable. Arms still rest; this is an unfinished walking diagnostic, separate from the interaction rig. See the feasibility report for findings.
 
 ## Technical studies
 

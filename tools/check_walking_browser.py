@@ -14,6 +14,15 @@ with sync_playwright() as p:
     page.wait_for_function('WalkingStudy.state().loaded')
     page.evaluate('WalkingStudy.inspect(.25,"resident","skin")')
     before = page.evaluate('WalkingStudy.state().seconds')
+    page.locator('[data-surface="layered"]').click()
+    page.wait_for_timeout(60)
+    assert page.evaluate('WalkingStudy.state().surface') == 'layered'
+    page.locator('#world').screenshot(path=str(out / 'resident-layered.png'))
+    page.locator('[data-person="neighbor"]').click()
+    assert page.evaluate('WalkingStudy.state().surface') == 'skin'
+    page.locator('[data-surface="layered"]').click()
+    assert page.evaluate('WalkingStudy.state().person') == 'resident'
+    assert page.locator('[data-person="resident"]').get_attribute('aria-pressed') == 'true'
     for who in ['resident', 'neighbor']:
         page.locator('[data-person="' + who + '"]').click()
         for method in ['parts', 'skin']:
@@ -26,6 +35,8 @@ with sync_playwright() as p:
     page.locator('#pause').click()
     page.wait_for_timeout(1000)
     assert page.evaluate('WalkingStudy.state().seconds') > before
+    page.locator('[data-surface="layered"]').click()
+    page.wait_for_timeout(1000)
     timing = page.evaluate('WalkingStudy.state().averageDrawMs')
     page.locator('#pause').click()
     page.locator('#restart').click()
@@ -35,7 +46,7 @@ with sync_playwright() as p:
     mobile.wait_for_function('WalkingStudy.state().loaded')
     assert mobile.evaluate('WalkingStudy.state().paused && document.documentElement.scrollWidth <= innerWidth')
     missing = browser.new_page()
-    missing.route('**/skin/neighbor.png', lambda route: route.abort())
+    missing.route('**/skin/resident-layered.png', lambda route: route.abort())
     missing.goto('http://127.0.0.1:8031/painted/walking/')
     missing.wait_for_function('WalkingStudy.state().failed')
     assert missing.locator('#loading').is_visible()

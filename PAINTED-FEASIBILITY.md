@@ -1,3 +1,17 @@
+# Study 04: independent whole-leg paintings
+
+October 21, 2026. Feedback on Study 03: the subtle whole-body vertical movement works, but thighs look frozen and motion appears restricted to stretching below the knee. Preserve the rise/fall while fixing full-leg articulation.
+
+Implemented at `/painted/walking/`, default **Whole-leg layers · new**, for the resident only. A newly generated transparent atlas supplies one connected upper body and two complete, independently painted legs from hip to shoe. Each leg has its own smooth thigh/knee/shin/foot weights; neither shares vertices or texture with the opposite leg. This replaces the previous shared trouser surface and its torso-bound upper thighs for this treatment. Pose timing, planted-foot targets, and body rise/fall are unchanged. The upper body is one rigid painting with resting arms; arm swing is explicitly unresolved. The bag remains a separate persistent object.
+
+The previous stretched painting and rigid-cutout reference remain selectable at the same time/pose. Selecting the new treatment selects the resident; selecting the neighbor switches to the previous painting. The full `/painted/` interactions and original `/` prototype are unchanged. Source atlas is `assets/skin/resident-layered.png`; measured crop bounds and weights are in `walking/layered.js`. Source artwork is not retouched by production scripts. The mesh renderer now supports a reference height independent of the cropped layer's height, maintaining leg width and foot size.
+
+Checks: `node tools/check_layered.cjs` verifies independent leg influences, rotation of actual rendered upper-leg edges through a stride, finite deformations, and retained body rise/fall. Existing skin and interaction checks still pass. Updated browser checks exercise new/old comparison, character fallback, preserved paused time, mobile/reduced motion, and failure when the new atlas cannot load. Stride and passing-pose screenshots were visually inspected; triangle edge overlap was adjusted for the new layers to remove visible mesh gaps. These checks do not establish artistic acceptance or physical-TV performance.
+
+Review remaining waist joins, knee shape, proportions and full-street readability. No claim of finished animation or arbitrary action reuse is made. This is a more suitable asset construction for walking, not a completed replacement for door-reaching, turning or flower poses. Do not expand the population before motion review.
+
+---
+
 # Study 03: connected-surface walking experiment
 
 October 21, 2026. The user found Study 02 visibly assembled from separately animated parts. That is a construction problem, not simply a shortage of frames. The rigid piece rotations expose joint transitions, disconnected shoulders/neck, and an overly bent supporting leg.

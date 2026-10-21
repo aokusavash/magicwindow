@@ -43,6 +43,8 @@ Study 02 at `/painted/` now tests that direction: shared continuous walking and 
 
 Further October 21 feedback: the articulated residents read as separately moving body parts. Study 03 at `/painted/walking/` compares a continuous painted surface against rigid pieces. It improves torso continuity but fails to separate overlapping painted legs cleanly; large reaches also distort. It has not replaced the full interaction rig or met the visual-quality bar. Next, prepare one properly layered/underpainted character with calibrated weights and authored pose corrections before expanding population or actions. Procedural activity and reusable controls remain viable; art preparation and motion quality remain unproven.
 
+Further feedback on Study 03 specifically favored the subtle vertical body motion and identified frozen thighs with lower-leg stretching. Study 04 now tests independent complete painted leg layers on one resident, preserving the same gait/body rise and fall. Previous treatments remain selectable; arm swing and interaction integration are still unresolved. Review the hip-to-knee movement before expanding characters.
+
 ## Neighborhood places: current direction
 
 Further October 19 discussion: optimize the limited street frontage for **visual variety, coziness, and things children find interesting**. Do not frame the choice primarily as everyday errands or reproduce the real-world proportion of restaurants. Four or five buildings is a working composition guess, not a fixed limit.

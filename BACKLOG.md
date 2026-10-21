@@ -33,7 +33,7 @@ Status October 21: the initial feasibility preview has been implemented at `/pai
 
 Study 03 `/painted/walking/` records the user's disjointed-body feedback and a bounded continuous-mesh comparison. Whole-figure references, mesh metadata, conservative walking, A/B controls and checks are implemented. Visual acceptance failed: legs distort from overlapping source artwork, and large reaches stretch clothing. The interaction scene keeps its rigid rig with small gait/joint repairs.
 
-Ready next batch: prepare and calibrate one genuinely layered, underpainted character, then review contact, passing and turn poses before producing more residents/actions. Preserve style and action reuse; add corrective artwork where the shared rig cannot maintain the silhouette. Do not treat more automated geometry checks as proof of animation quality.
+Study 04 now supplies independent complete leg paintings for one resident at the same walking URL. The user liked the body rise/fall, so it is preserved; the thigh now visibly rotates instead of remaining bound to the torso. New and previous treatments are selectable. Ready next batch: visually review full-leg movement and waist/knee shape, then add coherent arm motion and authored corrections before testing contact and turn poses or producing more residents/actions. Preserve style and action reuse; add corrective artwork where the shared rig cannot maintain the silhouette. Do not treat more automated geometry checks as proof of animation quality.
 
 ## Next build-session kickoff
 
