@@ -49,6 +49,8 @@ Study 04 feedback was positive overall but noted stiff feet and a hiking-like st
 
 Study 05 feedback: all three walks and foot roll were promising, but transitions felt jolty and the legs looked slightly too far forward. Study 06 smooths swing acceleration and pelvis support transfer, shifts leg roots/paths backward by 2.5% of body height, and tests complete painted arms with restrained opposing swing and elbow lag. Arm motion is switchable. The gait family remains under visual review; do not equate structural checks with natural movement or expand the population yet.
 
+Latest small refinement: the user liked the arm walk, requested half the backward leg adjustment, and slightly less bounce. The offset is now 1.25% of body height and vertical pelvis travel is reduced by 20%; foot roll, eased timing, stride choices and arm swing remain.
+
 ## Neighborhood places: current direction
 
 Further October 19 discussion: optimize the limited street frontage for **visual variety, coziness, and things children find interesting**. Do not frame the choice primarily as everyday errands or reproduce the real-world proportion of restaurants. Four or five buildings is a working composition guess, not a fixed limit.

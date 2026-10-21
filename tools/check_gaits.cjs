@@ -33,7 +33,7 @@ for(const key of ['stroll','everyday','brisk'])for(const dir of [-1,1]){
   assert(Math.max(...hips)-Math.min(...hips)>1);
   // The root of both legs is slightly behind the torso; alignment is mirrored.
   const aligned=gaits.pose(point(0,key,dir),meshes);
-  assert(Math.abs((aligned.legs[0].hip.x+aligned.legs[1].hip.x)/2-(aligned.hips.x-dir*182*.025))<1e-8);
+  assert(Math.abs((aligned.legs[0].hip.x+aligned.legs[1].hip.x)/2-(aligned.hips.x-dir*182*.0125))<1e-8);
   // No pop when a foot changes between ground support and swing.
   const g=gaits.profiles[key],cycle=2*182*g.step/g.speed;
   for(const phase of [0,g.duty,.5,(g.duty+.5)%1]){

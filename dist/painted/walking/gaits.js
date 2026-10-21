@@ -10,7 +10,7 @@
   function pose(p,meshes){
     var q=root.PaintedRig.pose(p),g=profiles[p.gait]||profiles.everyday;
     if(p.gait==='previous')return q;
-    var h=p.height,dir=p.direction,step=h*g.step,legLength=h*.48,unit=p.distance/(2*step),rootX=p.x-dir*h*.025;
+    var h=p.height,dir=p.direction,step=h*g.step,legLength=h*.48,unit=p.distance/(2*step),rootX=p.x-dir*h*.0125;
     var legs=[0,1].map(function(i){
       var phase=((unit+i*.5)%1+1)%1,stance=phase<g.duty,t=stance?phase/g.duty:(phase-g.duty)/(1-g.duty);
       // Quintic swing matches velocity AND acceleration at ground-contact joins.
@@ -35,6 +35,8 @@
     // Both legs remain reachable; the supporting leg sets the gentle body arc.
     var limits=legs.map(function(l){var dx=l.ankle.x-l.hip.x;return l.ankle.y-Math.sqrt(Math.max(1,Math.pow(legLength*.995,2)-dx*dx));});
     var hipsY=(limits[0]+limits[1]+Math.hypot(limits[0]-limits[1],h*.012))/2;
+    // Settle slightly lower to trim the vertical arc while keeping both feet reachable.
+    hipsY=(p.y-h*.49)+(hipsY-(p.y-h*.49))*.80;
     var dy=hipsY-q.hips.y;q.hips.y=hipsY;
     [q.shoulders,q.head,q.nose,q.bag].forEach(function(a){a.y+=dy;});
     q.arms.forEach(function(a){[a.shoulder,a.elbow,a.hand].forEach(function(v){v.y+=dy;});});
