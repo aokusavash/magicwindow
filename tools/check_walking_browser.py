@@ -27,6 +27,11 @@ with sync_playwright() as p:
     assert page.evaluate('WalkingStudy.state().compare')
     page.wait_for_timeout(80)
     page.locator('#world').screenshot(path=str(out / 'three-gaits.png'))
+    page.locator('#knees').click()
+    assert not page.evaluate('WalkingStudy.state().straightLanding')
+    assert page.evaluate('WalkingStudy.state().seconds') == before
+    page.locator('#knees').click()
+    assert page.evaluate('WalkingStudy.state().straightLanding')
     page.locator('#arms').click()
     assert not page.evaluate('WalkingStudy.state().armSwing')
     assert page.evaluate('WalkingStudy.state().seconds') == before
@@ -83,7 +88,7 @@ with sync_playwright() as p:
     missing.wait_for_function('WalkingStudy.state().failed')
     assert missing.locator('#loading').is_visible()
     assert not errors, errors
-    report = dict(browserErrors=errors, controls=True, threeGaits=True, singleGait=True, halfSpeed=True, armSwingToggle=True, pausePreservesComparison=True, mobile=True, reducedMotion=True, missingArtwork=True, oneActorAverageDrawMs=round(timing, 2))
+    report = dict(browserErrors=errors, controls=True, threeGaits=True, singleGait=True, halfSpeed=True, armSwingToggle=True, straightLandingToggle=True, pausePreservesComparison=True, mobile=True, reducedMotion=True, missingArtwork=True, oneActorAverageDrawMs=round(timing, 2))
     (out / 'browser-checks.json').write_text(json.dumps(report, indent=2))
     print(json.dumps(report))
     browser.close()

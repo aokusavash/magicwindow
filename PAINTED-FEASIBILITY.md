@@ -1,3 +1,17 @@
+# Study 07: near-straight landing pose
+
+October 21, 2026. The user found the walk close to the target but identified continuously bent knees as the remaining hiking-like quality. They requested a nearly straight leading knee after the foot comes forward, and proposed bounded, persistent differences between residents and activity-dependent changes in pace/style.
+
+At `/painted/walking/`, **Straighter landing** is on by default and can be toggled at the same paused time against the previous soft-knee pose. The leading leg extends during late swing, holds a 6°/7°/9° knee bend for Stroll/Everyday/Brisk through early stance, and eases back to the shared bend solver as weight transfers. This is deliberately short of a locked or hyperextended knee. The earlier 1.25% root alignment, quiet body-height path, foot/heel/toe targets, cadence, and arm swing are retained.
+
+This is an authored 2D silhouette correction. Blending the knee joint within a complete painted leg allows a small amount of limb-length flexibility; the tested full-leg drawing stays within 4% of the nominal length. It is not a rigid-body biomechanics model. Attempts to get the same near extension exclusively by raising the pelvis increased body travel or sharpened support transitions; they were not retained. The current correction leaves the body and planted-foot paths identical when toggled.
+
+The gait profiles now expose landing-knee bend and arm amplitude alongside speed, step length, support duration, lift and foot roll. These provide a foundation for variation, not a claim that persistent resident traits or context switching are already implemented. Future direction: assign each resident a stable, bounded baseline, then apply coherent activity adjustments for browsing, commuting or hurrying. Keep step timing synchronized with travel speed; do not reroll parameters every step or assume every person in an age group walks identically. Evaluate ranges across multiple body proportions before treating them as approved production limits.
+
+Checks: existing gait, foot-contact, reachability, transition smoothness and body-motion checks pass in both directions. Added checks verify early-stance knee bends below 12°, bounded limb-length change, and identical body/foot paths with the correction on/off. Browser checks verify the new toggle preserves paused time plus the existing controls, mobile/reduced-motion behavior, and asset failures. Paired screenshots of the same landing were visually inspected. Artistic acceptance and retargeting remain under review; original `/` and full `/painted/` interactions are unchanged.
+
+---
+
 # Study 06: softer timing, hip alignment, and arm swing
 
 Follow-up tuning: the user liked the new arm walk but found the backward leg shift a little excessive and the overall walk slightly too bouncy. Halved the backward offset to 1.25% of body height and reduced the pelvis vertical travel by 20%, settling slightly lower to keep the leg targets reachable. Foot paths, cadence, eased timing, and arm swing are retained.

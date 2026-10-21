@@ -51,6 +51,10 @@ Study 05 feedback: all three walks and foot roll were promising, but transitions
 
 Latest small refinement: the user liked the arm walk, requested half the backward leg adjustment, and slightly less bounce. The offset is now 1.25% of body height and vertical pelvis travel is reduced by 20%; foot roll, eased timing, stride choices and arm swing remain.
 
+Study 07 follows the user's near-final feedback: extend the leading knee after it comes forward, since the continuously bent legs still suggest hiking. The walking study now has a switchable, gently eased 6–9° landing bend, with the quiet body and planted-foot trajectories unchanged. Small painted-limb length flexibility is an explicit animation choice.
+
+Future gait variation: keep a stable baseline per resident within visually tested ranges, then adjust pace, stride, extension and arm swing coherently for the current activity. Age/body proportions may influence a character's design, but avoid a single rigid age-to-speed rule. Do not reroll style every step. Current profile parameters support experiments; persistent character traits, contextual transitions and multi-body acceptance remain future work.
+
 ## Neighborhood places: current direction
 
 Further October 19 discussion: optimize the limited street frontage for **visual variety, coziness, and things children find interesting**. Do not frame the choice primarily as everyday errands or reproduce the real-world proportion of restaurants. Four or five buildings is a working composition guess, not a fixed limit.

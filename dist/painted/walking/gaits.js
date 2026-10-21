@@ -1,9 +1,9 @@
 (function(root){
   'use strict';
   var profiles={
-    stroll:{label:'A · Stroll',speed:68,step:.245,duty:.64,lift:.014,heel:10,push:20},
-    everyday:{label:'B · Everyday',speed:88,step:.285,duty:.62,lift:.018,heel:12,push:24},
-    brisk:{label:'C · Brisk',speed:118,step:.34,duty:.60,lift:.026,heel:14,push:28},
+    stroll:{label:'A · Stroll',speed:68,step:.245,duty:.64,lift:.014,heel:10,push:20,landingBend:6,arm:.11},
+    everyday:{label:'B · Everyday',speed:88,step:.285,duty:.62,lift:.018,heel:12,push:24,landingBend:7,arm:.16},
+    brisk:{label:'C · Brisk',speed:118,step:.34,duty:.60,lift:.026,heel:14,push:28,landingBend:9,arm:.20},
     previous:{label:'Previous stride',speed:72,step:.30,duty:.50,lift:.045,heel:0,push:0}
   };
   function smooth(t){t=Math.max(0,Math.min(1,t));return t*t*t*(10+t*(-15+6*t));}
@@ -40,10 +40,21 @@
     var dy=hipsY-q.hips.y;q.hips.y=hipsY;
     [q.shoulders,q.head,q.nose,q.bag].forEach(function(a){a.y+=dy;});
     q.arms.forEach(function(a){[a.shoulder,a.elbow,a.hand].forEach(function(v){v.y+=dy;});});
-    legs.forEach(function(l){l.hip.y=hipsY;var ik=root.PaintedRig.solve(l.hip,l.ankle,legLength*.5,legLength*.5,-dir);l.knee=ik.joint;l.error=ik.error;});
+    legs.forEach(function(l){
+      l.hip.y=hipsY;var ik=root.PaintedRig.solve(l.hip,l.ankle,legLength*.5,legLength*.5,-dir);
+      var t=l.stance?l.phase/g.duty:(l.phase-g.duty)/(1-g.duty);
+      var extension=p.straightLanding===false?0:(l.stance?1-smooth((t-.18)/.22):smooth((t-.72)/.22));
+      var dx=l.ankle.x-l.hip.x,dy=l.ankle.y-l.hip.y,d=Math.hypot(dx,dy)||1;
+      var bend=d*.5*Math.tan(g.landingBend*Math.PI/360),side=-dir;
+      var landing={x:(l.hip.x+l.ankle.x)/2-dy/d*bend*side,y:(l.hip.y+l.ankle.y)/2+dx/d*bend*side};
+      // An authored silhouette correction, not a change to planted feet or body height.
+      // Small limb-length flexibility keeps the quiet body path through near extension.
+      l.knee={x:ik.joint.x+(landing.x-ik.joint.x)*extension,y:ik.joint.y+(landing.y-ik.joint.y)*extension};
+      l.extensionWeight=extension;l.error=ik.error;
+    });
     q.legs=legs;
     q.arms=[0,1].map(function(i){
-      var phase=unit*Math.PI*2+i*Math.PI,amplitude=p.armSwing===false?0:(p.gait==='stroll'?.11:p.gait==='brisk'?.20:.16);
+      var phase=unit*Math.PI*2+i*Math.PI,amplitude=p.armSwing===false?0:g.arm;
       var angle=-amplitude*Math.cos(phase-.12),forearm=angle+.12+amplitude*.20*Math.sin(phase-.45);
       var shoulder={x:q.hips.x+dir*h*(i?.035:-.055),y:q.hips.y-h*.243};
       var elbow={x:shoulder.x+dir*Math.sin(angle)*h*.16,y:shoulder.y+Math.cos(angle)*h*.16};

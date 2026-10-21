@@ -16,6 +16,11 @@ for(const key of ['stroll','everyday','brisk'])for(const dir of [-1,1]){
       assert(l.error<.01);
       assert(l.lift<=182*.027);
       assert(skin.deform(meshes[i],p,q).every(v=>Number.isFinite(v.x)&&Number.isFinite(v.y)));
+      const upper={x:l.knee.x-l.hip.x,y:l.knee.y-l.hip.y},lower={x:l.ankle.x-l.knee.x,y:l.ankle.y-l.knee.y};
+      const flex=Math.acos(Math.max(-1,Math.min(1,(upper.x*lower.x+upper.y*lower.y)/(Math.hypot(upper.x,upper.y)*Math.hypot(lower.x,lower.y)))))*180/Math.PI;
+      if(l.stance&&l.phase<.10)assert(flex<12,`${key} leading knee stays crouched: ${flex}`);
+      const lengthRatio=(Math.hypot(upper.x,upper.y)+Math.hypot(lower.x,lower.y))/(182*.48);
+      assert(lengthRatio>.96&&lengthRatio<1.001,`${key} corrective pose changes leg length excessively: ${lengthRatio}`);
       if(l.stance){
         const contact=l.pitch<0?l.heel:l.ball;
         assert(Math.abs(contact.y-p.y)<1e-7);
@@ -30,6 +35,9 @@ for(const key of ['stroll','everyday','brisk'])for(const dir of [-1,1]){
     });last=q;
   }
   assert(overlap&&heelSeen&&pushSeen&&bendSeen);
+  const legacy=gaits.pose({...point(0,key,dir),straightLanding:false},meshes),updated=gaits.pose(point(0,key,dir),meshes);
+  assert.deepEqual(legacy.hips,updated.hips);
+  legacy.legs.forEach((l,i)=>assert.deepEqual(l.foot,updated.legs[i].foot));
   assert(Math.max(...hips)-Math.min(...hips)>1);
   // The root of both legs is slightly behind the torso; alignment is mirrored.
   const aligned=gaits.pose(point(0,key,dir),meshes);
