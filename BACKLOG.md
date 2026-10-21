@@ -35,6 +35,8 @@ Study 03 `/painted/walking/` records the user's disjointed-body feedback and a b
 
 Study 04 now supplies independent complete leg paintings for one resident at the same walking URL. The user liked the body rise/fall, so it is preserved; the thigh now visibly rotates instead of remaining bound to the torso. New and previous treatments are selectable. Ready next batch: visually review full-leg movement and waist/knee shape, then add coherent arm motion and authored corrections before testing contact and turn poses or producing more residents/actions. Preserve style and action reuse; add corrective artwork where the shared rig cannot maintain the silhouette. Do not treat more automated geometry checks as proof of animation quality.
 
+Study 05 responds to stiff feet/hiking feedback with a three-stride comparison on the same resident, including heel/toe roll, lower lift, and support overlap. It preserves earlier treatment controls, adds half-speed and phone stacking, and is ready for motion preference feedback. After selection, refine shoe/ankle and resting arms, then trial the shared gait on two or three body types before mass asset generation. No preferred gait has been selected yet.
+
 ## Next build-session kickoff
 
 At the end of the October 19 walk, the user asked how to begin work from their computer. No further product decision is needed before starting the ready items above.

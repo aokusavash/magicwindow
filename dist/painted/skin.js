@@ -7,8 +7,12 @@
     q.arms.forEach(function(a){var dx=a.hand.x-a.elbow.x,dy=a.hand.y-a.elbow.y,d=Math.hypot(dx,dy)||1;list.push([a.shoulder,a.elbow],[a.elbow,a.hand],[a.hand,{x:a.hand.x+dx/d*h*.035,y:a.hand.y+dy/d*h*.035}]);});
     q.legs.forEach(function(l,index){
       var rest=mesh.bones[index?13:10],length=Math.hypot(rest[1][0]-rest[0][0],rest[1][1]-rest[0][1])*h/(mesh.referenceHeight||mesh.box.height);
-      var foot=side?[l.foot,{x:l.foot.x+dir*length,y:l.foot.y}]:[{x:l.foot.x,y:l.foot.y-length},l.foot];
+      var foot=side?[l.foot,l.ball||{x:l.foot.x+dir*length,y:l.foot.y}]:[{x:l.foot.x,y:l.foot.y-length},l.foot];
       list.push([l.hip,l.knee],[l.knee,l.ankle],foot);
+    });
+    if(mesh.bones.length>14)q.legs.forEach(function(l,i){
+      var a=list[i?13:10][1],rest=mesh.bones[14+i],length=Math.hypot(rest[1][0]-rest[0][0],rest[1][1]-rest[0][1])*h/(mesh.referenceHeight||mesh.box.height);
+      list.push([l.ball||a,l.toe||{x:a.x+dir*length,y:a.y}]);
     });
     return list;
   }

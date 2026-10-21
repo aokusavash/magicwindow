@@ -5,13 +5,13 @@
   var boxes=[{x:813,y:68,width:219,height:786},{x:1323,y:69,width:228,height:785}];
   function smooth(t){t=Math.max(0,Math.min(1,t));return t*t*(3-2*t);}
   function mesh(box,index){
-    var w=box.width,h=box.height,hip=[w*.41,h*.06],knee=[w*.40,h*.49],ankle=[w*.40,h*.91],sole=[w*.40,h*.992];
-    var bones=Array.from({length:14},function(){return [[0,0],[0,1]];});
-    [0,1].forEach(function(i){var b=i?11:8;bones[b]=[hip,knee];bones[b+1]=[knee,ankle];bones[b+2]=[sole,[w*.95,h*.992]];});
+    var w=box.width,h=box.height,hip=[w*.41,h*.06],knee=[w*.40,h*.49],ankle=[w*.40,h*.91],sole=[w*.40,h],ball=[w*.70,h];
+    var bones=Array.from({length:16},function(){return [[0,0],[0,1]];});
+    [0,1].forEach(function(i){var b=i?11:8;bones[b]=[hip,knee];bones[b+1]=[knee,ankle];bones[b+2]=[sole,ball];bones[14+i]=[ball,[w*.98,h]];});
     var b=index?11:8,vertices=[],triangles=[],nx=6,ny=24;
     for(var row=0;row<=ny;row++)for(var col=0;col<=nx;col++){
-      var t=row/ny,k=smooth((t-.43)/.12),f=smooth((t-.88)/.05);
-      vertices.push([w*col/nx,h*t,[[b,(1-k)*(1-f)],[b+1,k*(1-f)],[b+2,f]].filter(function(a){return a[1]>0;})]);
+      var t=row/ny,k=smooth((t-.43)/.12),f=smooth((t-.88)/.05),toe=smooth((col/nx-.64)/.14);
+      vertices.push([w*col/nx,h*t,[[b,(1-k)*(1-f)],[b+1,k*(1-f)],[b+2,f*(1-toe)],[14+index,f*toe]].filter(function(a){return a[1]>0;})]);
     }
     for(var y=0;y<ny;y++)for(var x=0;x<nx;x++){var a=y*(nx+1)+x;triangles.push([a,a+1,a+nx+2],[a,a+nx+2,a+nx+1]);}
     return {box:box,bones:bones,vertices:vertices,triangles:triangles,referenceHeight:h*.85/.48};

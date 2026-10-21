@@ -12,7 +12,23 @@ with sync_playwright() as p:
     page.on('pageerror', lambda e: errors.append(str(e)))
     page.goto('http://127.0.0.1:8031/painted/walking/')
     page.wait_for_function('WalkingStudy.state().loaded')
+    assert page.evaluate('WalkingStudy.state().compare')
+    page.locator('#pause').click()
+    before = page.evaluate('WalkingStudy.state().seconds')
+    for key in ['stroll','everyday','brisk','previous']:
+        page.locator('[data-gait="' + key + '"]').click()
+        assert page.evaluate('WalkingStudy.state().gait') == key
+        assert not page.evaluate('WalkingStudy.state().compare')
+        assert page.evaluate('WalkingStudy.state().seconds') == before
+    page.locator('#compare').click()
+    assert page.evaluate('WalkingStudy.state().compare')
+    page.wait_for_timeout(80)
+    page.locator('#world').screenshot(path=str(out / 'three-gaits.png'))
+    page.locator('#slow').click()
+    assert page.evaluate('WalkingStudy.state().slow')
+    page.locator('#slow').click()
     page.evaluate('WalkingStudy.inspect(.25,"resident","skin")')
+    page.get_by_text('Earlier artwork comparisons', exact=True).click()
     before = page.evaluate('WalkingStudy.state().seconds')
     page.locator('[data-surface="layered"]').click()
     page.wait_for_timeout(60)
@@ -45,13 +61,18 @@ with sync_playwright() as p:
     mobile.goto('http://127.0.0.1:8031/painted/walking/')
     mobile.wait_for_function('WalkingStudy.state().loaded')
     assert mobile.evaluate('WalkingStudy.state().paused && document.documentElement.scrollWidth <= innerWidth')
+    assert mobile.locator('#world').get_attribute('height') == '2700'
+    mobile.screenshot(path=str(out / 'gaits-mobile.png'), full_page=True)
+    mobile.locator('[data-gait="everyday"]').click()
+    mobile.wait_for_timeout(60)
+    assert mobile.locator('#world').get_attribute('height') == '900'
     missing = browser.new_page()
     missing.route('**/skin/resident-layered.png', lambda route: route.abort())
     missing.goto('http://127.0.0.1:8031/painted/walking/')
     missing.wait_for_function('WalkingStudy.state().failed')
     assert missing.locator('#loading').is_visible()
     assert not errors, errors
-    report = dict(browserErrors=errors, controls=True, pausePreservesComparison=True, mobile=True, reducedMotion=True, missingArtwork=True, oneActorAverageDrawMs=round(timing, 2))
+    report = dict(browserErrors=errors, controls=True, threeGaits=True, singleGait=True, halfSpeed=True, pausePreservesComparison=True, mobile=True, reducedMotion=True, missingArtwork=True, oneActorAverageDrawMs=round(timing, 2))
     (out / 'browser-checks.json').write_text(json.dumps(report, indent=2))
     print(json.dumps(report))
     browser.close()

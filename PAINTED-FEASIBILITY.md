@@ -1,3 +1,17 @@
+# Study 05: stride and foot-roll comparison
+
+October 21, 2026. The user found Study 04 promising, with stiff feet and an overly deliberate/hiking stride. They asked about comparing multiple people or continuing to tune one. This batch compares **three strides on the same character/artwork first**, avoiding appearance and body-proportion differences while choosing the movement. After motion review, retarget the preferred family of strides onto a small set of different bodies.
+
+Review `/painted/walking/`: A Stroll, B Everyday, C Brisk run together by default. Select one to inspect it alone; Previous stride retains the flat-footed controller as a reference. Pause, half-speed, close-up/full-street, and restart are available. Phone comparisons stack vertically. Cameras follow the walkers against repeating scenery, a diagnostic setup rather than a new town activity system.
+
+New gait profiles in `walking/gaits.js` vary step length, speed/cadence, ground-support duration, foot clearance, and roll angles. At the current resident height, the candidates are approximately 92, 102 and 114 steps/minute. Each has a brief overlap in ground support. Swing trajectories join the planted-foot velocity continuously instead of abruptly beginning a high lift. Clearance is 1.4–2.6% of body height versus the previous 4.5%. The body still rises/falls according to leg extension. The foot rolls from heel contact to full support to push-off; a small separate forefoot influence lets the toe remain down while the heel lifts. The same painted leg layers are reused, with no new person assets.
+
+This is target-driven 2D choreography, not a physics simulation or anatomically modeled shoe. The toe bend is a simple mesh deformation, and shoe/ankle shape still needs visual acceptance. Arms remain at rest in the connected upper painting. The complete door/flower scene keeps its existing rig; the original `/` is unchanged. Earlier artwork controls are retained under a disclosure and use the previous controller.
+
+Verification: `node tools/check_gaits.cjs` checks both directions, grounded support throughout, stationary heel/ball contact during stance, forefoot flex, lower clearance, overlapping support, body motion, reachable joints, finite rendered meshes, and continuity at swing/contact transitions. Updated layered/skin checks and full-scene geometry checks pass. Browser checks cover three-way and individual views, prior reference, paused comparison time, half-speed control, mobile stacking, reduced motion, asset failure, and prior artwork controls. Desktop/phone screenshots of support and passing poses were inspected. These establish implementation behavior; preferred naturalness remains a user visual decision, and physical-TV performance is untested.
+
+---
+
 # Study 04: independent whole-leg paintings
 
 October 21, 2026. Feedback on Study 03: the subtle whole-body vertical movement works, but thighs look frozen and motion appears restricted to stretching below the knee. Preserve the rise/fall while fixing full-leg articulation.
