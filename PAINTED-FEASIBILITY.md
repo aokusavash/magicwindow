@@ -1,3 +1,13 @@
+# Accepted walking checkpoint and relaxed variant
+
+October 21, 2026. The user accepted the Study 07 walk as visually successful, describing it as purposeful/businesslike rather than a casual stroll. This acceptance applies to the current character's side-on walking, not the full interaction scene or every future body type.
+
+Added **Relaxed** as a separate profile and default review view: 10% slower travel/cadence than the accepted Everyday profile, with 10% less vertical body travel. It inherits the same step length, foot clearance/roll, near-straight landing correction and arm-swing shape. The accepted Everyday profile remains intact; Stroll and Brisk also remain selectable. The three-way comparison now shows Relaxed, Everyday and Brisk. No new artwork was needed.
+
+Verification: existing geometry checks now include Relaxed in both directions, including foot planting, bounded limb deformation, landing extension and smooth transitions. A numerical comparison confirms precisely 0.90× travel speed and 0.90× vertical excursion relative to Everyday. Browser controls and mobile/reduced-motion checks cover the new default and selection. Relaxed's feel still needs user review.
+
+---
+
 # Study 07: near-straight landing pose
 
 October 21, 2026. The user found the walk close to the target but identified continuously bent knees as the remaining hiking-like quality. They requested a nearly straight leading knee after the foot comes forward, and proposed bounded, persistent differences between residents and activity-dependent changes in pace/style.

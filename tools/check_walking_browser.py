@@ -13,12 +13,12 @@ with sync_playwright() as p:
     page.goto('http://127.0.0.1:8031/painted/walking/')
     page.wait_for_function('WalkingStudy.state().loaded')
     assert not page.evaluate('WalkingStudy.state().compare')
-    assert page.evaluate('WalkingStudy.state().gait') == 'everyday'
+    assert page.evaluate('WalkingStudy.state().gait') == 'relaxed'
     page.locator('#compare').click()
     assert page.evaluate('WalkingStudy.state().compare')
     page.locator('#pause').click()
     before = page.evaluate('WalkingStudy.state().seconds')
-    for key in ['stroll','everyday','brisk','previous']:
+    for key in ['relaxed','stroll','everyday','brisk','previous']:
         page.locator('[data-gait="' + key + '"]').click()
         assert page.evaluate('WalkingStudy.state().gait') == key
         assert not page.evaluate('WalkingStudy.state().compare')

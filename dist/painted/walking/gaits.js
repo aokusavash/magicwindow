@@ -6,6 +6,8 @@
     brisk:{label:'C · Brisk',speed:118,step:.34,duty:.60,lift:.026,heel:14,push:28,landingBend:9,arm:.20},
     previous:{label:'Previous stride',speed:72,step:.30,duty:.50,lift:.045,heel:0,push:0}
   };
+  // Keep the accepted Everyday walk intact; Relaxed is a small variation of it.
+  profiles.relaxed=Object.assign({},profiles.everyday,{label:'Relaxed',speed:profiles.everyday.speed*.90,bounceScale:.90});
   function smooth(t){t=Math.max(0,Math.min(1,t));return t*t*t*(10+t*(-15+6*t));}
   function pose(p,meshes){
     var q=root.PaintedRig.pose(p),g=profiles[p.gait]||profiles.everyday;
@@ -36,7 +38,7 @@
     var limits=legs.map(function(l){var dx=l.ankle.x-l.hip.x;return l.ankle.y-Math.sqrt(Math.max(1,Math.pow(legLength*.995,2)-dx*dx));});
     var hipsY=(limits[0]+limits[1]+Math.hypot(limits[0]-limits[1],h*.012))/2;
     // Settle slightly lower to trim the vertical arc while keeping both feet reachable.
-    hipsY=(p.y-h*.49)+(hipsY-(p.y-h*.49))*.80;
+    hipsY=(p.y-h*.49)+(hipsY-(p.y-h*.49))*.80*(g.bounceScale||1);
     var dy=hipsY-q.hips.y;q.hips.y=hipsY;
     [q.shoulders,q.head,q.nose,q.bag].forEach(function(a){a.y+=dy;});
     q.arms.forEach(function(a){[a.shoulder,a.elbow,a.hand].forEach(function(v){v.y+=dy;});});

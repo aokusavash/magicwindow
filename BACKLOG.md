@@ -41,6 +41,8 @@ Study 06 addresses the next review: all three walks were promising but jolty, wi
 
 Study 07 adds a switchable near-straight leading knee during landing, then a relaxed bend through weight transfer. Tests preserve the previous body/foot paths and bound the corrective pose's small limb-length variation. Review Straighter landing on/off before expanding people. Future variation should combine stable resident traits with coherent activity adjustments; validate ranges on several bodies, rather than randomizing each step.
 
+Walking checkpoint accepted: the user approved Study 07's motion for this character and asked for a calmer alternative. Relaxed is added at 90% Everyday pace and 90% vertical travel, preserving the accepted Everyday walk. Review this small variant, then use the accepted gait foundation for bounded multi-body retargeting and interaction work.
+
 ## Next build-session kickoff
 
 At the end of the October 19 walk, the user asked how to begin work from their computer. No further product decision is needed before starting the ready items above.

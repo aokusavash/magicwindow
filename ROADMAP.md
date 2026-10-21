@@ -55,6 +55,8 @@ Study 07 follows the user's near-final feedback: extend the leading knee after i
 
 Future gait variation: keep a stable baseline per resident within visually tested ranges, then adjust pace, stride, extension and arm swing coherently for the current activity. Age/body proportions may influence a character's design, but avoid a single rigid age-to-speed rule. Do not reroll style every step. Current profile parameters support experiments; persistent character traits, contextual transitions and multi-body acceptance remain future work.
 
+Walking acceptance: the user considers the Study 07 walk nailed for this character, with a purposeful/businesslike feel. Preserve it as Everyday. A separate Relaxed variant now runs 10% slower with 10% less vertical travel; its foot roll, landing and arm-swing shape are retained. This is the default review option, while Everyday remains available. The acceptance is for side-on walking on this character; body retargeting, turns and interactions remain separate quality checks.
+
 ## Neighborhood places: current direction
 
 Further October 19 discussion: optimize the limited street frontage for **visual variety, coziness, and things children find interesting**. Do not frame the choice primarily as everyday errands or reproduce the real-world proportion of restaurants. Four or five buildings is a working composition guess, not a fixed limit.

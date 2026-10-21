@@ -4,7 +4,7 @@
   var scene=document.createElement('canvas');scene.width=1600;scene.height=900;
   var brush=scene.getContext('2d',{alpha:false}),seconds=0,last=0,loaded=false,failed=false;
   var stacked=matchMedia('(max-width:760px)').matches;
-  var person='resident',surface='layered',gait='everyday',compare=false,slow=false,closeup=true,armSwing=true,straightLanding=true;
+  var person='resident',surface='layered',gait='relaxed',compare=false,slow=false,closeup=true,armSwing=true,straightLanding=true;
   var paused=matchMedia('(prefers-reduced-motion: reduce)').matches,dirty=true,images={},drawSkin,drawParts,drawLayered,cost=[];
   var loading=document.getElementById('loading'),profiles=window.PaintedGaits.profiles;
   function asset(src){return new Promise(function(resolve,reject){var im=new Image();im.onload=function(){resolve(im);};im.onerror=reject;im.src=src;});}
@@ -32,7 +32,7 @@
     if(!loaded)return;var start=performance.now(),height=compare&&stacked?2700:900;
     if(canvas.height!==height){canvas.height=height;canvas.parentElement.style.aspectRatio='1600 / '+height;}
     if(compare){
-      ['stroll','everyday','brisk'].forEach(function(key,i){
+      ['relaxed','everyday','brisk'].forEach(function(key,i){
         var p=render(key),width=1600/3,sourceWidth=320*width/900;
         var x=stacked?0:i*width,y=stacked?i*900:0;
         if(stacked){width=1600;ctx.drawImage(scene,560,p.y-p.height*.45-135,480,270,0,y,1600,900);}
@@ -47,7 +47,7 @@
     cost.push(performance.now()-start);if(cost.length>90)cost.shift();dirty=false;
   }
   function update(){
-    canvas.setAttribute('aria-label',compare?'Three strides on the same painted resident: A Stroll, B Everyday, C Brisk':profiles[gait].label+' on a painted resident walking through a Japanese street');
+    canvas.setAttribute('aria-label',compare?'Three strides on the same painted resident: Relaxed, B Everyday, C Brisk':profiles[gait].label+' on a painted resident walking through a Japanese street');
     document.querySelectorAll('[data-surface]').forEach(function(el){el.setAttribute('aria-pressed',String(el.dataset.surface===surface));});
     document.querySelectorAll('[data-person]').forEach(function(el){el.setAttribute('aria-pressed',String(el.dataset.person===person));});
     document.querySelectorAll('[data-gait]').forEach(function(el){el.setAttribute('aria-pressed',String(!compare&&el.dataset.gait===gait));});

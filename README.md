@@ -55,7 +55,7 @@ Study 02 is now built at `/painted/`: two painted characters share a reusable ri
 
 Run `node tools/check_painted.cjs` for activity checks and `python3 tools/export_painted.py` for a single-file offline export. Joint deformation, turns, and convincing relighting still need visual iteration; no live weather or runtime generation service is claimed.
 
-Current motion experiment: [stride comparison](https://little-world-window.racing-dog-8718.chatgpt.site/painted/walking/). Study 07 compares Stroll, Everyday and Brisk with a near-straight landing knee, soft transitions, quiet body motion, heel/toe roll and a restrained arm swing. Single views, the previous stride, knee/arm toggles and half-speed inspection are available. This remains a walking study separate from the interaction rig. See the feasibility report for findings.
+Current motion experiment: [stride comparison](https://little-world-window.racing-dog-8718.chatgpt.site/painted/walking/). The user accepted the current side-on walk. Study 08 adds Relaxed at 10% slower pace and 10% less body bounce, preserving the accepted Everyday walk plus Stroll and Brisk. Near-straight landings, soft transitions, heel/toe roll and restrained arm swing are retained. Single views, the previous stride, knee/arm toggles and half-speed inspection are available. This remains a walking study separate from the interaction rig. See the feasibility report for findings.
 
 ## Technical studies
 

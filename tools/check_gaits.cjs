@@ -5,7 +5,7 @@ const skin=require('../dist/painted/skin.js');
 const {meshes}=require('../dist/painted/walking/layered.js');
 const gaits=require('../dist/painted/walking/gaits.js');
 function point(t,key,dir){const g=gaits.profiles[key];return {id:'resident',gait:key,x:800+dir*t*g.speed,y:746,height:182,baseHeight:182,direction:dir,distance:t*g.speed+120,travelX:dir,travelY:0,view:'side',turnScale:1,walkWeight:1,bend:0,breath:0,grip:0};}
-for(const key of ['stroll','everyday','brisk'])for(const dir of [-1,1]){
+for(const key of ['relaxed','stroll','everyday','brisk'])for(const dir of [-1,1]){
   let last,overlap=false,heelSeen=false,pushSeen=false,bendSeen=false,hips=[];
   for(let frame=0;frame<=600;frame++){
     const p=point(frame/120,key,dir),q=gaits.pose(p,meshes);
@@ -63,4 +63,4 @@ for(const key of ['stroll','everyday','brisk'])for(const dir of [-1,1]){
   const off=[0,.2,.4].map(t=>gaits.pose({...point(t,key,dir),armSwing:false},meshes).arms[0].angle);
   assert(off.every(a=>Math.abs(a)<1e-8));
 }
-console.log('Three gaits: planted contacts, toe flex, low clearance, double support, smooth support transfer, mirrored hip alignment, connected arm meshes/toggle, and transition continuity pass in both directions.');
+console.log('Walking profiles: planted contacts, toe flex, low clearance, double support, smooth support transfer, mirrored hip alignment, connected arm meshes/toggle, and transition continuity pass in both directions.');
