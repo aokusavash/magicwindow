@@ -154,6 +154,10 @@
       var near=Math.sin(state.heading)>=0?0:1,far=1-near;
       commands=[];
       var body=actor.cleanBody&&name==='rear45'&&images.contactBody?{image:images.contactBody,box:{x:102,y:27,width:360,height:713},pivot:.58}:data.body;
+      // Seated actions need a torso without the resting sleeves painted in.
+      // These optional assets leave the accepted walking renderer unchanged.
+      if(actor.diningBody&&name==='front'&&images.frontMealBody)body={image:images.frontMealBody,box:{x:144,y:19,width:372,height:666},pivot:.50};
+      if(actor.diningBody&&name==='rear'&&images.rearMealBody)body={image:images.rearMealBody,box:{x:122,y:28,width:367,height:709},pivot:.50};
       var bodyBox=body.box,bodyScale=p.height*.54/bodyBox.height;
       torsoBrush.clearRect(ox,oy,width,height);torsoBrush.save();torsoBrush.translate(q.hips.x,q.hips.y+p.height*.02);if(actor.lean)torsoBrush.rotate(actor.lean);torsoBrush.scale(p.direction*bodyScale,bodyScale);
       torsoBrush.drawImage(body.image,bodyBox.x,bodyBox.y,bodyBox.width,bodyBox.height,-bodyBox.width*body.pivot,-bodyBox.height,bodyBox.width,bodyBox.height);torsoBrush.restore();

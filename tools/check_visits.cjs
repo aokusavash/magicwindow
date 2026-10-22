@@ -62,6 +62,8 @@ for(const plan of [VisitWorld.ramen,VisitWorld.counter]){
     assert(a.meal&&a.meal.reachError<.01,'eating arm cannot reach bowl/mouth');min=Math.min(min,a.meal.lift);max=Math.max(max,a.meal.lift);
     assert.equal(s.heading,plan===VisitWorld.ramen?Math.PI:0,'diners must face straight in/out');
     assert.equal(a.meal.hidden,plan===VisitWorld.counter,'counter eating is hidden by her back');
+    assert(a.diningBody,'seated meals need sleeve-free torso art');
+    for(const arm of a.q.arms)for(const key of ['shoulder','elbow','hand','tip'])assert((arm[key].depth-a.q.hips.depth)*(plan===VisitWorld.counter?1:-1)>0,'meal arms must be on the chest side of the torso');
     if(plan===VisitWorld.ramen)assert.equal(s.door,0,'door must stay closed throughout the indoor meal');
     if(!first)first=a;
     a.q.legs.forEach((l,i)=>assert(Math.hypot(l.foot.x-first.q.legs[i].foot.x,l.foot.y-first.q.legs[i].foot.y)<1e-8,'seated feet drifted'));

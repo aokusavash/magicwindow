@@ -16,6 +16,8 @@ with sync_playwright() as p:
     assert rendering['closedDoorBodyPixels']==0,rendering
     assert all(x['hidden'] and x['heading']==0 and x['bowlPixels']==0 and x['eatingPixels']==0 and x['seatedLegPixels']>150 for x in rendering['meals'] if x['table']=='outside'),rendering
     assert all(not x['hidden'] and abs(x['heading']-3.141592653589793)<1e-8 and x['bowlPixels']>25 and x['eatingPixels']>100 for x in rendering['meals'] if x['table']=='inside'),rendering
+    assert all(x['chestArmPixels']>15 if x['table']=='inside' else x['chestArmPixels']==0 for x in rendering['diningArmLayering']),rendering
+    assert all(x['originalAlpha']>240 and x['cleanAlpha']==0 for x in rendering['removedSleeves']),rendering
     assert rendering['fixedForeground']['checked']>3000 and rendering['fixedForeground']['changed']==0,rendering
     page.locator('#counter').click();assert page.evaluate("Math.abs(VisitStudy.state().seconds-VisitWorld.counterTime)<.2 && VisitStudy.state().focus==='ramen'")
     page.locator('#meal').click();assert page.evaluate("Math.abs(VisitStudy.state().seconds-(VisitWorld.windowTime+2))<.2")

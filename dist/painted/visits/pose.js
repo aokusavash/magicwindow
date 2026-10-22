@@ -26,6 +26,7 @@
       });
     }
     if(state.seat>0&&tables[state.table]){
+      actor.diningBody=true;
       var table=tables[state.table],seat=state.seat,shift=(table.hipY-q.hips.y)*seat,forward=Math.sin(state.heading);
       q.hips.y+=shift;[q.shoulders,q.head,q.bag].forEach(function(p){p.y+=shift;});
       q.arms.forEach(function(a){['shoulder','elbow','hand','tip'].forEach(function(k){a[k].y+=shift;});});
@@ -41,10 +42,16 @@
         var mouth={x:q.head.x+forward*h*.095,y:q.head.y+h*.085};
         var scoop={x:bowl.x-dir*h*.03,y:bowl.y-h*.06},taste={x:mouth.x-dir*h*.05,y:mouth.y+h*.02};
         var target={x:scoop.x+(taste.x-scoop.x)*lift,y:scoop.y+(taste.y-scoop.y)*lift};
-        var error=armTo(q.arms[index],target,active,h,dir<0?-1:1);
-        armTo(q.arms[1-index],{x:bowl.x+dir*h*.04,y:bowl.y+h*.012},active,h,dir<0?1:-1);
+        var feeding=q.arms[index],resting=q.arms[1-index];
+        // Both elbows fold inward/down toward the bowl. A side-view bend
+        // sign lifted the rear-facing elbows above the shoulders.
+        var error=armTo(feeding,target,active,h,bowl.x<feeding.shoulder.x?-1:1);
+        armTo(resting,{x:bowl.x+dir*h*.04,y:bowl.y+h*.012},active,h,bowl.x<resting.shoulder.x?-1:1);
         var hidden=Math.cos(state.heading)>.9;
-        if(hidden)q.arms.forEach(function(a){['shoulder','elbow','hand','tip'].forEach(function(k){a[k].depth=q.hips.depth+182*.07;});});
+        // Eating happens on the chest side: in front of a front-facing
+        // torso, behind a rear-facing torso. Keep each whole arm together.
+        var armDepth=q.hips.depth+(hidden?1:-1)*182*.07;
+        q.arms.forEach(function(a){['shoulder','elbow','hand','tip'].forEach(function(k){a[k].depth=armDepth;});});
         actor.meal={bowl:bowl,hand:q.arms[index].hand,tip:{x:bowl.x+(mouth.x-bowl.x)*lift,y:bowl.y-1+(mouth.y-bowl.y+1)*lift},lift:lift,noodle:1-root.AlleyWorld.ease((phase-.36)/.22),alpha:active,time:time,mouth:mouth,reachError:error,hidden:hidden};
       }
     }

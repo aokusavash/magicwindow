@@ -1,5 +1,5 @@
 async()=>{
-  const files={contactBody:'../assets/directions/rear45-contact.png',entrance:'../assets/rig/entrance-layers.png',background:'../assets/street.png',sideUpper:'../assets/skin/resident-arms.png',sideLegs:'../assets/skin/resident-layered.png',props:'../assets/rig/resident.png',front:'../assets/directions/front.png',rear:'../assets/directions/rear.png',front45:'../assets/directions/front45.png',rear45:'../assets/directions/rear45.png',legs:'../assets/directions/legs.png',interior:'../assets/rig/interior.png'},images={};
+  const files={frontMealBody:'../assets/directions/front-meal.png',rearMealBody:'../assets/directions/rear-meal.png',contactBody:'../assets/directions/rear45-contact.png',entrance:'../assets/rig/entrance-layers.png',background:'../assets/street.png',sideUpper:'../assets/skin/resident-arms.png',sideLegs:'../assets/skin/resident-layered.png',props:'../assets/rig/resident.png',front:'../assets/directions/front.png',rear:'../assets/directions/rear.png',front45:'../assets/directions/front45.png',rear45:'../assets/directions/rear45.png',legs:'../assets/directions/legs.png',interior:'../assets/rig/interior.png'},images={};
   await Promise.all(Object.entries(files).map(async([k,v])=>{let i=new Image;i.src=v;await i.decode();images[k]=i;}));
   let c=document.createElement('canvas');c.width=1600;c.height=900;let ctx=c.getContext('2d',{willReadFrequently:true}),draw=VisitRenderer.renderer(c,images);
   function pixels(s){draw([s],'');return ctx.getImageData(0,0,1600,900).data;}
@@ -38,6 +38,36 @@ async()=>{
     for(let t of [1.5,3.5,55]){
       let s=VisitWorld.sample(plan,dining.start+t),eating=pixels(s),rest=pixels({...s,meal:false}),standing=pixels({...s,meal:false,seat:0}),pose=VisitPose.pose(s);noProps([s],'');let propFree=ctx.getImageData(0,0,1600,900).data;
       result.meals.push({table:s.table,t,heading:s.heading,hidden:pose.meal.hidden,bowlPixels:diff(eating,propFree,cx-14,586,28,15),eatingPixels:diff(eating,propFree,cx-35,545,70,65),seatedLegPixels:diff(rest,standing,cx-40,625,80,80)});
+    }
+  }
+  // Color the two detached arms, leaving the new torso paintings untouched.
+  // Front-facing arms must cross the chest; rear-facing arms must stay behind it.
+  let armImages={...images};
+  for(let name of ['front','rear']){
+    let atlas=document.createElement('canvas');atlas.width=images[name].width;atlas.height=images[name].height;
+    let paint=atlas.getContext('2d');paint.drawImage(images[name],0,0);paint.globalCompositeOperation='source-atop';paint.fillStyle='#ff00ff';
+    for(let box of AlleyFrames[name].slice(1,3))paint.fillRect(box.x,box.y,box.width,box.height);armImages[name]=atlas;
+  }
+  let arms=VisitRenderer.renderer(c,armImages);result.diningArmLayering=[];
+  for(let plan of [VisitWorld.counter,VisitWorld.ramen])for(let t of [1.5,3.5,6]){
+    let seg=plan.segments.find(s=>s.options.meal),s=VisitWorld.sample(plan,seg.start+t),a=VisitPose.pose(s);arms([s],'');
+    // The rear collar is open above the arm roots; test the solid back
+    // below those roots. The front chest includes the lifted forearm.
+    let top=a.meal.hidden?Math.max(...a.q.arms.map(arm=>arm.shoulder.y)):a.q.shoulders.y;
+    let x=Math.floor(a.q.hips.x-a.p.height*.075),y=Math.floor(top+a.p.height*.025),w=Math.ceil(a.p.height*.15),h=Math.floor(a.q.hips.y-a.p.height*.12-y);
+    let data=ctx.getImageData(x,y,w,h).data,count=0;
+    for(let i=0;i<data.length;i+=4)if(data[i]>220&&data[i+1]<60&&data[i+2]>180)count++;
+    result.diningArmLayering.push({table:s.table,t,chestArmPixels:count});
+  }
+  // At the old hanging-cuff locations the corrective torso must be empty.
+  // This fails if an original, sleeved torso is accidentally wired back in.
+  result.removedSleeves=[];
+  for(let name of ['front','rear']){
+    let atlas=document.createElement('canvas');atlas.width=images[name].width;atlas.height=images[name].height;let paint=atlas.getContext('2d');
+    paint.drawImage(images[name],0,0);let original=paint.getImageData(0,0,atlas.width,atlas.height).data;
+    paint.clearRect(0,0,atlas.width,atlas.height);paint.drawImage(images[name+'MealBody'],0,0);let clean=paint.getImageData(0,0,atlas.width,atlas.height).data;
+    for(let [x,y] of [[140,530],[150,590],[470,530],[470,590]]){
+      let i=(y*atlas.width+x)*4;result.removedSleeves.push({view:name,x,y,originalAlpha:original[i+3],cleanAlpha:clean[i+3]});
     }
   }
   // Near-opaque foreground landmarks must stay fixed as the leaf slides.

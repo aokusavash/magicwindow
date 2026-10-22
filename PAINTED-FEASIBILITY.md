@@ -1,3 +1,13 @@
+# Study 14: one pair of dining arms
+
+User review identified resting sleeves still baked into both seated torsos and eating arms hidden behind the front-facing chest. New front/rear torso underpaintings remove those baked sleeves, retaining the same character, collar, waistband and source registration. They apply only during seated actions; walking, flower and door artwork stay as before. The same two independent animated arms supply the entire eating gesture.
+
+Meal depth is now explicit: both arms are on the chest side of the torso, in front for the indoor/front-facing diner and behind for the outside/rear-facing diner. Side-view elbow-bend signs also incorrectly raised the rear diner's elbows; the inward bend now follows each shoulder's side relative to the bowl. The front diner shows the actual scoop/lift/taste gesture. Rear-facing hands, bowl and utensils remain hidden as requested.
+
+Regression checks color only the detached arm pixels to verify visible forearms across the front chest and occlusion by the solid rear back at three points in the meal cycle. The rear collar is open above the arm attachments and is excluded from the solid-back region. Source-alpha checks verify removal at eight former sleeve/cuff locations; route/contact/meal, window/door and walking regressions remain. Browser screenshots of both diners were reviewed. This is still a ramen feasibility refinement, pending human visual acceptance, with the same evaluate-before-expanding checkpoint.
+
+---
+
 # Study 13: ramen facing and layered entrance
 
 The user wants both meals viewed square-on: the counter diner faces directly into the room, with her face, bowl and eating hands hidden; the inside diner faces directly toward the street/viewer. Heading and meal-prop visibility now reflect that. One-minute meals, automatic closing, flowers and accepted walking remain.
