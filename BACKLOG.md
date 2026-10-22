@@ -63,6 +63,12 @@ The user accepted coherent walking around town, deferred the remaining minor bli
 
 Next review: how populated/cozy the street feels over a minute, and whether passing/occlusion and runtime performance remain acceptable. A real TV performance check is outstanding. Recommended subsequent batch is one complete ramen-shop visit with physical hand/door contact using the accepted character, followed by a small varied cast and local lighting/weather. Those later batches are not implemented by the crowd preview.
 
+### Current checkpoint: shop-visit review
+
+The user selected two interactions: ramen entry with a visible window/counter pause, and stopping to look at flowers/produce. No purchase is needed. Study 11 `/painted/visits/` now supplies both, alongside six passersby. It reuses the accepted character with handle IK, doorway/window occlusion and short stationary browsing; the ramen visitor returns and closes the door. Buttons jump to close-ups of either action. Node/browser checks cover contact, fixed support, smooth routes, correct indoor clipping, controls and mobile/reduced motion. The walking-only population comparison is preserved.
+
+Next review: does the hand clearly operate the door, does entering/being inside read convincingly, and does the browsing pause feel natural? Iterate on observed defects before adding purchases or a large action library. Cast variation, physical-TV performance, live Seattle lighting/weather and director behavior remain later work.
+
 ## Next build-session kickoff
 
 At the end of the October 19 walk, the user asked how to begin work from their computer. No further product decision is needed before starting the ready items above.

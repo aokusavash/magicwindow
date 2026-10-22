@@ -154,7 +154,7 @@
       var near=Math.sin(state.heading)>=0?0:1,far=1-near;
       commands=[];
       var bodyBox=data.body.box,bodyScale=p.height*.54/bodyBox.height;
-      torsoBrush.clearRect(ox,oy,width,height);torsoBrush.save();torsoBrush.translate(q.hips.x,q.hips.y+p.height*.02);torsoBrush.scale(p.direction*bodyScale,bodyScale);
+      torsoBrush.clearRect(ox,oy,width,height);torsoBrush.save();torsoBrush.translate(q.hips.x,q.hips.y+p.height*.02);if(actor.lean)torsoBrush.rotate(actor.lean);torsoBrush.scale(p.direction*bodyScale,bodyScale);
       torsoBrush.drawImage(data.body.image,bodyBox.x,bodyBox.y,bodyBox.width,bodyBox.height,-bodyBox.width*data.body.pivot,-bodyBox.height,bodyBox.width,bodyBox.height);torsoBrush.restore();
       [far,near].forEach(function(i){
         var source=name==='side'?(i===near?0:1):(i===0?source0:1-source0),item=data.legs[source];mesh(item,p,q,i);
@@ -177,7 +177,7 @@
       commands.sort(function(a,b){return b.depth-a.depth;}).forEach(function(c){c.paint();});
     }
     return function(state){
-      var actor=pose(state);ox=compact?Math.floor(actor.p.x-width/2):0;oy=compact?Math.floor(actor.p.y-actor.p.height*1.10-12):0;
+      var actor=options&&options.pose?options.pose(state):pose(state);ox=compact?Math.floor(actor.p.x-width/2):0;oy=compact?Math.floor(actor.p.y-actor.p.height*1.10-12):0;
       [brush,torsoBrush,legBrush].forEach(function(c){c.setTransform(1,0,0,1,-ox,-oy);});
       composite.clearRect(0,0,width,height);composite.globalCompositeOperation='lighter';
       facing(state.heading).forEach(function(v){brush.clearRect(ox,oy,width,height);view(v.name,actor,state);composite.globalAlpha=v.weight;composite.drawImage(piece,0,0);});

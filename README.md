@@ -59,7 +59,9 @@ Current motion experiment: [stride comparison](https://little-world-window.racin
 
 Accepted movement milestone: [alley and diagonals](https://little-world-window.racing-dog-8718.chatgpt.site/painted/alley/). Study 09 adds curved turns, depth/foreground overlap, and eight directions including all four 45° diagonals. The user considers the walk coherent enough to move on, with minor blips deferred. Run `node tools/check_alley.cjs` for route/pose checks.
 
-Newest preview: [a populated street](https://little-world-window.racing-dog-8718.chatgpt.site/painted/crowd/). Study 10 reuses the resident as eight independent walkers, with a five-person comparison, street/alley routes and per-person occlusion. People enter/leave the view; this tests density rather than cast variety or shop activity. Run `node tools/check_crowd.cjs` and, with a local server on port 8031, `python3 tools/check_crowd_browser.py`. Physical-TV performance still needs testing. A coherent shop visit is the recommended next interaction test.
+Population comparison: [a populated street](https://little-world-window.racing-dog-8718.chatgpt.site/painted/crowd/). Study 10 reuses the resident as eight independent walkers, with a five-person comparison, street/alley routes and per-person occlusion. People enter/leave the view; this tests density rather than cast variety or shop activity. Run `node tools/check_crowd.cjs` and, with a local server on port 8031, `python3 tools/check_crowd_browser.py`. Physical-TV performance still needs testing.
+
+Newest preview: [a reason to linger](https://little-world-window.racing-dog-8718.chatgpt.site/painted/visits/). Study 11 adds a ramen visit (hand on sliding door, entry, visible counter-window pause, exit and closing) and browsing the flower display among six passersby. Buttons jump to either visit with a close-up; Whole street returns to the ambient view. These are authored interaction sequences using the accepted character, with no purchases or meal animation. Run `node tools/check_visits.cjs` and, with the local server on port 8031, `python3 tools/check_visits_browser.py`.
 
 ## Technical studies
 
