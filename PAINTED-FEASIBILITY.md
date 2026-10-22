@@ -1,3 +1,17 @@
+# Study 15: posture and a finishing sip
+
+The user liked the arm repair and requested flared elbows, a head dip toward lifted chopsticks, and a final two-handed bowl drink. Seated elbow silhouettes now sit farther outward/down with the hand targets preserved. A small eased head dip follows each bite. The head is articulated from the existing portrait at the neck over the fixed collar, with slight vertical foreshortening; no walking artwork or gait is changed.
+
+The last twelve seconds of each 60-second meal are a single closing action: lay down chopsticks, reach both hands to the bowl, lift it to the lowered mouth, sip, lower it back to its original counter position, release, then settle. Both wrists follow the moving bowl. Bowl tilt and reduced broth/noodles accompany the sip; no more noodle bites begin after the finishing action. Rear-facing hands and food stay hidden by the back. The front-facing interior diner exposes the full action. **Finish the bowl** jumps to one second before this sequence for review.
+
+Hand targets use the existing solver; seated elbow placement is an authored projection correction for foreshortened arms, not a physically simulated 3D elbow. The silhouette and head/neck join still need human review. Original walking, flower and door behavior are preserved; final production and arbitrary action generation remain outside this study.
+
+Verification covers outward bite elbows, visible head articulation, continuous head/bowl motion, both hands staying on the bowl through lift/return, mouth/rim contact at the sip peak, one finish per meal, no subsequent bites, original bowl position after lowering, and seated support. Browser checks cover visible food at its actual moving position, arm layering, front/rear head changes, the finishing control and screenshots through reach/sip/lower. Existing doorway/foreground, phone/reduced-motion, gait/projection and crowd regressions remain the checks for surrounding behavior.
+
+Next: review the meal polish, then retain the agreed pause to evaluate the feasibility study before expanding scope.
+
+---
+
 # Study 14: one pair of dining arms
 
 User review identified resting sleeves still baked into both seated torsos and eating arms hidden behind the front-facing chest. New front/rear torso underpaintings remove those baked sleeves, retaining the same character, collar, waistband and source registration. They apply only during seated actions; walking, flower and door artwork stay as before. The same two independent animated arms supply the entire eating gesture.

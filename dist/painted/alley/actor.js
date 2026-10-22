@@ -160,7 +160,15 @@
       if(actor.diningBody&&name==='rear'&&images.rearMealBody)body={image:images.rearMealBody,box:{x:122,y:28,width:367,height:709},pivot:.50};
       var bodyBox=body.box,bodyScale=p.height*.54/bodyBox.height;
       torsoBrush.clearRect(ox,oy,width,height);torsoBrush.save();torsoBrush.translate(q.hips.x,q.hips.y+p.height*.02);if(actor.lean)torsoBrush.rotate(actor.lean);torsoBrush.scale(p.direction*bodyScale,bodyScale);
-      torsoBrush.drawImage(body.image,bodyBox.x,bodyBox.y,bodyBox.width,bodyBox.height,-bodyBox.width*body.pivot,-bodyBox.height,bodyBox.width,bodyBox.height);torsoBrush.restore();
+      if(actor.headDip&&actor.diningBody&&(name==='front'||name==='rear')){
+        // The head is part of the source portrait. Articulate it at the neck
+        // over the stationary collar; overlap covers the join during the nod.
+        var cut=bodyBox.height*(name==='front'?.49:.455),neck=-bodyBox.height+cut;
+        torsoBrush.drawImage(body.image,bodyBox.x,bodyBox.y+cut,bodyBox.width,bodyBox.height-cut,-bodyBox.width*body.pivot,neck,bodyBox.width,bodyBox.height-cut);
+        torsoBrush.save();torsoBrush.translate(0,neck+p.height*.025*actor.headDip/bodyScale);torsoBrush.scale(1,1-.035*actor.headDip);
+        torsoBrush.drawImage(body.image,bodyBox.x,bodyBox.y,bodyBox.width,cut,-bodyBox.width*body.pivot,-cut,bodyBox.width,cut);torsoBrush.restore();
+      }else torsoBrush.drawImage(body.image,bodyBox.x,bodyBox.y,bodyBox.width,bodyBox.height,-bodyBox.width*body.pivot,-bodyBox.height,bodyBox.width,bodyBox.height);
+      torsoBrush.restore();
       [far,near].forEach(function(i){
         var source=name==='side'?(i===near?0:1):(i===0?source0:1-source0),item=data.legs[source];mesh(item,p,q,i);
         if(item.shoe){var shoe=item.shoe,b=shoe.box,cut=shoe.ankleY-.025,scale=p.height/item.mesh.referenceHeight,ankle=q.legs[i].ankle,roll=actor.local.legs[i].pitch*state.walkWeight*Math.sin(Math.abs(state.heading))*.35;

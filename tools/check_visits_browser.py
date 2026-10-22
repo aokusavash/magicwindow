@@ -19,6 +19,9 @@ with sync_playwright() as p:
     assert all(x['chestArmPixels']>15 if x['table']=='inside' else x['chestArmPixels']==0 for x in rendering['diningArmLayering']),rendering
     assert all(x['originalAlpha']>240 and x['cleanAlpha']==0 for x in rendering['removedSleeves']),rendering
     assert rendering['fixedForeground']['checked']>3000 and rendering['fixedForeground']['changed']==0,rendering
+    assert all(x['changedPixels']>50 for x in rendering['headNods']),rendering
+    assert all(x['bowlPixels']>50 for x in rendering['broth']),rendering
+    page.locator('#broth').click();assert page.evaluate("Math.abs(VisitStudy.state().seconds-(VisitWorld.windowTime+47))<.2 && VisitStudy.state().focus==='ramen'")
     page.locator('#counter').click();assert page.evaluate("Math.abs(VisitStudy.state().seconds-VisitWorld.counterTime)<.2 && VisitStudy.state().focus==='ramen'")
     page.locator('#meal').click();assert page.evaluate("Math.abs(VisitStudy.state().seconds-(VisitWorld.windowTime+2))<.2")
     page.locator('#ramen').click();assert page.evaluate("VisitStudy.state().focus==='ramen' && !VisitStudy.state().paused")
@@ -32,6 +35,8 @@ with sync_playwright() as p:
         page.evaluate("t=>VisitStudy.inspect(t,'ramen')",t);page.locator('#world').screenshot(path=str(out/(action+'.png')))
     for offset in [1.5,3.5,6]:
         page.evaluate("t=>VisitStudy.inspect(VisitWorld.mealTime+t,'ramen')",offset);page.locator('#world').screenshot(path=str(out/f'counter-meal-{offset}.png'))
+    for offset in [50,52,54,56,58]:
+        page.evaluate("t=>VisitStudy.inspect(VisitWorld.windowTime+t,'ramen')",offset);page.locator('#world').screenshot(path=str(out/f'broth-{offset}.png'))
     page.evaluate("VisitStudy.inspect(VisitWorld.flowerTime+5,'flowers')");page.locator('#world').screenshot(path=str(out/'browse.png'))
     page.evaluate("VisitStudy.inspect(15,'')");page.locator('#world').screenshot(path=str(out/'town.png'))
     mobile=browser.new_page(viewport={'width':390,'height':844},reduced_motion='reduce');mobile.goto('http://127.0.0.1:8031/painted/visits/');mobile.wait_for_function('VisitStudy.state().loaded')

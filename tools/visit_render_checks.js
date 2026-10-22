@@ -37,7 +37,7 @@ async()=>{
     let dining=plan.segments.find(s=>s.options.meal),cx=plan===VisitWorld.counter?232:310;
     for(let t of [1.5,3.5,55]){
       let s=VisitWorld.sample(plan,dining.start+t),eating=pixels(s),rest=pixels({...s,meal:false}),standing=pixels({...s,meal:false,seat:0}),pose=VisitPose.pose(s);noProps([s],'');let propFree=ctx.getImageData(0,0,1600,900).data;
-      result.meals.push({table:s.table,t,heading:s.heading,hidden:pose.meal.hidden,bowlPixels:diff(eating,propFree,cx-14,586,28,15),eatingPixels:diff(eating,propFree,cx-35,545,70,65),seatedLegPixels:diff(rest,standing,cx-40,625,80,80)});
+      result.meals.push({table:s.table,t,heading:s.heading,hidden:pose.meal.hidden,bowlPixels:diff(eating,propFree,cx-14,Math.floor(pose.meal.bowl.y)-3,28,15),eatingPixels:diff(eating,propFree,cx-35,545,70,65),seatedLegPixels:diff(rest,standing,cx-40,625,80,80)});
     }
   }
   // Color the two detached arms, leaving the new torso paintings untouched.
@@ -68,6 +68,20 @@ async()=>{
     paint.clearRect(0,0,atlas.width,atlas.height);paint.drawImage(images[name+'MealBody'],0,0);let clean=paint.getImageData(0,0,atlas.width,atlas.height).data;
     for(let [x,y] of [[140,530],[150,590],[470,530],[470,590]]){
       let i=(y*atlas.width+x)*4;result.removedSleeves.push({view:name,x,y,originalAlpha:original[i+3],cleanAlpha:clean[i+3]});
+    }
+  }
+  // Isolate head articulation from arm changes: identical pose/props,
+  // with just the portrait nod disabled in a diagnostic renderer.
+  let originalNod=VisitPose.pose;VisitPose.pose=s=>{let a=originalNod(s);a.headDip=0;return a;};let noNod=VisitRenderer.renderer(c,images);VisitPose.pose=originalNod;
+  result.headNods=[];result.broth=[];
+  for(let plan of [VisitWorld.counter,VisitWorld.ramen]){
+    let seg=plan.segments.find(s=>s.options.meal),s=VisitWorld.sample(plan,seg.start+(plan===VisitWorld.ramen?1.5:3.5)),a=VisitPose.pose(s),normal=pixels(s);noNod([s],'');
+    let still=ctx.getImageData(0,0,1600,900).data;result.headNods.push({table:s.table,changedPixels:diff(normal,still,Math.floor(a.p.x)-30,Math.floor(a.q.head.y)-30,60,42)});
+    if(plan===VisitWorld.ramen)for(let t of [50,54,58]){
+      let s=VisitWorld.sample(plan,seg.start+t),a=VisitPose.pose(s),normal=pixels(s);noPropsAt(s);
+      function noPropsAt(state){let original=VisitPose.pose;VisitPose.pose=s=>{let a=original(s);if(a.meal)a.meal.alpha=0;return a;};let fixture=VisitRenderer.renderer(c,images);VisitPose.pose=original;fixture([state],'');}
+      let empty=ctx.getImageData(0,0,1600,900).data;
+      result.broth.push({t,bowlPixels:diff(normal,empty,Math.floor(a.meal.bowl.x)-12,Math.floor(a.meal.bowl.y)-3,24,14)});
     }
   }
   // Near-opaque foreground landmarks must stay fixed as the leaf slides.

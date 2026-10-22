@@ -1,5 +1,6 @@
 (function(root){
   'use strict';
+  function eased(t){return Math.max(0,Math.min(1,root.AlleyWorld.ease(t)));}
   function rotate(p,origin,angle){var x=p.x-origin.x,y=p.y-origin.y,c=Math.cos(angle),s=Math.sin(angle);p.x=origin.x+x*c-y*s;p.y=origin.y+x*s+y*c;}
   var tables={outside:{hipY:623,bowl:{x:232,y:591}},inside:{hipY:616,bowl:{x:310,y:591}}};
   function armTo(arm,target,weight,h,bend){
@@ -36,23 +37,39 @@
         Object.keys(target).forEach(function(k){l[k].x+=(target[k].x-l[k].x)*seat;l[k].y+=(target[k].y-l[k].y)*seat;});
       });
       if(state.meal){
-        var time=state.mealTime+(state.table==='inside'?2.1:0),phase=(time%8.6)/8.6;
-        var lift=root.AlleyWorld.ease((phase-.13)/.22)*(1-root.AlleyWorld.ease((phase-.60)/.22));
-        var active=state.mealBlend,dir=forward<0?-1:1,index=dir<0?1:0,bowl=table.bowl;
+        var elapsed=state.mealTime,time=elapsed+(state.table==='inside'?2.1:0),phase=(time%8.6)/8.6,ease=eased;
+        var finish=ease((elapsed-48)/1.4),grasp=finish*(1-ease((elapsed-58)/1.2));
+        var bowlLift=ease((elapsed-50.5)/2)*(1-ease((elapsed-55)/2.5));
+        var sip=ease((elapsed-52.3)/.7)*(1-ease((elapsed-55)/.7));
+        var lift=ease((phase-.13)/.22)*(1-ease((phase-.60)/.22))*(1-finish);
+        var active=state.mealBlend,dir=forward<0?-1:1,index=dir<0?1:0;
+        actor.headDip=active*(lift*.72+Math.max(bowlLift*.65,sip)*.95);
+        var headDrop=h*.029*actor.headDip;q.head.y+=headDrop;
         var mouth={x:q.head.x+forward*h*.095,y:q.head.y+h*.085};
-        var scoop={x:bowl.x-dir*h*.03,y:bowl.y-h*.06},taste={x:mouth.x-dir*h*.05,y:mouth.y+h*.02};
+        var bowl={x:table.bowl.x,y:table.bowl.y+(mouth.y-table.bowl.y)*bowlLift};
+        var scoop={x:table.bowl.x-dir*h*.03,y:table.bowl.y-h*.06},taste={x:mouth.x-dir*h*.05,y:mouth.y+h*.105};
         var target={x:scoop.x+(taste.x-scoop.x)*lift,y:scoop.y+(taste.y-scoop.y)*lift};
-        var feeding=q.arms[index],resting=q.arms[1-index];
-        // Both elbows fold inward/down toward the bowl. A side-view bend
-        // sign lifted the rear-facing elbows above the shoulders.
-        var error=armTo(feeding,target,active,h,bowl.x<feeding.shoulder.x?-1:1);
-        armTo(resting,{x:bowl.x+dir*h*.04,y:bowl.y+h*.012},active,h,bowl.x<resting.shoulder.x?-1:1);
-        var hidden=Math.cos(state.heading)>.9;
-        // Eating happens on the chest side: in front of a front-facing
-        // torso, behind a rear-facing torso. Keep each whole arm together.
-        var armDepth=q.hips.depth+(hidden?1:-1)*182*.07;
+        var errors=[];
+        q.arms.forEach(function(arm,i){
+          var side=arm.shoulder.x<q.hips.x?-1:1;
+          var eating=i===index?target:{x:table.bowl.x+dir*h*.04,y:table.bowl.y+h*.012};
+          // Both hands travel to the actual bowl before it rises, remain
+          // attached while drinking, then release only after it is set down.
+          var grip={x:bowl.x+side*7,y:bowl.y+3};
+          var goal={x:eating.x+(grip.x-eating.x)*grasp,y:eating.y+(grip.y-eating.y)*grasp};
+          errors.push(armTo(arm,goal,active,h,table.bowl.x<arm.shoulder.x?-1:1));
+          // In a frontal painting, depth foreshortens the upper arm. Author
+          // the elbow silhouette outward/down instead of folding it across
+          // the middle of the chest. Wrists stay at their contact targets.
+          var flare=active*(.86+.14*grasp),ex=arm.shoulder.x+side*h*(.045+.015*grasp),ey=arm.shoulder.y+h*.105;
+          arm.elbow.x+=(ex-arm.elbow.x)*flare;arm.elbow.y+=(ey-arm.elbow.y)*flare;
+          var dx=arm.hand.x-arm.elbow.x,dy=arm.hand.y-arm.elbow.y,len=Math.hypot(dx,dy)||1;
+          arm.tip.x=arm.hand.x+dx/len*h*.04;arm.tip.y=arm.hand.y+dy/len*h*.04;
+        });
+        var hidden=Math.cos(state.heading)>.9,armDepth=q.hips.depth+(hidden?1:-1)*182*.07;
         q.arms.forEach(function(a){['shoulder','elbow','hand','tip'].forEach(function(k){a[k].depth=armDepth;});});
-        actor.meal={bowl:bowl,hand:q.arms[index].hand,tip:{x:bowl.x+(mouth.x-bowl.x)*lift,y:bowl.y-1+(mouth.y-bowl.y+1)*lift},lift:lift,noodle:1-root.AlleyWorld.ease((phase-.36)/.22),alpha:active,time:time,mouth:mouth,reachError:error,hidden:hidden};
+        actor.meal={bowl:bowl,tableBowl:table.bowl,hand:q.arms[index].hand,tip:{x:table.bowl.x+(mouth.x-table.bowl.x)*lift,y:table.bowl.y-1+(mouth.y-table.bowl.y+1)*lift},lift:lift,noodle:(1-ease((phase-.36)/.22))*(1-finish),alpha:active,time:time,mouth:mouth,reachError:Math.max.apply(Math,errors),hidden:hidden,finish:finish,grasp:grasp,bowlLift:bowlLift,sip:sip,broth:1-ease((elapsed-53)/2.2),chopsticks:1-finish};
+
       }
     }
     // Keep the authored upper-arm/forearm lengths and solve the free hand to

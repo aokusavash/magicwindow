@@ -65,6 +65,8 @@ Next review: how populated/cozy the street feels over a minute, and whether pass
 
 ### Current checkpoint: shop-visit review
 
+Study 15 ready: widen the eating elbows, dip the head toward bites, and finish each minute-long meal with a two-handed bowl lift/sip/return. Finish the bowl provides a direct review jump. Hand/bowl contacts, head movement, one final drink and unchanged surrounding interactions are checked. Await visual review before the agreed feasibility assessment.
+
 Study 14 follow-up: remove the baked-in resting sleeves from both seated torsos and draw the real eating arms in front of the front-facing chest / behind the rear-facing back. New local corrective art and per-facing arm depth are implemented, with inward/downward elbow folds. Review both diners through scoop/lift/pause; preserve the walking baseline and the pause-to-evaluate gate.
 
 Study 13 ready for review: direct inward/outward dining facings, intentionally hidden outside food/face, a clean torso corrective asset for the reach, and local architecture/door/lantern/vine/plant layers. Check the opening for a believable two-arm silhouette and fixed foreground overlap. Continue ramen refinements until accepted, then **pause and evaluate whether to conclude the study** before more features. This overrides the older automatic cast → weather recommendation. Proposed quality diagnostic after that gate: one higher-resolution shop crop at intended display scale, preserving painterly style while testing actual detail. The full background is still 1672×941; no full-town high-resolution/layer rebuild is claimed or queued as an immediate batch.

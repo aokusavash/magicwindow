@@ -71,7 +71,30 @@ for(const plan of [VisitWorld.ramen,VisitWorld.counter]){
   }
   assert(min<.05&&max>.95,'meal must scoop and lift, with pauses between bites');meals++;
 }
+// The last twelve seconds are a single closing action, not another bite loop.
+for(const plan of [VisitWorld.ramen,VisitWorld.counter]){
+  const seg=plan.segments.find(s=>s.options.meal),at=t=>VisitPose.pose(VisitWorld.sample(plan,seg.start+t));
+  const bite=at(plan===VisitWorld.ramen?1.5:3.5),rest=VisitPose.pose({...VisitWorld.sample(plan,seg.start+(plan===VisitWorld.ramen?1.5:3.5)),meal:false});
+  assert(bite.q.head.y>rest.q.head.y+2,'head must dip toward the lifted chopsticks');
+  bite.q.arms.forEach(arm=>assert(Math.sign(arm.shoulder.x-bite.q.hips.x)*(arm.elbow.x-arm.shoulder.x)>0,'bite elbows should flare outward'));
+  let previous,finishes=0,wasDrinking=false;
+  for(let frame=1;frame<60*60;frame++){
+    const t=frame/60,a=at(t),m=a.meal;
+    assert(a.headDip>=0&&a.headDip<=1&&m.bowlLift>=0&&m.bowlLift<=1);
+    if(m.sip>.9&&!wasDrinking)finishes++;wasDrinking=m.sip>.9;
+    if(t>49.5&&t<58){
+      assert.equal(m.grasp,1);assert.equal(m.chopsticks,0);assert.equal(m.lift,0,'no noodle bites during the broth finish');
+      a.q.arms.forEach(arm=>{const side=Math.sign(arm.shoulder.x-a.q.hips.x);assert(Math.hypot(arm.hand.x-(m.bowl.x+side*7),arm.hand.y-(m.bowl.y+3))<.01,'hand left the held bowl');});
+    }
+    if(previous){assert(Math.abs(m.bowl.y-previous.meal.bowl.y)<.3,'bowl teleported');assert(Math.abs(a.q.head.y-previous.q.head.y)<.3,'head nod snapped');}
+    previous=a;
+  }
+  assert.equal(finishes,1,'exactly one final drink per meal');
+  const sip=at(54),down=at(58);assert(sip.meal.bowl.y<sip.meal.tableBowl.y-5&&sip.headDip>.8,'lift bowl to the lowered mouth');
+  assert(Math.abs(sip.meal.bowl.y-sip.meal.mouth.y)<.01,'bowl rim must meet the mouth');
+  assert.equal(down.meal.bowl.y,down.meal.tableBowl.y);assert.equal(down.headDip,0);assert.equal(down.meal.broth,0);
+}
 const closer=VisitWorld.ramen.segments.find(s=>s.action==='auto-close');
 const clear=VisitWorld.sample(VisitWorld.ramen,closer.start);assert(clear.ground.x>170&&clear.zone==='interior','closer started before the person cleared the doorway');
 assert(contacts>80&&plants>5000);
-console.log(JSON.stringify({poses,handleContacts:contacts,plantedContacts:plants,smoothRoutesAndTurns:true,offscreenLoops:true,stationaryDoorGesture:true,visibleFlowerBend:true,oneMinuteSeatedMeals:meals,automaticDoor:true,eightResidents:true}));
+console.log(JSON.stringify({poses,handleContacts:contacts,plantedContacts:plants,smoothRoutesAndTurns:true,offscreenLoops:true,stationaryDoorGesture:true,visibleFlowerBend:true,oneMinuteSeatedMeals:meals,automaticDoor:true,eightResidents:true,headDips:true,flaredElbows:true,twoHandedBrothFinish:true}));
