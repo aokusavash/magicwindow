@@ -1,6 +1,6 @@
 # Magic Window build backlog
 
-Updated October 21, 2026. This queue supports a walk → build → review cycle. See [ROADMAP.md](ROADMAP.md) for product decisions and [AGENTS.md](AGENTS.md) for working instructions.
+Updated October 22, 2026. This queue supports a walk → build → review cycle. See [ROADMAP.md](ROADMAP.md) for product decisions and [AGENTS.md](AGENTS.md) for working instructions.
 
 ## How to use this queue
 
@@ -42,6 +42,10 @@ Study 06 addresses the next review: all three walks were promising but jolty, wi
 Study 07 adds a switchable near-straight leading knee during landing, then a relaxed bend through weight transfer. Tests preserve the previous body/foot paths and bound the corrective pose's small limb-length variation. Review Straighter landing on/off before expanding people. Future variation should combine stable resident traits with coherent activity adjustments; validate ranges on several bodies, rather than randomizing each step.
 
 Walking checkpoint accepted: the user approved Study 07's motion for this character and asked for a calmer alternative. Relaxed is added at 90% Everyday pace and 90% vertical travel, preserving the accepted Everyday walk. Review this small variant, then use the accepted gait foundation for bounded multi-body retargeting and interaction work.
+
+### Current checkpoint: alley and diagonal movement
+
+The user accepted the walking quality and requested moving on, including all four 45° diagonals toward/away. Study 09 `/painted/alley/` implements the first next-stage test with eight facings, a curved out/back route, depth scale, building occlusion, and individual direction/close-up controls. Existing walking assets/controller remain frozen. Review the new views/turns and projected shoe contact. Then upgrade restaurant entry using the accepted character construction, rather than relying on the older interaction rig as proof. See the current feasibility report for actual checks and limits.
 
 ## Next build-session kickoff
 

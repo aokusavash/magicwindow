@@ -57,6 +57,12 @@ Future gait variation: keep a stable baseline per resident within visually teste
 
 Walking acceptance: the user considers the Study 07 walk nailed for this character, with a purposeful/businesslike feel. Preserve it as Everyday. A separate Relaxed variant now runs 10% slower with 10% less vertical travel; its foot roll, landing and arm-swing shape are retained. This is the default review option, while Everyday remains available. The acceptance is for side-on walking on this character; body retargeting, turns and interactions remain separate quality checks.
 
+## Turning and depth test
+
+October 22: the user accepted the walking result, agreed to freeze it, and authorized the alley test before restaurant entry. Diagonal walking is required toward and away on both sides, with at least 45° facings; people must not be limited to right-angle movement.
+
+Study 09 at `/painted/alley/` now supplies a curved alley trip out/back, perspective size changes, foreground overlap and eight individual directional tests. It reuses the accepted gait and side assets with newly prepared front/rear/quarter-view layers. Painted views blend during turns; the route/ground targets are continuous. The old walking study stays available. Review view consistency, pivots and shoe contact before treating this new action as accepted. Restaurant contact remains the next separate step; the older door rig has not been upgraded by this batch.
+
 ## Neighborhood places: current direction
 
 Further October 19 discussion: optimize the limited street frontage for **visual variety, coziness, and things children find interesting**. Do not frame the choice primarily as everyday errands or reproduce the real-world proportion of restaurants. Four or five buildings is a working composition guess, not a fixed limit.

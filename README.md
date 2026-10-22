@@ -57,6 +57,8 @@ Run `node tools/check_painted.cjs` for activity checks and `python3 tools/export
 
 Current motion experiment: [stride comparison](https://little-world-window.racing-dog-8718.chatgpt.site/painted/walking/). The user accepted the current side-on walk. Study 08 adds Relaxed at 10% slower pace and 10% less body bounce, preserving the accepted Everyday walk plus Stroll and Brisk. Near-straight landings, soft transitions, heel/toe roll and restrained arm swing are retained. Single views, the previous stride, knee/arm toggles and half-speed inspection are available. This remains a walking study separate from the interaction rig. See the feasibility report for findings.
 
+Newest movement test: [alley and diagonals](https://little-world-window.racing-dog-8718.chatgpt.site/painted/alley/). Study 09 adds curved turns, depth/foreground overlap, and eight directions including all four 45° diagonals. The accepted walk remains available above. Review the new painted-view transitions and projected motion; restaurant entry remains a separate next test. Run `node tools/check_alley.cjs` for route/pose checks.
+
 ## Technical studies
 
 The separate `/studies/` page compares pixel and illustrated movable-part characters against a near-side-on painted town. It includes a family-and-dog movement rehearsal, a pace comparison, and a text-free fullscreen view. This earlier technical experiment does not select the phase-one art style or replace the original `/` prototype.

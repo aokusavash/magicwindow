@@ -1,3 +1,21 @@
+# Study 09: alley, turning, and eight-direction movement
+
+October 22, 2026. The user accepted the walking result and authorized the next test: turning and walking into depth, followed by restaurant interaction. They specifically require diagonal movement toward and away in either direction, with at least 45° facings. Preserve the accepted side-on walk.
+
+Review `/painted/alley/`. The resident follows a curved street-to-alley route, walks into depth, passes behind a building corner, pauses/turns there, returns toward the viewer and turns for the next trip. The full route is about 43 seconds. Individual direction controls cover left/right, front/back and all four 45° diagonals; each short test slows to a stop and can be replayed. Turn into alley and Diagonal return skip to useful review points. Close-up, half-speed, path overlay, reduced-motion startup and asset-failure handling are included.
+
+Reuse and new work: `alley/world.js` defines an arc-length sampled curved ground path, acceleration/deceleration and projection. `alley/actor.js` consumes the accepted Relaxed gait's timing, near-straight landing, quieter body motion and arm swing, then projects its joint targets along that path. Ground foot targets stay planted during steady curved travel; height decreases with depth. Five canonical painted views (front, front quarter, side, rear quarter and rear) plus mirroring cover eight headings. Adjacent views blend through turns. The side artwork/limbs are reused; new directional torso/arm atlases and a four-view single-leg atlas supply the missing angles. The initially generated paired-leg cells are retained in the source sheets but not used for movement. PNG source files remain unchanged; `tools/measure_direction_parts.py` reproduces the measured alpha bounds.
+
+The bag remains an attached prop and is drawn on the appropriate side of the torso. Two foreground masks from the same scenery cover the actor as she passes behind the alley buildings; she does not fade away at the corner. The original `/`, accepted `/painted/walking/` gait/renderer, and older `/painted/` interaction logic are unchanged apart from review links.
+
+**Limits to review:** these are blended painted facings, not arbitrary 3D camera rotation. View consistency, blend silhouettes, projected proportions and stop/pivot behavior need visual acceptance. The new angles use restrained, separately cropped shoe drawings after full mesh projection over-bent the shoes; their contact/roll is an artistic approximation. Math checks verify the ground targets, not perfect raster-shoe contact. Foreground masks and path are hand calibrated to this plate, with no general collision/navigation system. The perspective camera is likewise calibrated for this street. Restaurant entry with the accepted character construction is the next separate interaction test, not implemented by this batch. No live weather, population expansion, or new engine is introduced.
+
+Validation: `node tools/check_alley.cjs` checks eight directions/all four diagonals, continuous route/loop headings, projected joint finiteness, depth scaling, stopping and more than 5,000 steady planted-foot samples along curved travel. Existing gait checks pass. `python3 tools/check_alley_browser.py` checks direction controls, paused inspection, close-up/half-speed/path controls, restart after a completed test, mobile/reduced motion, missing artwork and building occlusion (the hidden actor's projected region matches the scenery). Desktop/mobile screenshots, turning, approach/return and all eight headings were inspected. Physical-TV testing and artistic acceptance of these new actions remain open.
+
+Next review: does the character turn and move diagonally convincingly, stay grounded as she recedes, and retain a coherent identity across views? Freeze the accepted walking work and target observed issues in these new behaviors before restaurant entry.
+
+---
+
 # Accepted walking checkpoint and relaxed variant
 
 October 21, 2026. The user accepted the Study 07 walk as visually successful, describing it as purposeful/businesslike rather than a casual stroll. This acceptance applies to the current character's side-on walking, not the full interaction scene or every future body type.
