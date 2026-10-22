@@ -57,7 +57,7 @@ Pole-depth refinement: fixed the brief cutout at the alley mouth on both legs of
 
 ### Current checkpoint: populated-street review
 
-Resolved follow-up: left-side hip/leg separation was an off-axis projection mismatch with the flat torso. Hip roots now follow the torso plane, tapering the correction through the knees while preserving planted feet. Screen-position/depth/heading and existing browser/overlap checks pass. Review at the same crowd URL.
+Follow-up: the first hip repair addressed attachment but user review found the feet still produced a growing uneven stride on the left. Character-width offsets now use the route's local image plane, removing the per-foot forward/backward bias while keeping planted contacts and the accepted gait. A full-cycle comparison across the screen fails on the previous version and passes now; existing depth/heading/browser/overlap checks also pass. Await visual review at the same crowd URL.
 
 The user accepted coherent walking around town, deferred the remaining minor blips and requested five to eight clones for a density review. Study 10 `/painted/crowd/` supplies eight active walkers, a five-person comparison, staggered street/alley routes and reusable rendering with per-person occlusion. All copies share the existing art. The visible count changes as people leave the frame or pass behind scenery. Controls, phone/reduced motion, missing artwork, depth compositing, compact/full rendering and planted-contact checks pass; the single-person rendering is preserved.
 

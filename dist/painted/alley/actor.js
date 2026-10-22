@@ -15,8 +15,16 @@
     function point(node,lateral,bias){
       var along=node.x-(bias||0),p=state.route.sample(state.s+state.sign*along),nx=p.dz*state.sign,nz=-p.dx*state.sign;
       if(state.phase==='hidden-turn'||state.phase==='street-turn'){p={x:state.x+Math.sin(state.heading)*along,z:state.z+Math.cos(state.heading)*along};nx=Math.cos(state.heading);nz=-Math.sin(state.heading);}
-      var x=p.x+nx*lateral,z=p.z+nz*lateral;
-      return Object.assign(root.AlleyWorld.project(x,z,-node.y),{depth:z});
+      var x=p.x+nx*lateral,z=p.z+nz*lateral,center=root.AlleyWorld.project(p.x,p.z,-node.y);
+      var projected=root.AlleyWorld.project(x,z,-node.y);
+      // These painted characters use a flat camera-facing body, not a fully
+      // modeled volume. Project the route in perspective, but keep body-width
+      // offsets in its local image plane. Projecting each foot's lateral depth
+      // toward the scene's off-center vanishing point shifted one foot forward
+      // and the other backward, creating a growing limp on the left. Evaluate
+      // this at the foot's route position, so a planted contact stays fixed.
+      projected.x=center.x+nx*lateral*center.scale;
+      return Object.assign(projected,{depth:z});
     }
     var q={hips:point(local.hips,0),shoulders:point(local.shoulders,0),head:point(local.head,0),legs:[],arms:[]};
     local.legs.forEach(function(l,i){
@@ -26,7 +34,7 @@
       // on its two hip roots pulled them apart toward the left of the street.
       // Attach both roots in the torso's camera plane, tapering the correction
       // through the knee to zero at the ankle. This affine shear preserves a
-      // straight leg and leaves every world-space foot contact untouched.
+      // straight leg and leaves the projected ground targets untouched.
       var dx=q.hips.x+Math.cos(state.heading)*lateral*q.hips.scale-out.hip.x,dy=q.hips.y-out.hip.y;
       var kneeWeight=(out.ankle.y-out.knee.y)/(out.ankle.y-out.hip.y);
       out.hip.x+=dx;out.hip.y+=dy;
@@ -43,7 +51,7 @@
         // The torso is a painted billboard. Project its attached arms in that
         // same local camera plane: full off-axis perspective on only the arms
         // pulled the far sleeve outside the jacket, especially facing left.
-        // Retain world depth for overlaps, and full 3D ground targets for feet.
+        // Retain world depth for overlaps and route-based targets for feet.
         p.x=q.hips.x+(Math.sin(state.heading)*along+Math.cos(state.heading)*lateral)*scale;
         p.y=q.hips.y+(n.y-local.hips.y)*scale;out[k]=p;
       });q.arms.push(out);

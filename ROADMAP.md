@@ -73,6 +73,8 @@ Alley-mouth follow-up: the pole briefly covered the character while she was stil
 
 ## Accepted movement milestone and crowd review
 
+Subsequent user review found the hip-only repair still produced uneven alternating steps toward the left. Corrected lateral offsets throughout the character projection so foot depth no longer introduces a position-dependent forward/backward bias. Route perspective, fixed stance contacts, depth ordering and the accepted gait remain. Added a full-cycle left/center/right comparison (both directions/four depths) that reproduces the previous defect and passes with the correction. Crowd/alley browser and garment/pole checks pass; await visual review at the same crowd URL.
+
 Crowd-review follow-up: fixed the left-side leg distortion caused by projecting hip roots in depth while the painted torso stayed flat. Upper legs now attach to the torso plane, with the adjustment tapering to unchanged ankle/ground targets. Left/center/right, eight-heading and depth regressions verify the attachment and preserved knee/foot mechanics. The accepted standalone walking study is unchanged; further minor motion polish remains deferred.
 
 The user now considers the coherent town walk successful enough to move on; remaining small blips can be honed later. Preserve this milestone rather than continuing open-ended gait polishing. They requested five to eight copies of the same resident to judge the populated scene and asked for advice on the next product step.
