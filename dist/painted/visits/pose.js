@@ -28,7 +28,8 @@
     }
     if(state.seat>0&&tables[state.table]){
       actor.diningBody=true;
-      var table=tables[state.table],seat=state.seat,shift=(table.hipY-q.hips.y)*seat,forward=Math.sin(state.heading);
+      var table=Object.assign({},tables[state.table]),seat=state.seat,shift=(table.hipY-q.hips.y)*seat,forward=Math.sin(state.heading);
+      if(state.seatRaise){table.hipY-=state.seatRaise;shift=(table.hipY-q.hips.y)*seat;}
       q.hips.y+=shift;[q.shoulders,q.head,q.bag].forEach(function(p){p.y+=shift;});
       q.arms.forEach(function(a){['shoulder','elbow','hand','tip'].forEach(function(k){a[k].y+=shift;});});
       q.legs.forEach(function(l,i){
@@ -55,7 +56,7 @@
           var eating=i===index?target:{x:table.bowl.x+dir*h*.04,y:table.bowl.y+h*.012};
           // Both hands travel to the actual bowl before it rises, remain
           // attached while drinking, then release only after it is set down.
-          var grip={x:bowl.x+side*7,y:bowl.y+3};
+          var grip={x:bowl.x+side*(state.mealGrip||7),y:bowl.y+3};
           var goal={x:eating.x+(grip.x-eating.x)*grasp,y:eating.y+(grip.y-eating.y)*grasp};
           errors.push(armTo(arm,goal,active,h,table.bowl.x<arm.shoulder.x?-1:1));
           // In a frontal painting, depth foreshortens the upper arm. Author

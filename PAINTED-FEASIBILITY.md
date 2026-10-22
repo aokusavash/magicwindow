@@ -1,3 +1,21 @@
+# Study 16: a varied cast on the same street
+
+The user accepted the meal polish and requested a stronger reuse test: a man in substantially different clothing, variations of the woman, and a child around half adult height. Background replacement is explicitly deferred. `/painted/cast/` now compares the original, a 9% taller variation using the same artwork, a ponytailed woman in a blue blouse/ochre trousers, a man in a navy yukata and a child in a coral sweatshirt/olive shorts.
+
+Three generated part atlases supply five canonical facings each, with opposite directions mirrored. Each design has head/arm-free torso, two independent arms and independent leg textures; the yukata also has continuous lower garment panels. Torso cleanup was necessary to remove baked sleeves. The single side-view child leg is reused for both physical legs. No new independent walk/eat/turn action sheets were produced. Atlas alpha and centerlines are measured into tracked registration metadata by `tools/measure_cast.py`; original PNG bytes are retained.
+
+Profiles reuse the accepted gait and visit actions. Body height enters the pose calculation before route projection so stance contacts stay planted. The child has shorter legs, a larger relative head and adjusted arms. Artwork-specific ankle, limb width and shoe width/height registration avoid oversized footwear and below-ground soles. Custom actor buffers include raised seated heads, fixing clipping exposed by the first composite.
+
+The yukata is one deforming painted panel over the moving underlegs, participating in torso coverage and arm depth. Quiet hem sway and shape follow the hips/ankles. This is a garment-specific 2D treatment, not general clothing simulation; compression when seated and larger folds still need artistic review. The child cannot reach the adult handle, so entry is automatic. A raised seat and wider bowl grip adapt dining; the shared seating transition remains and a complete stool-climbing action is not implemented. These constraints are evidence about reuse rather than reasons to pretend every body can use unchanged furniture choreography.
+
+Walk together shows all five profiles. Character selection preserves action time; controls jump to alley turns, entrance, rear-facing counter dining, front-facing interior dining, the broth finish and flowers. The scene and original one-person `/painted/visits/` stay available for comparison. No new background composition or shop mix is built.
+
+Checks cover five bodies across eight headings, finite poses, ground contacts, adult handle contact, child automatic entry/raised seat, both hands following the bowl, visible seated heads, expected relative heights, actual garment compositing, controls, phone/reduced-motion startup and missing art. Existing walk/projection, meal/door and crowd checks protect accepted behavior. Screenshots are inspected at street and close-up size; passing checks alone do not establish naturalness or physical-TV performance.
+
+Next: review the new people, particularly robe folds/stride, child scale and seating, limbs through turns, and whether art/calibration effort is acceptable. Keep the background deferred until this animation study is ready to conclude.
+
+---
+
 # Study 15: posture and a finishing sip
 
 The user liked the arm repair and requested flared elbows, a head dip toward lifted chopsticks, and a final two-handed bowl drink. Seated elbow silhouettes now sit farther outward/down with the hand targets preserved. A small eased head dip follows each bite. The head is articulated from the existing portrait at the neck over the fixed collar, with slight vertical foreshortening; no walking artwork or gait is changed.

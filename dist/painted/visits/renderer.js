@@ -1,9 +1,9 @@
 (function(root){
   'use strict';
-  function renderer(canvas,images){
+  function renderer(canvas,images,options){
     var scene=document.createElement('canvas'),layer=document.createElement('canvas');scene.width=layer.width=1600;scene.height=layer.height=900;
     var ctx=scene.getContext('2d',{alpha:false}),actorCtx=layer.getContext('2d'),output=canvas.getContext('2d',{alpha:false});
-    var drawActor=root.AlleyActor.renderer(actorCtx,images,root.AlleyFrames,{compact:true,pose:root.VisitPose.pose}),previousBounds;
+    var drawActor=options&&options.actorRenderer?options.actorRenderer(actorCtx):root.AlleyActor.renderer(actorCtx,images,root.AlleyFrames,{compact:true,pose:root.VisitPose.pose}),previousBounds;
     var d=root.VisitWorld.door;
     // Local entrance study: opaque architecture, moving leaf and fixed
     // transparent props. No lantern or foliage is sampled into the leaf.
@@ -47,7 +47,7 @@
     function person(state,inside){
       if(state.inFrame===false||state.hidden)return;
       if(previousBounds)actorCtx.clearRect(previousBounds.x,previousBounds.y,previousBounds.width,previousBounds.height);
-      if(!inside){var p=state.ground||root.AlleyWorld.project(state.x,state.z),height=182*p.scale;actorCtx.fillStyle='rgba(44,39,27,.18)';actorCtx.beginPath();actorCtx.ellipse(p.x,p.y+1-(state.seat||0)*16,height*.14,Math.max(1,height*.014),0,0,Math.PI*2);actorCtx.fill();}
+      if(!inside){var p=state.ground||root.AlleyWorld.project(state.x,state.z),height=state.height||182*p.scale;actorCtx.fillStyle='rgba(44,39,27,.18)';actorCtx.beginPath();actorCtx.ellipse(p.x,p.y+1-(state.seat||0)*16,height*.14,Math.max(1,height*.014),0,0,Math.PI*2);actorCtx.fill();}
       var actor=drawActor(state),b=actor.bounds;previousBounds=b;meal(actor);
       actorCtx.save();actorCtx.beginPath();actorCtx.rect(b.x,b.y,b.width,b.height);actorCtx.clip();
       if(inside){
@@ -65,12 +65,13 @@
     }
     return function(population,focus){
       ctx.drawImage(images.background,0,0,1600,900);var visitor=population.find(function(s){return s.id==='ramen-visitor';}),open=visitor?visitor.door:0;door(open);
+      if(options&&options.seats)options.seats(ctx,population);
       population.filter(function(s){return s.zone==='interior';}).forEach(function(s){person(s,true);});
       var outside=population.filter(function(s){return s.zone!=='interior';}).sort(function(a,b){return b.z-a.z||a.id.localeCompare(b.id);});
       outside.filter(function(s){return (s.ground||root.AlleyWorld.project(s.x,s.z)).y<716;}).forEach(function(s){person(s,false);});
       foreground();
       outside.filter(function(s){return (s.ground||root.AlleyWorld.project(s.x,s.z)).y>=716;}).forEach(function(s){person(s,false);});
-      var crop=focus==='ramen'?{x:0,y:430,w:640,h:360}:focus==='flowers'?{x:350,y:450,w:640,h:360}:{x:0,y:0,w:1600,h:900};
+      var crop=typeof focus==='object'?focus:focus==='ramen'?{x:0,y:430,w:640,h:360}:focus==='flowers'?{x:350,y:450,w:640,h:360}:{x:0,y:0,w:1600,h:900};
       output.drawImage(scene,crop.x,crop.y,crop.w,crop.h,0,0,1600,900);
     };
   }

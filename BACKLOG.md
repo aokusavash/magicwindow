@@ -12,6 +12,8 @@ A saved backlog is not an execution service. No unattended coding runner or sche
 
 ## Current priority: painted-animation feasibility
 
+**Current batch: Study 16 cast review.** The user accepted meal polish and authorized a robe-wearing man, two woman variations (height and new hair/top) and a half-height child. Implemented at `/painted/cast/` with shared actions, measured part atlases, robe cloth and child seat/entry adaptations. Review proportions, garment motion, foot/hand contact and view changes. **Replacement background is explicitly deferred**; do not start composition, shop swaps or higher-resolution scenery as part of this batch. Full child stool climbing is a separate unimplemented action.
+
 October 21 user decision: try the ambitious painted-animation direction first, with storybook as a close alternative. Both are preferred over defaulting to pixel art for ease; all four remain acceptable if evidence guides a change. This experimental choice removes the need to wait for an initial style preference before preparing a small painted study. Final visual acceptance and release remain separate.
 
 The existing October 20 movement study is a technical rehearsal, not evidence that the new visual-quality target has been met. Consult its implementation notes and reuse useful foundations, preserving the existing prototype and unrelated work. Phaser is still a candidate, not a selected dependency.

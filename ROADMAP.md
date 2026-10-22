@@ -73,6 +73,8 @@ Alley-mouth follow-up: the pole briefly covered the character while she was stil
 
 ## Accepted movement milestone and crowd review
 
+Current authorized batch: the user accepted Study 15, chose to focus on the cast, and explicitly deferred all replacement-background work. Study 16 now tests a man in a yukata, a 9% taller version of the original woman, a ponytailed woman in a different blouse/trousers, and a child around half adult height. Reuse existing walking/turning/ramen controls, with garment-specific cloth, child proportions and furniture adaptations as needed. The child uses automatic entry and a raised seat; a complete climbing animation remains separate. Review this study before expanding scope. Background composition/shop mix/high-resolution art will be tackled later when ready.
+
 Meal polish (Study 15): the user liked the repaired arms and requested wider eating elbows, a head dip toward chopsticks, and a final two-handed drink of broth. Both diners now finish their minute-long meal with chopsticks down, grasp/lift/sip, return/release and settle; the front view exposes the action and the rear keeps hands/food hidden. Finish the bowl jumps to that ending. Await review, retaining the study evaluation gate.
 
 Dining follow-up: the user identified duplicate resting sleeves and front-facing eating arms disappearing behind the torso. Study 14 now uses sleeve-free front/rear torso underpaintings for seated actions, with both real arms on the chest side and inward/downward elbow folds. Preserve the accepted walking art and square-on dining views; await visual review before advancing.

@@ -17,7 +17,7 @@
     return list;
   }
   function deform(mesh,p,q){
-    var aim=targets(p,q,mesh),widthScale=p.height/(mesh.referenceHeight||mesh.box.height),mirror=p.view==='side'?p.direction:1;
+    var aim=targets(p,q,mesh),widthScale=p.height/(mesh.referenceHeight||mesh.box.height)*(mesh.widthScale||1),mirror=p.view==='side'?p.direction:1;
     var matrices=mesh.bones.map(function(b,i){
       var rx=b[1][0]-b[0][0],ry=b[1][1]-b[0][1],rd=Math.hypot(rx,ry)||1;
       var a=aim[i][0],c=aim[i][1],dx=c.x-a.x,dy=c.y-a.y,d=Math.hypot(dx,dy)||1;
