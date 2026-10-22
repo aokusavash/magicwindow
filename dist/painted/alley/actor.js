@@ -63,12 +63,31 @@
     for(var y=0;y<ny;y++)for(var x=0;x<nx;x++){var a=y*(nx+1)+x;triangles.push([a,a+1,a+nx+2],[a,a+nx+2,a+nx+1]);}
     return {box:box,bones:bones,vertices:vertices,triangles:triangles,referenceHeight:kind==='arm'?h*.90/.35:h*(ankleY-.06)/.48};
   }
-  function renderer(ctx,images,frames){
+  function renderer(ctx,images,frames,options){
+    var compact=options&&options.compact,width=compact?256:1600,height=compact?384:900,ox=0,oy=0;
     var piece=document.createElement('canvas'),blend=document.createElement('canvas'),torso=document.createElement('canvas'),legLayer=document.createElement('canvas');
-    [piece,blend,torso,legLayer].forEach(function(c){c.width=1600;c.height=900;});
+    [piece,blend,torso,legLayer].forEach(function(c){c.width=width;c.height=height;});
     var brush=piece.getContext('2d'),composite=blend.getContext('2d'),torsoBrush=torso.getContext('2d'),legBrush=legLayer.getContext('2d'),cache={},commands=[];
     // Keep the source torso coverage beneath moving sleeves. Trimming away
     // baked sleeves without underpaint exposed the scenery through her jacket.
+    function compactMesh(m){
+      if(!compact)return m;
+      // Within a run of identical bone weights the painting is one affine
+      // surface. Intermediate rows add draw calls without changing its shape.
+      // Keep every changing-weight row, including knees, ankles and toe flex.
+      var stride=1;while(stride<m.vertices.length&&m.vertices[stride][1]===m.vertices[0][1])stride++;
+      var rows=m.vertices.length/stride,keys=[],keep=[0],triangles=[];
+      for(var r=0;r<rows;r++)keys.push(JSON.stringify(m.vertices.slice(r*stride,(r+1)*stride).map(function(v){return v[2];})));
+      for(var r=1;r<rows-1;r++)if(keys[r]!==keys[r-1]||keys[r]!==keys[r+1])keep.push(r);
+      keep.push(rows-1);
+      for(var r=1;r<keep.length;r++){
+        var first=keep[r-1]*stride,last=keep[r]*stride,key=JSON.stringify(m.vertices[first][2]);
+        var affine=keys[keep[r-1]]===keys[keep[r]]&&m.vertices.slice(first,first+stride).every(function(v){return JSON.stringify(v[2])===key;});
+        if(affine)triangles.push([first,first+stride-1,last+stride-1],[first,last+stride-1,last]);
+        else for(var c=0;c<stride-1;c++){var a=first+c,b=last+c;triangles.push([a,a+1,b+1],[a,b+1,b]);}
+      }
+      return Object.assign({},m,{triangles:triangles});
+    }
     function crop(image,box){var c=document.createElement('canvas');c.width=box.width;c.height=box.height;c.getContext('2d').drawImage(image,box.x,box.y,box.width,box.height,0,0,box.width,box.height);return c;}
     views.forEach(function(name){
       var data={arms:[],legs:[]};
@@ -84,7 +103,7 @@
           texture.getContext('2d').clearRect(0,legBox.height*cut,legBox.width,legBox.height);
           data.legs.push({mesh:buildMesh(legBox,'leg',i,name),texture:texture,shoe:{image:images.legs,box:legBox,ankleY:cut,ankleX:name.indexOf('45')>=0?.30:.50}});
         });
-      }cache[name]=data;
+      }if(compact){data.arms.forEach(function(a){a.mesh=compactMesh(a.mesh);});data.legs.forEach(function(l){l.mesh=compactMesh(l.mesh);});}cache[name]=data;
     });
     function mesh(item,p,q,physical){
       // Rebind a source left/right limb to the physical leg/arm it depicts.
@@ -96,15 +115,15 @@
       var depth=isArm?(limb.shoulder.depth+limb.elbow.depth+limb.hand.depth)/3:(limb.hip.depth+limb.knee.depth+limb.ankle.depth)/3;
       commands.push({depth:depth,paint:function(){
         var targetBrush=isArm?brush:legBrush;
-        if(!isArm)legBrush.clearRect(0,0,1600,900);
+        if(!isArm)legBrush.clearRect(ox,oy,width,height);
         item.mesh.triangles.forEach(function(t){root.PaintedSkin.triangle(targetBrush,item.texture,t.map(function(i){return item.mesh.vertices[i];}),t.map(function(i){return points[i];}),.65);});
         if(!isArm){
           // Cloth coverage is not anatomical depth: the jacket stays over the
           // trouser roots even when a stepping leg comes nearer the camera.
           // Use its actual alpha silhouette, preserving holes/open space and
           // keeping arm/leg/bag depth ordering unchanged everywhere else.
-          legBrush.globalCompositeOperation='destination-out';legBrush.drawImage(torso,0,0);legBrush.globalCompositeOperation='source-over';
-          brush.drawImage(legLayer,0,0);
+          legBrush.globalCompositeOperation='destination-out';legBrush.drawImage(torso,ox,oy);legBrush.globalCompositeOperation='source-over';
+          brush.drawImage(legLayer,ox,oy);
         }
       }});
     }
@@ -114,7 +133,7 @@
       var near=Math.sin(state.heading)>=0?0:1,far=1-near;
       commands=[];
       var bodyBox=data.body.box,bodyScale=p.height*.54/bodyBox.height;
-      torsoBrush.clearRect(0,0,1600,900);torsoBrush.save();torsoBrush.translate(q.hips.x,q.hips.y+p.height*.02);torsoBrush.scale(p.direction*bodyScale,bodyScale);
+      torsoBrush.clearRect(ox,oy,width,height);torsoBrush.save();torsoBrush.translate(q.hips.x,q.hips.y+p.height*.02);torsoBrush.scale(p.direction*bodyScale,bodyScale);
       torsoBrush.drawImage(data.body.image,bodyBox.x,bodyBox.y,bodyBox.width,bodyBox.height,-bodyBox.width*data.body.pivot,-bodyBox.height,bodyBox.width,bodyBox.height);torsoBrush.restore();
       [far,near].forEach(function(i){
         var source=name==='side'?(i===near?0:1):(i===0?source0:1-source0),item=data.legs[source];mesh(item,p,q,i);
@@ -124,7 +143,7 @@
       });
       mesh(data.arms[name==='side'?1:(far===0?source0:1-source0)],p,q,far);
       commands.push({depth:q.hips.depth,paint:function(){
-        brush.drawImage(torso,0,0);
+        brush.drawImage(torso,ox,oy);
         // Front/quarter/side paintings already carry the shoulder strap. Only
         // add the absent rear strap, rather than drawing a second one from the
         // middle of her neck over every view.
@@ -136,7 +155,13 @@
       commands.push({depth:q.bag.depth-H*.09,paint:function(){bag(p,q);}});
       commands.sort(function(a,b){return b.depth-a.depth;}).forEach(function(c){c.paint();});
     }
-    return function(state){var actor=pose(state);composite.clearRect(0,0,1600,900);composite.globalCompositeOperation='lighter';facing(state.heading).forEach(function(v){brush.clearRect(0,0,1600,900);view(v.name,actor,state);composite.globalAlpha=v.weight;composite.drawImage(piece,0,0);});composite.globalAlpha=1;ctx.drawImage(blend,0,0);return actor;};
+    return function(state){
+      var actor=pose(state);ox=compact?Math.floor(actor.p.x-width/2):0;oy=compact?Math.floor(actor.p.y-actor.p.height*1.10-12):0;
+      [brush,torsoBrush,legBrush].forEach(function(c){c.setTransform(1,0,0,1,-ox,-oy);});
+      composite.clearRect(0,0,width,height);composite.globalCompositeOperation='lighter';
+      facing(state.heading).forEach(function(v){brush.clearRect(ox,oy,width,height);view(v.name,actor,state);composite.globalAlpha=v.weight;composite.drawImage(piece,0,0);});
+      composite.globalAlpha=1;ctx.drawImage(blend,ox,oy);actor.bounds={x:ox,y:oy,width:width,height:height};return actor;
+    };
   }
   var api={pose:pose,facing:facing,renderer:renderer,buildMesh:buildMesh};root.AlleyActor=api;
   if(typeof module!=='undefined'&&module.exports)module.exports=api;

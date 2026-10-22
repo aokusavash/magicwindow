@@ -1,3 +1,21 @@
+# Study 10: a populated street
+
+The user accepts the coherent town walk as a milestone, with remaining minor blips deferred. They requested five to eight copies to judge population and the overall street experience before further action work.
+
+Review `/painted/crowd/`: eight active copies by default, switchable to five without resetting their schedules. People walk both ways on street lanes and make separate alley trips, with staggered starts, stride phases and route speeds. They enter/leave at screen edges and turn at a hidden alley corner, so the number visible at any instant varies. Pause, half speed, restart, fullscreen, reduced-motion startup and asset-failure handling are included. This is a density/movement review with identical artwork, not a varied cast, character stories, shop visits or a complete ambient simulation.
+
+`crowd/world.js` keeps routes/schedules separate from rendering. `crowd/renderer.js` sorts residents by ground depth and applies scenery masks to each resident's transparent layer, preserving other people. It reuses the same gait, directional paintings, clothing coverage and pole-depth rules. There is no collision-avoidance planner; separate lanes and phase offsets provide a first arrangement, and some passes/occlusions still need visual judgment.
+
+An optional compact mode in the shared actor renderer uses 256×384 buffers instead of whole-scene intermediates. It also collapses mesh subdivisions only where bone weights are constant and the deformation is affine, preserving all changing-weight rows at knees/ankles/toes. It does not change the accepted gait or generate replacement artwork. The existing single-person renderer remains the default; sixteen directional frames were bit-identical to the preceding revision. A 29-pose compact/full comparison found mean channel error below 0.4/255, with about 0.06% of covered pixels showing larger edge/seam differences.
+
+Checks: `node tools/check_crowd.cjs` verifies five/eight residents, finite poses, depth order, fourteen offscreen wraps and over 14,000 planted contacts across the new routes. `python3 tools/check_crowd_browser.py` verifies compact/full rendering, order-independent population compositing, complete hidden-corner masking, no stale people after clearing the population, controls/time preservation, phone/reduced motion and missing art. Existing alley path, hand/clothing, pole and browser regressions pass. Five/eight screenshots and later timeline frames were inspected.
+
+Performance limit: this workspace's headless Chromium measured roughly 37 ms median / 45 ms p95 for an eight-person draw in the render check. This is a local rendering measurement, not physical-TV frame-rate validation or a 60 fps claim. More population or TV deployment may need further profiling/caching or a rendering backend change. The original prototype and accepted walking comparison remain available.
+
+Recommended next milestone, not implemented by this batch: one complete ramen-shop visit using the accepted character construction (approach, stop/turn, hand/door contact, enter and return), then a small varied cast to test reuse, then lighting/weather tied to Seattle. Aim for varied visible reasons to pause and linger as well as walking.
+
+---
+
 # Study 09: alley, turning, and eight-direction movement
 
 **Latest refinement — pole depth at the alley mouth:** the user observed a brief body cutout at the same spot outbound and returning. The foreground group used a shared z=35 gate even though the character was still standing in front of the painted pole's base. The pole is now a separate narrow silhouette anchored at ground row 702; pots/frontage and foliage use their own ground rows (715/711). Occlusion activates only when the projected ground position is behind the corresponding object. This preserves passage in front of the pole near the street and genuine overlap farther down the alley. The path, character, garment coverage and accepted walking study are unchanged.

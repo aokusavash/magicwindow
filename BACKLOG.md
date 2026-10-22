@@ -43,7 +43,7 @@ Study 07 adds a switchable near-straight leading knee during landing, then a rel
 
 Walking checkpoint accepted: the user approved Study 07's motion for this character and asked for a calmer alternative. Relaxed is added at 90% Everyday pace and 90% vertical travel, preserving the accepted Everyday walk. Review this small variant, then use the accepted gait foundation for bounded multi-body retargeting and interaction work.
 
-### Current checkpoint: alley and diagonal movement
+### Accepted checkpoint: alley and diagonal movement
 
 The user accepted the walking quality and requested moving on, including all four 45° diagonals toward/away. Study 09 `/painted/alley/` implements the first next-stage test with eight facings, a curved out/back route, depth scale, building occlusion, and individual direction/close-up controls. Existing walking assets/controller remain frozen. Review the new views/turns and projected shoe contact. Then upgrade restaurant entry using the accepted character construction, rather than relying on the older interaction rig as proof. See the current feasibility report for actual checks and limits.
 
@@ -54,6 +54,12 @@ Second-review regression repair: restore full jacket coverage (remove torso slee
 Garment overlap refinement: the jacket/blouse silhouette now covers trouser roots throughout the stride, independently of anatomical limb depth. Added eight-heading/full-stride raster checks for covered and exposed trouser regions; existing hand/gait checks pass. Await visual review of the waist overlap before advancing the interaction study.
 
 Pole-depth refinement: fixed the brief cutout at the alley mouth on both legs of the trip. The pole has its own silhouette and ground-contact depth, distinct from the pots/frontage; the route and animation stay intact. A 50-frame crossing regression check passes while distant occlusion remains. Await review before the restaurant interaction test.
+
+### Current checkpoint: populated-street review
+
+The user accepted coherent walking around town, deferred the remaining minor blips and requested five to eight clones for a density review. Study 10 `/painted/crowd/` supplies eight active walkers, a five-person comparison, staggered street/alley routes and reusable rendering with per-person occlusion. All copies share the existing art. The visible count changes as people leave the frame or pass behind scenery. Controls, phone/reduced motion, missing artwork, depth compositing, compact/full rendering and planted-contact checks pass; the single-person rendering is preserved.
+
+Next review: how populated/cozy the street feels over a minute, and whether passing/occlusion and runtime performance remain acceptable. A real TV performance check is outstanding. Recommended subsequent batch is one complete ramen-shop visit with physical hand/door contact using the accepted character, followed by a small varied cast and local lighting/weather. Those later batches are not implemented by the crowd preview.
 
 ## Next build-session kickoff
 

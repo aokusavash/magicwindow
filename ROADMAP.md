@@ -71,6 +71,14 @@ Further review found trouser roots alternating over the jacket, particularly wal
 
 Alley-mouth follow-up: the pole briefly covered the character while she was still in front of its base, in both travel directions. Split its narrow silhouette from the broad frontage mask and anchor pole/pot/foliage occlusion to their painted ground-contact rows rather than the shared z=35 threshold. Fifty sampled crossing frames now retain the full character, with legitimate distant overlap preserved. Review this final alley correction before moving on to restaurant contact.
 
+## Accepted movement milestone and crowd review
+
+The user now considers the coherent town walk successful enough to move on; remaining small blips can be honed later. Preserve this milestone rather than continuing open-ended gait polishing. They requested five to eight copies of the same resident to judge the populated scene and asked for advice on the next product step.
+
+Study 10 at `/painted/crowd/` provides eight active walkers by default and a five-person comparison. Staggered street/alley routes, speeds, phases, depth sorting and per-person scenery masks show density and crossing activity; people can be offscreen or behind scenery. Reuse the accepted artwork/motion. An optional compact renderer reduces intermediate-buffer and affine-subdivision work, while the default single-person rendering remains visually unchanged. Browser checks pass; physical-TV performance remains unverified, and local headless eight-person draws still cost around 37 ms.
+
+Recommended next sequence: one convincing shop visit/contact test; a few distinct people to prove shared-action retargeting; then Seattle lighting/weather and mixed walking/lingering for the family watching test. These are recommendations, not completed features or background jobs. Crowd collision avoidance, persistent identities and the AI director remain later work.
+
 ## Neighborhood places: current direction
 
 Further October 19 discussion: optimize the limited street frontage for **visual variety, coziness, and things children find interesting**. Do not frame the choice primarily as everyday errands or reproduce the real-world proportion of restaurants. Four or five buildings is a working composition guess, not a fixed limit.
