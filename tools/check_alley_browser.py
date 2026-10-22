@@ -20,6 +20,8 @@ with sync_playwright() as p:
     assert all(s['covered']>50 and s['bad']==0 for s in rendering['overlaps']),rendering
     assert rendering['chest']['missing']==0,rendering
     assert all(s['covered']>50 and s['bad']==0 and s['exposed']>50 and s['missing']==0 for s in rendering['waist']),rendering['waist']
+    mouth=page.evaluate((Path(__file__).parent/'alley_path_occlusion_checks.js').read_text())
+    assert all(s['frames']==25 and s['clippedFrames']==0 for s in mouth.values()),mouth
     before=page.evaluate('AlleyStudy.state().seconds');page.wait_for_timeout(120)
     assert page.evaluate('AlleyStudy.state().seconds')==before
     for button,state in [('closeup','closeup'),('slow','slow'),('guides','guides')]:
@@ -64,5 +66,5 @@ with sync_playwright() as p:
     missing.goto(url);missing.wait_for_function('AlleyStudy.state().failed')
     assert missing.locator('#loading').is_visible()
     assert not errors,errors
-    report=dict(browserErrors=errors,eightDirections=True,surfaceRendering=rendering,controls=True,pause=True,endReplay=True,buildingOcclusion=True,poleEdge=pole,hiddenCornerChangedPixels=changed,mobile=True,reducedMotion=True,missingArtwork=True)
+    report=dict(browserErrors=errors,eightDirections=True,surfaceRendering=rendering,controls=True,pause=True,endReplay=True,alleyMouth=mouth,buildingOcclusion=True,poleEdge=pole,hiddenCornerChangedPixels=changed,mobile=True,reducedMotion=True,missingArtwork=True)
     (out/'browser-checks.json').write_text(json.dumps(report,indent=2));print(json.dumps(report));browser.close()

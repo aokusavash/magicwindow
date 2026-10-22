@@ -52,6 +52,16 @@ assert(diagonals.size===4);
 assert(world.project(900,200).scale<world.project(900,0).scale);
 assert.equal(occlusion.active({z:0},'alley').length,0);
 assert.equal(occlusion.active({z:300},45).length,0);
+function atGroundRow(y){let lo=0,hi=2000;for(let i=0;i<40;i++){let mid=(lo+hi)/2;if(world.project(1150,mid).y>y)lo=mid;else hi=mid;}return {x:1150,z:(lo+hi)/2};}
+for(const direction of [-1,1]){
+  const front=occlusion.active({...atGroundRow(730),sign:direction},'alley');
+  assert(!front.some(o=>occlusion.contains(o.outline,1156,550)),'pole hid a character still standing in front of its base');
+  const between=occlusion.active({...atGroundRow(714),sign:direction},'alley');
+  assert(between.some(o=>o.id==='left-shop-and-plants'));
+  assert(!between.some(o=>o.id==='pole'),'pole must stand farther into the alley than the pots');
+  const behind=occlusion.active({...atGroundRow(700),sign:direction},'alley');
+  assert(behind.some(o=>o.id==='pole'),'genuine overlap behind the pole must remain');
+}
 const masks=occlusion.active({z:300},'alley');
 const covered=(x,y)=>masks.some(o=>occlusion.contains(o.outline,x,y));
 assert(covered(1156,550),'the actual pole face must cover the actor, including the former unmasked hair strip');

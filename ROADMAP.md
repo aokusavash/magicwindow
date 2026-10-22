@@ -69,6 +69,8 @@ Second alley feedback caught regressions in the right-facing walk, clipping and 
 
 Further review found trouser roots alternating over the jacket, particularly walking away. Clothing coverage now overrides anatomical depth at their intersection: each painted torso's alpha silhouette covers the leg layers consistently, retaining exposed trousers and existing arm/leg ordering. A 64-pose, eight-heading garment-overlap regression test catches the previous failure and passes with this repair. Treat garment coverage separately from body depth in future character construction; do not solve it by moving all arms/legs into a fixed global draw order.
 
+Alley-mouth follow-up: the pole briefly covered the character while she was still in front of its base, in both travel directions. Split its narrow silhouette from the broad frontage mask and anchor pole/pot/foliage occlusion to their painted ground-contact rows rather than the shared z=35 threshold. Fifty sampled crossing frames now retain the full character, with legitimate distant overlap preserved. Review this final alley correction before moving on to restaurant contact.
+
 ## Neighborhood places: current direction
 
 Further October 19 discussion: optimize the limited street frontage for **visual variety, coziness, and things children find interesting**. Do not frame the choice primarily as everyday errands or reproduce the real-world proportion of restaurants. Four or five buildings is a working composition guess, not a fixed limit.

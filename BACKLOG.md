@@ -53,6 +53,8 @@ Second-review regression repair: restore full jacket coverage (remove torso slee
 
 Garment overlap refinement: the jacket/blouse silhouette now covers trouser roots throughout the stride, independently of anatomical limb depth. Added eight-heading/full-stride raster checks for covered and exposed trouser regions; existing hand/gait checks pass. Await visual review of the waist overlap before advancing the interaction study.
 
+Pole-depth refinement: fixed the brief cutout at the alley mouth on both legs of the trip. The pole has its own silhouette and ground-contact depth, distinct from the pots/frontage; the route and animation stay intact. A 50-frame crossing regression check passes while distant occlusion remains. Await review before the restaurant interaction test.
+
 ## Next build-session kickoff
 
 At the end of the October 19 walk, the user asked how to begin work from their computer. No further product decision is needed before starting the ready items above.
