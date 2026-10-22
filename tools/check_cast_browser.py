@@ -9,7 +9,7 @@ with sync_playwright() as p:
  assert all(s['pixels']>(180 if s['id']=='child' else 800) for s in result['directions']),result
  assert all(s['pixels']>(35 if s['id']=='child' else 130) for s in result['standingHeads']),result
  # Affine triangle edges and a direct blit have slightly different filtering.
- assert all(s['headBack']>5 and s['waistAlphaError']<.003 for s in result['blousePosture']),result
+ assert all(3<s['headBack']<7 and s['waistAlphaError']<.003 for s in result['blousePosture']),result
  assert result['heights']['tall']>result['heights']['original']*1.05 and .44<result['heights']['child']/result['heights']['original']<.62,result
  assert all(s['pixels']>(50 if s['id']=='child' else 100) for s in result['seatedHeads']),result
  assert result['robe']['covered']>100 and result['robe']['changedPixels']>150,result
@@ -22,6 +22,8 @@ with sync_playwright() as p:
     target=t+(7 if action=='broth' else 5 if action=='turns' else 2)
     page.evaluate('t=>CastStudy.inspect(t)',target);page.locator('#world').screenshot(path=str(out/f'{person}-{action}.png'))
  page.evaluate("CastStudy.inspect(3,'walk','yukata','')");page.locator('#world').screenshot(path=str(out/'walk.png'))
+ t=page.evaluate('CastStudy.state().seconds');page.locator('#timing').click();assert page.evaluate('CastStudy.state().previousTiming') and page.evaluate('CastStudy.state().seconds')==t
+ page.locator('#timing').click();assert not page.evaluate('CastStudy.state().previousTiming')
  page.locator('#slow').click();assert page.evaluate('CastStudy.state().slow');page.locator('#restart').click();assert page.evaluate('CastStudy.state().seconds')==0
  mobile=browser.new_page(viewport={'width':390,'height':844},reduced_motion='reduce');mobile.goto('http://127.0.0.1:8031/painted/cast/');mobile.wait_for_function('CastStudy.state().loaded');assert mobile.evaluate('CastStudy.state().paused && document.documentElement.scrollWidth<=innerWidth');mobile.locator('[data-person="child"]').click();mobile.locator('[data-action="broth"]').click();assert mobile.evaluate('CastStudy.state().paused');mobile.screenshot(path=str(out/'mobile.png'),full_page=True)
  missing=browser.new_page();missing.route('**/assets/cast/child.png',lambda r:r.abort());missing.goto('http://127.0.0.1:8031/painted/cast/');missing.wait_for_function('CastStudy.state().failed');assert missing.locator('#loading').is_visible()

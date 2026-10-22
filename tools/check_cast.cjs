@@ -34,6 +34,21 @@ for(const id of CastWorld.ids){
 assert.equal(CastWorld.profiles.child.scale,.5);assert(CastWorld.profiles.child.proportions.headRise>0&&CastWorld.profiles.child.proportions.legs<1,'child must have distinct proportions');
 assert.equal(CastWorld.profiles.tall.art,'tall','tall woman needs independent artwork');
 assert(CastWorld.profiles.tall.bodyWidth<1&&CastWorld.profiles.tall.legWidth<.9,'tall woman must have a slimmer silhouette');
+let earlierReleases=0;
+for(const id of CastWorld.ids)for(const angle of [90,-90])for(let frame=0;frame<240;frame++){
+ const s=CastWorld.dress(AlleyWorld.at(frame/120,angle),id),a=AlleyActor.pose(s),old=AlleyActor.pose({...s,gaitTuning:undefined});
+ assert.deepEqual(a.q.hips,old.q.hips,'landing release must not change body speed or bounce');
+ a.q.legs.forEach((leg,i)=>{
+  for(const key of ['hip','ankle','foot','heel','ball','toe'])assert.deepEqual(leg[key],old.q.legs[i][key],'landing release must preserve ground travel/contact');
+  if(!s.gaitTuning)assert.deepEqual(leg,old.q.legs[i],'man and child keep their accepted gait');
+  else if(a.local.legs[i].extensionWeight<old.local.legs[i].extensionWeight-.3)earlierReleases++;
+ });
+}
+assert(earlierReleases>80,'women must move out of the held landing sooner');
+for(const id of ['blouse','yukata'])for(const angle of [45,90,135,-45,-90,-135]){
+ const s=CastWorld.dress(AlleyWorld.at(.7,angle),id),a=AlleyActor.pose(s),b=AlleyActor.pose({...s,proportions:{...s.proportions,shoulderForward:0}});
+ a.q.arms.forEach((arm,i)=>assert(Math.abs(arm.shoulder.x-b.q.arms[i].shoulder.x-Math.sin(s.heading)*a.p.height*s.proportions.shoulderForward)<1e-6,'sleeve fitting must follow facing'));
+}
 for(const angle of [0,45,90,135,180,-45,-90,-135]){
  const s=CastWorld.dress(AlleyWorld.at(.7,angle),'blouse'),fitted=AlleyActor.pose(s),base=AlleyActor.pose({...s,proportions:{}});
  fitted.q.arms.forEach((arm,i)=>assert(Math.abs(arm.shoulder.y-base.q.arms[i].shoulder.y-fitted.p.height*.018)<1e-6,'blouse sleeve roots must fit the lowered shoulders'));

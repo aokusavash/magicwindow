@@ -4,7 +4,7 @@
   function mix(a,b,t){return {x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t};}
   function pose(state){
     var H=182*(state.bodyScale||1),proportions=state.proportions||{};
-    var local=root.PaintedGaits.pose({id:'resident',gait:'relaxed',x:0,y:0,height:H,baseHeight:H,direction:1,distance:state.distance,travelX:1,travelY:0,view:'side',turnScale:1,walkWeight:1,bend:0,breath:0,grip:0,armSwing:state.walkWeight>.01},root.PaintedLayered.meshes);
+    var local=root.PaintedGaits.pose({id:'resident',gait:'relaxed',gaitTuning:state.gaitTuning,x:0,y:0,height:H,baseHeight:H,direction:1,distance:state.distance,travelX:1,travelY:0,view:'side',turnScale:1,walkWeight:1,bend:0,breath:0,grip:0,armSwing:state.walkWeight>.01},root.PaintedLayered.meshes);
     var w=state.walkWeight,dy=(-H*.525-local.hips.y)*(1-w);local.hips.y+=dy;
     [local.shoulders,local.head,local.nose,local.bag].forEach(function(p){p.y+=dy;});
     local.legs.forEach(function(l,i){
@@ -54,7 +54,7 @@
     local.arms.forEach(function(a,i){
       // Both anatomical shoulders share a fore/aft plane. The old far-shoulder
       // offset put its entire sleeve in front of the chest when facing right.
-      var out={},fore=local.hips.x-H*.01-H*.045*Math.abs(Math.sin(state.heading)),bias=a.shoulder.x-fore;
+      var out={},fore=local.hips.x-H*.01-H*.045*Math.abs(Math.sin(state.heading))+H*(proportions.shoulderForward||0),bias=a.shoulder.x-fore;
       var settle=H*(.025*Math.pow(Math.max(0,Math.cos(state.heading)),2)+(proportions.shoulderDrop||0));
       ['shoulder','elbow','hand','tip'].forEach(function(k){
         var n={x:a.shoulder.x+(a[k].x-a.shoulder.x)*w,y:a[k].y+settle},lateral=(i?-1:1)*H*.095*(proportions.width||1),p=point(n,lateral,bias),scale=q.hips.scale,along=n.x-bias-local.hips.x;

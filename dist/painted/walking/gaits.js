@@ -12,6 +12,7 @@
   function pose(p,meshes){
     var q=root.PaintedRig.pose(p),g=profiles[p.gait]||profiles.everyday;
     if(p.gait==='previous')return q;
+    if(p.gaitTuning)g=Object.assign({},g,p.gaitTuning);
     var h=p.height,dir=p.direction,step=h*g.step,legLength=h*.48,unit=p.distance/(2*step),rootX=p.x-dir*h*.0125;
     var legs=[0,1].map(function(i){
       var phase=((unit+i*.5)%1+1)%1,stance=phase<g.duty,t=stance?phase/g.duty:(phase-g.duty)/(1-g.duty);
@@ -45,7 +46,8 @@
     legs.forEach(function(l){
       l.hip.y=hipsY;var ik=root.PaintedRig.solve(l.hip,l.ankle,legLength*.5,legLength*.5,-dir);
       var t=l.stance?l.phase/g.duty:(l.phase-g.duty)/(1-g.duty);
-      var extension=p.straightLanding===false?0:(l.stance?1-smooth((t-.18)/.22):smooth((t-.72)/.22));
+      var landingHold=g.landingHold===undefined?.18:g.landingHold,landingRelease=g.landingRelease||.22;
+      var extension=p.straightLanding===false?0:(l.stance?1-smooth((t-landingHold)/landingRelease):smooth((t-.72)/.22));
       var dx=l.ankle.x-l.hip.x,dy=l.ankle.y-l.hip.y,d=Math.hypot(dx,dy)||1;
       var bend=d*.5*Math.tan(g.landingBend*Math.PI/360),side=-dir;
       var landing={x:(l.hip.x+l.ankle.x)/2-dy/d*bend*side,y:(l.hip.y+l.ankle.y)/2+dx/d*bend*side};
