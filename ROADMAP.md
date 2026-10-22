@@ -73,6 +73,8 @@ Alley-mouth follow-up: the pole briefly covered the character while she was stil
 
 ## Accepted movement milestone and crowd review
 
+Crowd-review follow-up: fixed the left-side leg distortion caused by projecting hip roots in depth while the painted torso stayed flat. Upper legs now attach to the torso plane, with the adjustment tapering to unchanged ankle/ground targets. Left/center/right, eight-heading and depth regressions verify the attachment and preserved knee/foot mechanics. The accepted standalone walking study is unchanged; further minor motion polish remains deferred.
+
 The user now considers the coherent town walk successful enough to move on; remaining small blips can be honed later. Preserve this milestone rather than continuing open-ended gait polishing. They requested five to eight copies of the same resident to judge the populated scene and asked for advice on the next product step.
 
 Study 10 at `/painted/crowd/` provides eight active walkers by default and a five-person comparison. Staggered street/alley routes, speeds, phases, depth sorting and per-person scenery masks show density and crossing activity; people can be offscreen or behind scenery. Reuse the accepted artwork/motion. An optional compact renderer reduces intermediate-buffer and affine-subdivision work, while the default single-person rendering remains visually unchanged. Browser checks pass; physical-TV performance remains unverified, and local headless eight-person draws still cost around 37 ms.

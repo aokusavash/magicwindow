@@ -6,6 +6,11 @@ async()=>{
   let comparison={poses:0,pixels:0,error:0,largeDifferences:0};
   let poses=[-135,-90,-45,0,45,90,135,180].flatMap(h=>[.8,1.4].map(t=>AlleyWorld.at(t,h)));
   poses.push(...[5.8,8,12,16,33].map(t=>AlleyWorld.at(t)),...CrowdWorld.population(0,8));
+  // Include the left-edge pose that exposed the off-axis hip separation.
+  for(let x of [180,750,1250])for(let degrees of [-90,90]){
+    let heading=degrees*Math.PI/180,dx=Math.sin(heading),route={sample:s=>({x:x+dx*s,z:-32,dx,dz:0})};
+    poses.push({x,z:-32,heading,route,s:0,sign:1,distance:44,walkWeight:1,phase:'street'});
+  }
   for(let state of poses){
     ac.clearRect(0,0,1600,900);bc.clearRect(0,0,1600,900);normal(state);compact(state);
     let x=ac.getImageData(0,0,1600,900).data,y=bc.getImageData(0,0,1600,900).data;comparison.poses++;

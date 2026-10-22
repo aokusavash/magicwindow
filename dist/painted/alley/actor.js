@@ -19,7 +19,20 @@
       return Object.assign(root.AlleyWorld.project(x,z,-node.y),{depth:z});
     }
     var q={hips:point(local.hips,0),shoulders:point(local.shoulders,0),head:point(local.head,0),legs:[],arms:[]};
-    local.legs.forEach(function(l,i){var out={};['hip','knee','ankle','foot','ball','toe','heel'].forEach(function(k){out[k]=point(l[k],(i?-1:1)*H*.055,i?-2:2);});q.legs.push(out);});
+    local.legs.forEach(function(l,i){
+      var out={},lateral=(i?-1:1)*H*.055;
+      ['hip','knee','ankle','foot','ball','toe','heel'].forEach(function(k){out[k]=point(l[k],lateral,i?-2:2);});
+      // The painted pelvis is flat, just like the torso. Off-axis perspective
+      // on its two hip roots pulled them apart toward the left of the street.
+      // Attach both roots in the torso's camera plane, tapering the correction
+      // through the knee to zero at the ankle. This affine shear preserves a
+      // straight leg and leaves every world-space foot contact untouched.
+      var dx=q.hips.x+Math.cos(state.heading)*lateral*q.hips.scale-out.hip.x,dy=q.hips.y-out.hip.y;
+      var kneeWeight=(out.ankle.y-out.knee.y)/(out.ankle.y-out.hip.y);
+      out.hip.x+=dx;out.hip.y+=dy;
+      out.knee.x+=dx*kneeWeight;out.knee.y+=dy*kneeWeight;
+      q.legs.push(out);
+    });
     local.arms.forEach(function(a,i){
       // Both anatomical shoulders share a fore/aft plane. The old far-shoulder
       // offset put its entire sleeve in front of the chest when facing right.
