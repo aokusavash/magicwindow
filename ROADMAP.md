@@ -63,6 +63,8 @@ October 22: the user accepted the walking result, agreed to freeze it, and autho
 
 Study 09 at `/painted/alley/` now supplies a curved alley trip out/back, perspective size changes, foreground overlap and eight individual directional tests. It reuses the accepted gait and side assets with newly prepared front/rear/quarter-view layers. Painted views blend during turns; the route/ground targets are continuous. The old walking study stays available. Review view consistency, pivots and shoe contact before treating this new action as accepted. Restaurant contact remains the next separate step; the older door rig has not been upgraded by this batch.
 
+First alley feedback identified incorrect hand overlaps across directions, a cropped head, and a scenery cutoff left of the actual tree/pole edge. Repairs now measure whole atlas components instead of equal cells (which clipped multiple torso paintings), restore their pivots, separate moving sleeves from resting sleeves, and sort limbs/clothes/bag by projected depth. The left foreground boundary follows the bright pole and leaves. Added source-bound and raster-overlap regression checks; preserve the accepted walking study while the user reviews this repaired alley version. Do not advance to restaurant interaction or population expansion on the strength of automated checks alone.
+
 ## Neighborhood places: current direction
 
 Further October 19 discussion: optimize the limited street frontage for **visual variety, coziness, and things children find interesting**. Do not frame the choice primarily as everyday errands or reproduce the real-world proportion of restaurants. Four or five buildings is a working composition guess, not a fixed limit.

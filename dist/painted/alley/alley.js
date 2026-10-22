@@ -5,9 +5,7 @@
   function asset(src){return new Promise(function(resolve,reject){var i=new Image();i.onload=function(){resolve(i);};i.onerror=reject;i.src=src;});}
   function poly(points){ctx.beginPath();points.forEach(function(p,i){if(i)ctx.lineTo(p[0],p[1]);else ctx.moveTo(p[0],p[1]);});ctx.closePath();}
   function foreground(state){
-    if(mode!=='alley'||state.z<35)return;
-    var shapes=[[[0,0],[1143,0],[1147,450],[1152,635],[1147,727],[0,727]],[[1268,0],[1600,0],[1600,751],[1266,751],[1253,652],[1236,528],[1245,365]]];
-    shapes.forEach(function(points){ctx.save();poly(points);ctx.clip();ctx.drawImage(images.background,0,0,1600,900);ctx.restore();});
+    AlleyOcclusion.active(state,mode).forEach(function(o){ctx.save();poly(o.outline);ctx.clip();ctx.drawImage(images.background,0,0,1600,900);ctx.restore();});
   }
   function draw(){
     if(!loaded)return;var state=AlleyWorld.at(seconds,mode),ground=AlleyWorld.project(state.x,state.z);

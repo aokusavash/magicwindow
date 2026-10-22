@@ -47,6 +47,8 @@ Walking checkpoint accepted: the user approved Study 07's motion for this charac
 
 The user accepted the walking quality and requested moving on, including all four 45° diagonals toward/away. Study 09 `/painted/alley/` implements the first next-stage test with eight facings, a curved out/back route, depth scale, building occlusion, and individual direction/close-up controls. Existing walking assets/controller remain frozen. Review the new views/turns and projected shoe contact. Then upgrade restaurant entry using the accepted character construction, rather than relying on the older interaction rig as proof. See the current feasibility report for actual checks and limits.
 
+First-review repairs are implemented for the shared directional problems: whole-component atlas bounds restore cropped heads/bodies; calibrated torso/shoulder attachments and depth-sorted surfaces correct arm/trouser/bag overlap; the foreground edge follows the actual pole and foliage. Source-bound, mirrored hand-overlap and pole-edge raster regression checks pass alongside existing movement/browser checks. Next: user review of the repaired alley preview before restaurant entry. The painted view blends and hand-calibrated masks are still visual-review items.
+
 ## Next build-session kickoff
 
 At the end of the October 19 walk, the user asked how to begin work from their computer. No further product decision is needed before starting the ready items above.
