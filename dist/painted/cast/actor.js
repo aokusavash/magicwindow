@@ -5,11 +5,15 @@
   function views(image,frames,profile){
     var out={};names.forEach(function(name){
       var f=frames[name],data={body:{image:image,box:f.body,pivot:name==='side'?.56:name==='front45'?.56:name==='rear45'?.54:.5,height:profile.id==='child'?.62:.54,neckCut:f.neckCut},arms:[],legs:[]};
-      f.arms.forEach(function(b,i){var mesh=root.AlleyActor.buildMesh(b,'arm',i,name,f.armAnchors[i]);mesh.widthScale=profile.id==='child'?.82:.95;data.arms.push({mesh:mesh,texture:crop(image,b)});});
+      if(profile.bodyWidth)data.body.widthScale=profile.bodyWidth;
+      if(profile.bodyHeight)data.body.height=profile.bodyHeight;
+      if(profile.id==='tall'&&f.waistX)data.body.pivot=f.waistX;
+      if(profile.headBack)data.body.headBack=profile.headBack[name]||0;
+      f.arms.forEach(function(b,i){var mesh=root.AlleyActor.buildMesh(b,'arm',i,name,f.armAnchors[i]);mesh.widthScale=profile.armWidth||(profile.id==='child'?.82:.95);data.arms.push({mesh:mesh,texture:crop(image,b)});});
       f.legs.forEach(function(b,i){
-        var anchors=f.legAnchors[i],mesh=root.AlleyActor.buildMesh(b,'leg',i,name,anchors),cut=anchors.ankleY,texture=crop(image,b);mesh.widthScale=profile.id==='child'?.60:profile.id==='yukata'?.65:.9;
+        var anchors=f.legAnchors[i],mesh=root.AlleyActor.buildMesh(b,'leg',i,name,anchors),cut=anchors.ankleY,texture=crop(image,b);mesh.widthScale=profile.legWidth||(profile.id==='child'?.60:profile.id==='yukata'?.65:.9);
         texture.getContext('2d').clearRect(0,b.height*cut,b.width,b.height);
-        data.legs.push({mesh:mesh,texture:texture,shoe:{image:image,box:b,ankleY:cut,ankleX:anchors.ankleX,widthScale:profile.id==='child'?.55:profile.id==='yukata'?.55:.83,heightScale:.05*(cut-.06)/(.48*(1-cut))}});
+        data.legs.push({mesh:mesh,texture:texture,shoe:{image:image,box:b,ankleY:cut,ankleX:anchors.ankleX,widthScale:profile.shoeWidth||(profile.id==='child'?.55:profile.id==='yukata'?.55:.83),heightScale:.05*(cut-.06)/(.48*(1-cut))}});
       });
       if(f.garment)data.garment={image:image,box:f.garment};out[name]=data;
     });return out;

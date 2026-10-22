@@ -21,6 +21,7 @@
     }
     if(proportions.headRise){local.head.y-=H*proportions.headRise;local.nose.y-=H*proportions.headRise;}
     if(proportions.arms)local.arms.forEach(function(a){['elbow','hand','tip'].forEach(function(k){a[k].x=a.shoulder.x+(a[k].x-a.shoulder.x)*proportions.arms;a[k].y=a.shoulder.y+(a[k].y-a.shoulder.y)*proportions.arms;});});
+    if(proportions.forearms)local.arms.forEach(function(a){['hand','tip'].forEach(function(k){a[k].x=a.elbow.x+(a[k].x-a.elbow.x)*proportions.forearms;a[k].y=a.elbow.y+(a[k].y-a.elbow.y)*proportions.forearms;});});
     function point(node,lateral,bias){
       var along=node.x-(bias||0),p=state.route.sample(state.s+state.sign*along),nx=p.dz*state.sign,nz=-p.dx*state.sign;
       if(state.phase==='hidden-turn'||state.phase==='street-turn'){p={x:state.x+Math.sin(state.heading)*along,z:state.z+Math.cos(state.heading)*along};nx=Math.cos(state.heading);nz=-Math.sin(state.heading);}
@@ -54,7 +55,7 @@
       // Both anatomical shoulders share a fore/aft plane. The old far-shoulder
       // offset put its entire sleeve in front of the chest when facing right.
       var out={},fore=local.hips.x-H*.01-H*.045*Math.abs(Math.sin(state.heading)),bias=a.shoulder.x-fore;
-      var settle=H*.025*Math.pow(Math.max(0,Math.cos(state.heading)),2);
+      var settle=H*(.025*Math.pow(Math.max(0,Math.cos(state.heading)),2)+(proportions.shoulderDrop||0));
       ['shoulder','elbow','hand','tip'].forEach(function(k){
         var n={x:a.shoulder.x+(a[k].x-a.shoulder.x)*w,y:a[k].y+settle},lateral=(i?-1:1)*H*.095*(proportions.width||1),p=point(n,lateral,bias),scale=q.hips.scale,along=n.x-bias-local.hips.x;
         // The torso is a painted billboard. Project its attached arms in that
@@ -170,7 +171,7 @@
       if(actor.diningBody&&name==='front'&&images.frontMealBody)body={image:images.frontMealBody,box:{x:144,y:19,width:372,height:666},pivot:.50};
       if(actor.diningBody&&name==='rear'&&images.rearMealBody)body={image:images.rearMealBody,box:{x:122,y:28,width:367,height:709},pivot:.50};
       var bodyBox=body.box,bodyScale=p.height*(body.height||.54)/bodyBox.height;
-      torsoBrush.clearRect(ox,oy,width,height);torsoBrush.save();torsoBrush.translate(q.hips.x,q.hips.y+p.height*.02);if(actor.lean)torsoBrush.rotate(actor.lean);torsoBrush.scale(p.direction*bodyScale,bodyScale);
+      torsoBrush.clearRect(ox,oy,width,height);torsoBrush.save();torsoBrush.translate(q.hips.x,q.hips.y+p.height*.02);if(actor.lean)torsoBrush.rotate(actor.lean);torsoBrush.scale(p.direction*bodyScale*(body.widthScale||1),bodyScale);
       if(actor.headDip&&actor.diningBody&&(name==='front'||name==='rear')){
         // The head is part of the source portrait. Articulate it at the neck
         // over the stationary collar; overlap covers the join during the nod.
@@ -178,6 +179,17 @@
         torsoBrush.drawImage(body.image,bodyBox.x,bodyBox.y+cut,bodyBox.width,bodyBox.height-cut,-bodyBox.width*body.pivot,neck,bodyBox.width,bodyBox.height-cut);
         torsoBrush.save();torsoBrush.translate(0,neck+p.height*.025*actor.headDip/bodyScale);torsoBrush.scale(1,1-.035*actor.headDip);
         torsoBrush.drawImage(body.image,bodyBox.x,bodyBox.y,bodyBox.width,cut,-bodyBox.width*body.pivot,-cut,bodyBox.width,cut);torsoBrush.restore();
+      }else if(body.headBack){
+        // Fit the portrait over its neck without rotating the entire chest or
+        // moving the waist/limb sockets. The head translates as one painting;
+        // only the collar band blends back into the stationary torso.
+        var offset=p.height*body.headBack/bodyScale/(body.widthScale||1);
+        var bands=[0,.45,.48,.51,.54,.57,.60,.64,1];
+        function portraitPoint(x,t){return {x:x-bodyBox.width*body.pivot-offset*(1-root.AlleyWorld.ease((t-.45)/.19)),y:bodyBox.height*(t-1)};}
+        for(var row=1;row<bands.length;row++){
+          var top=bands[row-1],bottom=bands[row],source=[[bodyBox.x,bodyBox.y+bodyBox.height*top],[bodyBox.x+bodyBox.width,bodyBox.y+bodyBox.height*top],[bodyBox.x+bodyBox.width,bodyBox.y+bodyBox.height*bottom],[bodyBox.x,bodyBox.y+bodyBox.height*bottom]],target=[portraitPoint(0,top),portraitPoint(bodyBox.width,top),portraitPoint(bodyBox.width,bottom),portraitPoint(0,bottom)];
+          [[0,1,2],[0,2,3]].forEach(function(t){root.PaintedSkin.triangle(torsoBrush,body.image,t.map(function(i){return source[i];}),t.map(function(i){return target[i];}),.15);});
+        }
       }else torsoBrush.drawImage(body.image,bodyBox.x,bodyBox.y,bodyBox.width,bodyBox.height,-bodyBox.width*body.pivot,-bodyBox.height,bodyBox.width,bodyBox.height);
       torsoBrush.restore();
       if(options&&options.paintGarment&&data.garment){torsoBrush.save();torsoBrush.globalCompositeOperation='destination-over';options.paintGarment(torsoBrush,data.garment,actor,state,name);torsoBrush.restore();}

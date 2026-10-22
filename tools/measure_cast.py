@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image
 from scipy import ndimage
 root=Path(__file__).resolve().parents[1]
-settings={'blouse':[0,.385,.640,1],'child':[0,.430,.685,1],'yukata':[0,.294,.514,.706,1]}
+settings={'blouse':[0,.385,.640,1],'child':[0,.430,.685,1],'yukata':[0,.294,.514,.706,1],'tall':[0,.375,.607,1]}
 views=['front','front45','side','rear45','rear'];result={}
 for name,cuts in settings.items():
  im=Image.open(root/f'dist/painted/assets/cast/{name}.png');alpha=np.array(im)[:,:,3];h,w=alpha.shape;frames={}
@@ -36,7 +36,8 @@ for name,cuts in settings.items():
   def center(b,y):
    yy=b['y']+round(b['height']*y);strip=alpha[max(b['y'],yy-2):min(b['y']+b['height'],yy+3),b['x']:b['x']+b['width']]>128
    _,xx=np.where(strip);return float(xx.mean()/b['width']) if len(xx) else .5
-  ankle={'blouse':.85,'child':.77,'yukata':.78}[name]
+  if name=='tall':frame['waistX']=center(parts[0],.94)
+  ankle={'blouse':.85,'child':.77,'yukata':.78,'tall':.86}[name]
   frame['legAnchors']=[{'hipX':center(b,.06),'kneeX':center(b,(ankle+.06)/2),'ankleX':center(b,ankle),'ankleY':ankle} for b in parts[2]]
   frame['armAnchors']=[{'shoulderX':center(b,.10),'elbowX':center(b,.50),'handX':center(b,.78),'tipX':center(b,.97)} for b in parts[1]]
   if len(parts)>3:frame['garment']=parts[3]

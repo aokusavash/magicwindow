@@ -32,6 +32,13 @@ for(const id of CastWorld.ids){
   }
 }
 assert.equal(CastWorld.profiles.child.scale,.5);assert(CastWorld.profiles.child.proportions.headRise>0&&CastWorld.profiles.child.proportions.legs<1,'child must have distinct proportions');
+assert.equal(CastWorld.profiles.tall.art,'tall','tall woman needs independent artwork');
+assert(CastWorld.profiles.tall.bodyWidth<1&&CastWorld.profiles.tall.legWidth<.9,'tall woman must have a slimmer silhouette');
+for(const angle of [0,45,90,135,180,-45,-90,-135]){
+ const s=CastWorld.dress(AlleyWorld.at(.7,angle),'blouse'),fitted=AlleyActor.pose(s),base=AlleyActor.pose({...s,proportions:{}});
+ fitted.q.arms.forEach((arm,i)=>assert(Math.abs(arm.shoulder.y-base.q.arms[i].shoulder.y-fitted.p.height*.018)<1e-6,'blouse sleeve roots must fit the lowered shoulders'));
+ assert.deepEqual(fitted.q.legs,base.q.legs,'shoulder fitting must not alter the accepted walk');
+}
 for(const [id,views] of Object.entries(CastFrames))for(const [name,f] of Object.entries(views)){
  assert.equal(f.arms.length,2);assert.equal(f.legs.length,2);assert(f.body.width>0&&f.body.height>0);
  if(id==='yukata')assert(f.garment.width>0,'robe needs a continuous lower panel');
