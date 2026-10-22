@@ -10,7 +10,7 @@ Updated October 22, 2026. Read this in a fresh chat; update it after a meaningfu
 
 ## Current review
 
-- Latest: https://little-world-window.racing-dog-8718.chatgpt.site/painted/cast/ (Study 16). Accepted one-character meals remain at `/painted/visits/` (Study 15). The user accepted the original meal polish and likes the child/man walking. Latest feedback requests blue head/arm placement, man arm placement and less hesitation in the women’s landings.
+- Latest: https://little-world-window.racing-dog-8718.chatgpt.site/painted/reference/ (Study 17). A separate, synchronized current/capture-informed walking comparison for original and blue women, with painted/skeleton/overlay modes, side/front/back/diagonal views, pose jumps, frame steps and a cycle scrubber. The current cast/shop review remains at `/painted/cast/` (Study 16). Accepted one-character meals remain at `/painted/visits/` (Study 15). The user accepted the original meal polish and likes the child/man walking. Latest feedback requests blue head/arm placement, man arm placement and less hesitation in the women’s landings.
 - Five profiles: original woman; a distinct taller/slimmer woman with a low bun, burgundy waistcoat, cream sleeves and charcoal trousers; a ponytailed woman in a blue blouse/ochre trousers; a man in an indigo yukata; and a child at half body scale with shorter legs/larger relative head. The four new designs have measured five-facing, transparent part atlases. Opposite facings mirror those views.
 - Same walking, alley turns, flower bend, door visit, seating/eating and final two-handed broth action are reused. Walk together shows the group. Select a neighbor, then choose Alley & turns, Enter ramen, Counter meal, Inside meal, Finish the bowl or Smell flowers. Whole street restores mixed activity. Character changes preserve the review time.
 - The yukata has a continuous lower garment mesh over both legs. It is an authored 2D cloth treatment, not a general cloth simulator. Larger folds and poses need visual review.
@@ -23,6 +23,8 @@ Updated October 22, 2026. Read this in a fresh chat; update it after a meaningfu
 
 ## Implementation and constraints
 
+- `dist/painted/reference/`: `capture.js` is a loop-prepared CMU 07_04 slow-walk excerpt; `motion.js` adapts body balance, lean, arms and swing timing while retaining planted-foot support. Candidate knees use a continuous solve. This is an in-place study, not exact mocap retargeting or a replacement of shop movement. `SOURCES.md` records provenance, preprocessing, permissions and limits; `tools/prepare_walk_reference.py` reproduces the tracked sample from a pinned BVH ZIP.
+
 - `dist/painted/cast/`: `world.js` profiles/adaptation, `actor.js` measured custom skins and continuous robe, `frames.js` tracked atlas bounds/bone registration, `cast.js` UI. Original generated PNG bytes are in `assets/cast/`; `tools/measure_cast.py` reads alpha and writes metadata without retouching artwork. The side child leg reuses one source leg for both physical legs.
 - Shared `alley/actor.js` accepts optional body scale/proportions, shoulder/forearm fitting, portrait neck-band deformation, prepared views, garment painting and shoe registration. Defaults preserve accepted art/motion. Child cadence uses physical body height before projection; do not scale an already projected adult pose, which slides stance contacts. Custom actor buffers account for a raised seated head.
 - `skin.js` has an optional limb-width calibration. New feet use measured ankle positions plus separate width/height calibration so source-art shoe proportions do not extend below the ground.
@@ -32,6 +34,6 @@ Updated October 22, 2026. Read this in a fresh chat; update it after a meaningfu
 
 ## Verification and fresh-chat entry
 
-Run `node tools/check_cast.cjs`, `node tools/check_visits.cjs`, `node tools/check_leg_projection.cjs` and `node tools/check_gaits.cjs` after relevant movement edits. Serve with `python3 -m http.server 8031 --bind 127.0.0.1 --directory dist`, then run `python3 tools/check_cast_browser.py` and `python3 tools/check_visits_browser.py`. Crowd/alley browser checks cover shared-renderer changes. Screenshots/reports are under ignored `artifacts/`. Checks support visual review; they do not establish naturalness alone.
+For Study 17 also run `node tools/check_reference.cjs` and `python3 tools/check_reference_browser.py` against the local server. Run `node tools/check_cast.cjs`, `node tools/check_visits.cjs`, `node tools/check_leg_projection.cjs` and `node tools/check_gaits.cjs` after relevant movement edits. Serve with `python3 -m http.server 8031 --bind 127.0.0.1 --directory dist`, then run `python3 tools/check_cast_browser.py` and `python3 tools/check_visits_browser.py`. Crowd/alley browser checks cover shared-renderer changes. Screenshots/reports are under ignored `artifacts/`. Checks support visual review; they do not establish naturalness alone.
 
 Fresh-chat prompt: “Open Magic Window, read CURRENT-STATE.md and the repo instructions, and continue from the latest shop-visit review.” Include new visual feedback/screenshots where relevant; the full old transcript is unnecessary.

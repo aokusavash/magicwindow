@@ -1,3 +1,17 @@
+# Study 17: walking against a recorded reference
+
+The user approved a reference-based study after reviewing established walk-cycle practice. `/painted/reference/` compares the current original/blue-woman gait against a separate capture-informed adaptation, at matched speed and cycle distance. It retains the existing street/paintings and leaves the cast, dining and accepted standalone walking motion unchanged.
+
+The source is CMU Graphics Lab subject 07, trial 04 (slow walk), downloaded as a BVH conversion from a pinned cmubvh mirror because direct CMU data downloads returned HTTP 403. A 176-sample cycle is aligned, drift-corrected and periodically smoothed into tracked joint curves. The source skeleton viewer exposes this loop-prepared recording. [SOURCES.md](dist/painted/reference/SOURCES.md) records attribution, SHA-256, source frames, permitted use, reproduction and teaching references.
+
+The candidate uses captured body rise, restrained fore/aft and lateral balance, projected lean, shoulder offsets, arm directions and swing-foot progress. Ground support remains the existing planted-foot trajectory; swing changes fade out at contact boundaries. Knees use a continuous two-bone solve and a smooth pelvis reach limit instead of holding the landing silhouette. Painted limb lengths and reduced foot clearance are deliberate adaptations. This is not exact mocap retargeting; the 2D torso still approximates depth rotation.
+
+Current is on the left, adapted on the right. Person/view switches preserve phase. Painted, skeleton-overlay and skeleton-only modes, frame stepping, half speed, a cycle scrubber and approximate contact/down/passing/up jumps support review. The stage is explicitly an in-place comparison with moving ground ticks; it does not demonstrate new navigation or shop actions.
+
+Verification covers 3,840 poses across eight headings, support invariance/planted contacts, bounded swing clearance, changing captured arm/swing paths, reachable knees and loop/contact continuity. Browser checks exercise both people, five directions and three drawing modes, pixel changes, phase/step controls, mobile/reduced motion and missing art. Existing cast, accepted gait/projection and meal regressions pass. Screenshots of side/front paintings and skeleton overlays were inspected. Human motion review is still required before accepting or expanding this candidate.
+
+---
+
 # Study 16: a varied cast on the same street
 
 **Latest review — attachment balance and landing flow:** the blue woman’s previous head correction was too far back. Profile correction is now 2.5% of body height (was 4.5%), quarters 1.4% (was 2.8%); her shoulders/arms move forward 1.8%. The yukata man’s shoulders/arms move backward 1.5%, following the facing direction. Lower sleeve placement and the close-reach forearm fit remain. Existing part atlases are unchanged; all adult door and bowl contacts still pass.

@@ -4,7 +4,8 @@
   function mix(a,b,t){return {x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t};}
   function pose(state){
     var H=182*(state.bodyScale||1),proportions=state.proportions||{};
-    var local=root.PaintedGaits.pose({id:'resident',gait:'relaxed',gaitTuning:state.gaitTuning,x:0,y:0,height:H,baseHeight:H,direction:1,distance:state.distance,travelX:1,travelY:0,view:'side',turnScale:1,walkWeight:1,bend:0,breath:0,grip:0,armSwing:state.walkWeight>.01},root.PaintedLayered.meshes);
+    var gaitPose=state.gaitPose||root.PaintedGaits.pose;
+    var local=gaitPose({id:'resident',gait:'relaxed',gaitTuning:state.gaitTuning,x:0,y:0,height:H,baseHeight:H,direction:1,distance:state.distance,travelX:1,travelY:0,view:'side',turnScale:1,walkWeight:1,bend:0,breath:0,grip:0,armSwing:state.walkWeight>.01},root.PaintedLayered.meshes);
     var w=state.walkWeight,dy=(-H*.525-local.hips.y)*(1-w);local.hips.y+=dy;
     [local.shoulders,local.head,local.nose,local.bag].forEach(function(p){p.y+=dy;});
     local.legs.forEach(function(l,i){
