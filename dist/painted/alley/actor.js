@@ -153,9 +153,10 @@
       var p=actor.p,q=actor.q,data=cache[name],back=Math.cos(state.heading)>0,mirror=p.direction<0,source0=(back?1:0)^(mirror?1:0);
       var near=Math.sin(state.heading)>=0?0:1,far=1-near;
       commands=[];
-      var bodyBox=data.body.box,bodyScale=p.height*.54/bodyBox.height;
+      var body=actor.cleanBody&&name==='rear45'&&images.contactBody?{image:images.contactBody,box:{x:102,y:27,width:360,height:713},pivot:.58}:data.body;
+      var bodyBox=body.box,bodyScale=p.height*.54/bodyBox.height;
       torsoBrush.clearRect(ox,oy,width,height);torsoBrush.save();torsoBrush.translate(q.hips.x,q.hips.y+p.height*.02);if(actor.lean)torsoBrush.rotate(actor.lean);torsoBrush.scale(p.direction*bodyScale,bodyScale);
-      torsoBrush.drawImage(data.body.image,bodyBox.x,bodyBox.y,bodyBox.width,bodyBox.height,-bodyBox.width*data.body.pivot,-bodyBox.height,bodyBox.width,bodyBox.height);torsoBrush.restore();
+      torsoBrush.drawImage(body.image,bodyBox.x,bodyBox.y,bodyBox.width,bodyBox.height,-bodyBox.width*body.pivot,-bodyBox.height,bodyBox.width,bodyBox.height);torsoBrush.restore();
       [far,near].forEach(function(i){
         var source=name==='side'?(i===near?0:1):(i===0?source0:1-source0),item=data.legs[source];mesh(item,p,q,i);
         if(item.shoe){var shoe=item.shoe,b=shoe.box,cut=shoe.ankleY-.025,scale=p.height/item.mesh.referenceHeight,ankle=q.legs[i].ankle,roll=actor.local.legs[i].pitch*state.walkWeight*Math.sin(Math.abs(state.heading))*.35;

@@ -1,7 +1,7 @@
 (function(root){
   'use strict';
   function rotate(p,origin,angle){var x=p.x-origin.x,y=p.y-origin.y,c=Math.cos(angle),s=Math.sin(angle);p.x=origin.x+x*c-y*s;p.y=origin.y+x*s+y*c;}
-  var tables={outside:{hipY:623,bowl:{x:216,y:591}},inside:{hipY:616,bowl:{x:320,y:591}}};
+  var tables={outside:{hipY:623,bowl:{x:232,y:591}},inside:{hipY:616,bowl:{x:310,y:591}}};
   function armTo(arm,target,weight,h,bend){
     var hand={x:arm.hand.x+(target.x-arm.hand.x)*weight,y:arm.hand.y+(target.y-arm.hand.y)*weight};
     var upper=Math.hypot(arm.elbow.x-arm.shoulder.x,arm.elbow.y-arm.shoulder.y),lower=Math.hypot(arm.hand.x-arm.elbow.x,arm.hand.y-arm.elbow.y),depth=arm.hand.depth;
@@ -38,17 +38,20 @@
         var time=state.mealTime+(state.table==='inside'?2.1:0),phase=(time%8.6)/8.6;
         var lift=root.AlleyWorld.ease((phase-.13)/.22)*(1-root.AlleyWorld.ease((phase-.60)/.22));
         var active=state.mealBlend,dir=forward<0?-1:1,index=dir<0?1:0,bowl=table.bowl;
-        var mouth={x:q.head.x+dir*h*.095,y:q.head.y+h*.085};
+        var mouth={x:q.head.x+forward*h*.095,y:q.head.y+h*.085};
         var scoop={x:bowl.x-dir*h*.03,y:bowl.y-h*.06},taste={x:mouth.x-dir*h*.05,y:mouth.y+h*.02};
         var target={x:scoop.x+(taste.x-scoop.x)*lift,y:scoop.y+(taste.y-scoop.y)*lift};
         var error=armTo(q.arms[index],target,active,h,dir<0?-1:1);
         armTo(q.arms[1-index],{x:bowl.x+dir*h*.04,y:bowl.y+h*.012},active,h,dir<0?1:-1);
-        actor.meal={bowl:bowl,hand:q.arms[index].hand,tip:{x:bowl.x+(mouth.x-bowl.x)*lift,y:bowl.y-1+(mouth.y-bowl.y+1)*lift},lift:lift,noodle:1-root.AlleyWorld.ease((phase-.36)/.22),alpha:active,time:time,mouth:mouth,reachError:error};
+        var hidden=Math.cos(state.heading)>.9;
+        if(hidden)q.arms.forEach(function(a){['shoulder','elbow','hand','tip'].forEach(function(k){a[k].depth=q.hips.depth+182*.07;});});
+        actor.meal={bowl:bowl,hand:q.arms[index].hand,tip:{x:bowl.x+(mouth.x-bowl.x)*lift,y:bowl.y-1+(mouth.y-bowl.y+1)*lift},lift:lift,noodle:1-root.AlleyWorld.ease((phase-.36)/.22),alpha:active,time:time,mouth:mouth,reachError:error,hidden:hidden};
       }
     }
     // Keep the authored upper-arm/forearm lengths and solve the free hand to
     // the same handle used by the moving door. The bag arm remains at rest.
     if(state.grip>0){
+      actor.cleanBody=true;
       var arm=q.arms[1],restTip={x:arm.tip.x,y:arm.tip.y},wrist={x:state.handle.x,y:state.handle.y+h*.038};
       var hand={x:arm.hand.x+(wrist.x-arm.hand.x)*state.grip,y:arm.hand.y+(wrist.y-arm.hand.y)*state.grip};
       var upper=Math.hypot(arm.elbow.x-arm.shoulder.x,arm.elbow.y-arm.shoulder.y),lower=Math.hypot(arm.hand.x-arm.elbow.x,arm.hand.y-arm.elbow.y);

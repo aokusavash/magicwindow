@@ -1,3 +1,19 @@
+# Study 13: ramen facing and layered entrance
+
+The user wants both meals viewed square-on: the counter diner faces directly into the room, with her face, bowl and eating hands hidden; the inside diner faces directly toward the street/viewer. Heading and meal-prop visibility now reflect that. One-minute meals, automatic closing, flowers and accepted walking remain.
+
+The apparent extra arm came from the resting sleeve baked into the rear-quarter torso beneath the separately animated arm. A newly generated opaque, arm-free torso is used only during the door reach, with the original walking art preserved. It is a local corrective asset, not evidence that the whole cast is ready for arbitrary gestures.
+
+The entrance now demonstrates separate scenery assets: an architectural underpainting, clean sliding door leaf, fixed lantern/bracket/vine, and transparent foreground pots/plants. Crops are measured from an original generated atlas; the leaf contains no lantern or foliage. Props remain fixed as the leaf moves. Characters behind their ground-contact row are drawn beneath them; nearby street walkers remain in front. The shop entrance has been locally repainted to make those assets possible; the rest of the town remains flattened. Architectural texture that never changes or occludes a person can remain together. Separate interactive or depth-relevant objects with clean paint beneath them; a completely empty base and hundreds of independent decorative objects are not required.
+
+Source-resolution finding: the scenery is 1672×941. The study renders at 1600×900, and ramen/flower close-ups enlarge a 640×360 crop to that canvas; fullscreen may enlarge it again. Painterly brushwork also softens tiny forms. This batch does not replace the town with higher-resolution art or claim to recover missing detail by sharpening. Recommended later diagnostic: one matching storefront at higher native resolution, with readable flowers/wood and coherent edges, compared at intended TV viewing size. Preserve the warm painted character while testing detail/readability independently.
+
+Verification includes full visit routes/contact/support, direct dining facings, hidden outside food versus visible inside food, colored-hand depth during the slide, invariant foreground landmarks (allowing source-alpha transparency), closed-door coverage, indoor windows/counter occlusion, compositing order/clearing, controls/mobile/reduced motion and missing art. Accepted gait/projection and crowd regressions are retained. Browser screenshots were inspected; physical TV and other browser engines remain unverified.
+
+**Next gate is artistic assessment.** This is still a study. Continue ramen refinements based on review; once accepted, pause to evaluate visual appeal, contact/occlusion quality and asset-preparation cost before deciding whether to conclude the study, improve resolution or move toward production. Do not automatically advance to cast/weather or a full-town layer rebuild.
+
+---
+
 # Study 12: counter and interior dining
 
 The user liked the latest door/flower refinement, then requested automatic door closing and visible seated ramen eating for about a minute. They want the final restaurant to support open-counter stools as well as interior visits. Both are now represented at the same `/painted/visits/` URL: three visitors (two diners plus the flower browser) and five passersby, preserving eight active residents.

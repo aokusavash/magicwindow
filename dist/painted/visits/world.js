@@ -49,7 +49,7 @@
   ramen.move([[188,671]],58,'clear-door',{zone:'interior'});
   ramen.wait(1.1,'auto-close',{doorTo:0,zone:'interior'});
   ramen.move([[310,671]],58,'inside-walk',{zone:'interior'});
-  ramen.wait(.85,'turn-window',{heading:Math.PI*.78,zone:'interior'});
+  ramen.wait(.85,'turn-window',{heading:Math.PI,zone:'interior'});
   ramen.wait(1.2,'sit-inside',{zone:'interior',seatTo:1,table:'inside'});
   var windowTime=ramen.wait(60,'at-counter',{zone:'interior',idle:true,counter:true,seat:1,meal:true,table:'inside'});
   ramen.wait(1.2,'stand-inside',{zone:'interior',seatFrom:1,table:'inside'});
@@ -64,7 +64,7 @@
   ramen.move([[161,731],[224,746],[380,746],[1780,746]],73,'leave');
   var counter=build('counter-diner',[-180,746]);
   counter.move([[90,746],[195,735],[232,703]],68,'approach-counter');
-  counter.wait(.85,'turn-stool',{heading:-Math.PI/2});
+  counter.wait(.85,'turn-stool',{heading:0});
   var counterTime=counter.wait(1.3,'sit-counter',{seatTo:1,table:'outside'});
   var mealTime=counter.wait(60,'counter-meal',{seat:1,meal:true,table:'outside'});
   counter.wait(1.3,'stand-counter',{seatFrom:1,table:'outside'});

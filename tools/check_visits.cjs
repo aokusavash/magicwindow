@@ -41,6 +41,7 @@ for(const action of ['open-door']){
   for(let f=0;f<=60;f++){
     const s=VisitWorld.sample(VisitWorld.ramen,seg.start+seg.duration*f/61),a=VisitPose.pose(s);
     assert.equal(s.walkWeight,0,'opening the door must not involve walking sideways');
+    assert(a.cleanBody,'door reach needs an underpainted arm-free torso');
     if(!first)first={s,a};
     assert.equal(s.distance,first.s.distance);assert(Math.hypot(s.ground.x-first.s.ground.x,s.ground.y-first.s.ground.y)<1e-8);
     a.q.legs.forEach((l,i)=>['foot','heel','ball','toe'].forEach(k=>assert(Math.hypot(l[k].x-first.a.q.legs[i][k].x,l[k].y-first.a.q.legs[i][k].y)<1e-8,'door gesture moved a planted foot')));
@@ -59,6 +60,8 @@ for(const plan of [VisitWorld.ramen,VisitWorld.counter]){
   for(let t=1.5;t<59;t+=.1){
     const s=VisitWorld.sample(plan,segment.start+t),a=VisitPose.pose(s);assert.equal(s.seat,1);assert.equal(s.walkWeight,0);
     assert(a.meal&&a.meal.reachError<.01,'eating arm cannot reach bowl/mouth');min=Math.min(min,a.meal.lift);max=Math.max(max,a.meal.lift);
+    assert.equal(s.heading,plan===VisitWorld.ramen?Math.PI:0,'diners must face straight in/out');
+    assert.equal(a.meal.hidden,plan===VisitWorld.counter,'counter eating is hidden by her back');
     if(plan===VisitWorld.ramen)assert.equal(s.door,0,'door must stay closed throughout the indoor meal');
     if(!first)first=a;
     a.q.legs.forEach((l,i)=>assert(Math.hypot(l.foot.x-first.q.legs[i].foot.x,l.foot.y-first.q.legs[i].foot.y)<1e-8,'seated feet drifted'));
