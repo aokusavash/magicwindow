@@ -1,3 +1,17 @@
+# Study 12: counter and interior dining
+
+The user liked the latest door/flower refinement, then requested automatic door closing and visible seated ramen eating for about a minute. They want the final restaurant to support open-counter stools as well as interior visits. Both are now represented at the same `/painted/visits/` URL: three visitors (two diners plus the flower browser) and five passersby, preserving eight active residents.
+
+The interior diner retains the accepted manual opening. She walks fully clear of the doorway before a 1.1-second automatic close. The door stays shut during her 60-second meal, reopens before her return through the doorway, then closes behind her after exit. These explicit automatic phases require no hand contact. The aperture now draws no interior pixels when fully closed, including the former negative-width edge case.
+
+The counter diner takes an existing painted stool outside, with blended seating/standing transitions, folded legs and feet near its rungs. The indoor diner also settles into a seated pose behind the counter window. A shared meal action moves one hand between bowl and mouth, rests the other by the bowl, lifts noodles and shortens them during a bite, then pauses. A small composited bowl, broth/noodles, garnish, chopsticks and drifting steam complete the action. Meals last 60 seconds with offset bite timing, rather than a static window pause. The stool itself is not pulled or moved, and ordering/serving has not been animated. Source character art and the accepted walking/flower actions remain unchanged.
+
+Counter meal, Interior visit and Inside meal buttons provide review entry points. Node checks cover 16,934 finite poses, 88 manual handle contacts, 7,998 planted contacts, continuous routes/turns, offscreen resets, fixed seated feet, reachable eating gestures, two full-minute meals and closed-door meal timing. Browser checks verify visible food/eating/seated-leg changes, completely closed doorway masking, preserved indoor facade/counter coverage, manual hand overlap, controls/mobile/reduced motion and missing art. Existing gait, screen-position and crowd movement checks pass. Close-up seating, scoop/bite, indoor dining, door-closed and full-town frames were inspected.
+
+This is a reviewable dining study with reused artwork. Stools are fixed, meal props are small canvas drawings, and the authored occupants do not yet use a general seat/door reservation system. Physical-TV performance remains unverified. Next review should focus on sitting/standing transitions, bowl-to-mouth motion and how counter dining reads alongside interior arrivals. CURRENT-STATE.md records this checkpoint.
+
+---
+
 # Study 11: a reason to linger
 
 **Latest review refinement:** the user liked both first attempts and specifically accepted the ramen entry/window sequence and flower-facing turn. Opening is now a stationary gesture near the center of the doorway: a 0.4-second reach, 1.47-second slide and 0.28-second release, roughly twice the previous pace. The palm follows the handle across the body with feet fixed. The gripping wrist/fingers span the vertical handle, allowing the elbow to fold near the chest; rear-view depth correctly hides the arm beneath the torso during the cross-body part. Closing uses the same planted gesture. The flower pause now eases into a roughly 23-degree waist bend, with restrained hip settling, fixed ankles/feet and hanging arms, then returns upright before departure. The accepted flower turn and interior/window sequence remain.

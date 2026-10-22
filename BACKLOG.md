@@ -65,6 +65,8 @@ Next review: how populated/cozy the street feels over a minute, and whether pass
 
 ### Current checkpoint: shop-visit review
 
+Study 12 ready for review: the user liked the prior refinement and requested automatic closing, a one-minute seated meal, and both counter/interior options. One diner now takes an outside stool; another enters and eats inside. Each meal lasts 60 seconds with bowl/chopstick/noodle motion and pauses. The door closes after she clears it, remains closed for the meal, and reopens for departure. The flower visit plus five passersby preserve eight residents. Targeted movement, meal/door, rendering and mobile checks pass. Review seating/eating and door timing next; moving stools and ordering remain unimplemented. See CURRENT-STATE.md for the latest entry point.
+
 Latest refinement ready: the user liked the first visits, then requested stationary centered door operation at about twice the speed and a bend to smell flowers. Both are implemented and checked; await visual review. The doorway/window sequence and flower turn are preserved. CURRENT-STATE.md provides the concise entry for another chat; update it as this review advances.
 
 The user selected two interactions: ramen entry with a visible window/counter pause, and stopping to look at flowers/produce. No purchase is needed. Study 11 `/painted/visits/` now supplies both, alongside six passersby. It reuses the accepted character with handle IK, doorway/window occlusion and short stationary browsing; the ramen visitor returns and closes the door. Buttons jump to close-ups of either action. Node/browser checks cover contact, fixed support, smooth routes, correct indoor clipping, controls and mobile/reduced motion. The walking-only population comparison is preserved.

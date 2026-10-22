@@ -46,19 +46,30 @@
   ramen.wait(.45,'turn-in',{heading:0});
   ramen.move([[104,692],[102,671]],58,'enter',{zone:'interior'});
   ramen.wait(.7,'turn-counter',{heading:Math.PI/2,zone:'interior'});
+  ramen.move([[188,671]],58,'clear-door',{zone:'interior'});
+  ramen.wait(1.1,'auto-close',{doorTo:0,zone:'interior'});
   ramen.move([[310,671]],58,'inside-walk',{zone:'interior'});
   ramen.wait(.85,'turn-window',{heading:Math.PI*.78,zone:'interior'});
-  var windowTime=ramen.wait(9,'at-counter',{zone:'interior',idle:true,counter:true});
+  ramen.wait(1.2,'sit-inside',{zone:'interior',seatTo:1,table:'inside'});
+  var windowTime=ramen.wait(60,'at-counter',{zone:'interior',idle:true,counter:true,seat:1,meal:true,table:'inside'});
+  ramen.wait(1.2,'stand-inside',{zone:'interior',seatFrom:1,table:'inside'});
   ramen.wait(.8,'turn-return',{heading:-Math.PI/2,zone:'interior'});
+  ramen.move([[188,671]],58,'approach-exit',{zone:'interior'});
+  ramen.wait(1.05,'auto-open-exit',{doorTo:1,zone:'interior'});
   ramen.move([[102,671]],58,'inside-return',{zone:'interior'});
   ramen.wait(.7,'turn-out',{heading:Math.PI,zone:'interior'});
   ramen.move([[104,692],[104,703]],58,'exit',{zone:'interior'});
-  ramen.wait(.7,'turn-close',{heading:-Math.PI/4});
-  ramen.wait(.4,'reach-close',{gripTo:1});
-  ramen.wait(1.47,'close-door',{doorTo:0,grip:1});
-  ramen.wait(.28,'release-close',{gripFrom:1});
+  ramen.wait(1.1,'auto-close-exit',{doorTo:0});
   ramen.wait(.9,'turn-street',{heading:Math.PI});
   ramen.move([[161,731],[224,746],[380,746],[1780,746]],73,'leave');
+  var counter=build('counter-diner',[-180,746]);
+  counter.move([[90,746],[195,735],[232,703]],68,'approach-counter');
+  counter.wait(.85,'turn-stool',{heading:-Math.PI/2});
+  var counterTime=counter.wait(1.3,'sit-counter',{seatTo:1,table:'outside'});
+  var mealTime=counter.wait(60,'counter-meal',{seat:1,meal:true,table:'outside'});
+  counter.wait(1.3,'stand-counter',{seatFrom:1,table:'outside'});
+  counter.wait(.85,'turn-leave-counter',{heading:Math.PI*.65});
+  counter.move([[280,732],[380,746],[1780,746]],68,'leave-counter');
   var browser=build('flower-browser',[1780,753]);
   browser.move([[790,753],[674,747],[632,734]],66,'approach-flowers');
   browser.wait(.8,'turn-flowers',{heading:-Math.PI/4});
@@ -75,6 +86,7 @@
     }else{point=s.position;if(o.heading!==undefined)heading=angle(s.heading,o.heading,u);}
     var openness=o.doorTo===undefined?s.door:s.door+(o.doorTo-s.door)*(s.route?travel:progress);
     var grip=o.grip||0;if(o.gripTo)grip=progress;if(o.gripFrom)grip=1-progress;
+    var seat=o.seat||0;if(o.seatTo)seat=progress;if(o.seatFrom)seat=1-progress;
     var p=W.project(point.x,point.z),height=182*p.scale;
     // Reverse both gait travel and joint sampling for the deliberate backward
     // closing step. Feet still plant on the exact route instead of approximating
@@ -82,12 +94,13 @@
     var fixed=!s.route;
     return {id:plan.id,x:point.x,z:point.z,s:arc,sign:o.backward?-1:1,route:s.route||{sample:function(){return point;}},heading:heading,distance:s.distance+arc*(o.backward?-1:1),walkWeight:weight,
       phase:fixed?'street-turn':'visit-walk',action:s.action,zone:o.zone||'street',door:openness,grip:grip,handle:{x:door.handleX-door.travel*openness,y:door.handleY},
-      idle:o.idle?Math.sin((t-s.start)*1.5):0,browse:!!o.browse,counter:!!o.counter,ground:p,height:height,inFrame:p.x+height*.4>0&&p.x-height*.4<1600,hidden:false,progress:u};
+      idle:o.idle?Math.sin((t-s.start)*1.5):0,browse:!!o.browse,counter:!!o.counter,seat:seat,meal:!!o.meal,mealTime:t-s.start,mealBlend:o.meal?W.ease((t-s.start)/1.2)*W.ease((s.duration-(t-s.start))/1.2):0,table:o.table,automaticDoor:o.doorTo!==undefined&&!o.grip,
+      ground:p,height:height,inFrame:p.x+height*.4>0&&p.x-height*.4<1600,hidden:false,progress:u};
   }
-  ramen.offset=entrance-5;browser.offset=flowerTime-3;
+  ramen.offset=entrance-5;browser.offset=flowerTime-3;counter.offset=counterTime-2;
   function population(seconds,count){
-    return [sample(ramen,seconds+ramen.offset),sample(browser,seconds+browser.offset)].concat(root.CrowdWorld.population(seconds,8).filter(function(s){return s.id!=='resident-1'&&s.id!=='resident-4';}).slice(0,(count||8)-2)).sort(function(a,b){return b.z-a.z||a.id.localeCompare(b.id);});
+    return [sample(ramen,seconds+ramen.offset),sample(counter,seconds+counter.offset),sample(browser,seconds+browser.offset)].concat(root.CrowdWorld.population(seconds,8).filter(function(s){return s.id!=='resident-1'&&s.id!=='resident-4'&&s.id!=='resident-5';}).slice(0,(count||8)-3)).sort(function(a,b){return b.z-a.z||a.id.localeCompare(b.id);});
   }
-  var api={door:door,ground:ground,ramen:ramen,browser:browser,sample:sample,population:population,entranceTime:entrance-3-ramen.offset,windowTime:windowTime-ramen.offset,flowerTime:flowerTime-3-browser.offset};
+  var api={door:door,ground:ground,ramen:ramen,counter:counter,browser:browser,sample:sample,population:population,entranceTime:entrance-3-ramen.offset,windowTime:windowTime-ramen.offset,counterTime:counterTime-1-counter.offset,mealTime:mealTime-counter.offset,flowerTime:flowerTime-3-browser.offset};
   root.VisitWorld=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

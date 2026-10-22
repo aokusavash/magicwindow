@@ -13,15 +13,21 @@ with sync_playwright() as p:
     assert all(x['outsidePixels']==0 and x['counterPixels']==0 for x in rendering['interior']),rendering
     assert all(x['windowPixels']>250 for x in rendering['interior'] if x['action']=='at-counter'),rendering
     assert rendering['browsePixels']>1500 and rendering['orderChanged']==0 and rendering['stalePixels']==0,rendering
+    assert rendering['closedDoorBodyPixels']==0,rendering
+    assert all(x['bowlPixels']>25 and x['eatingPixels']>100 and x['seatedLegPixels']>150 for x in rendering['meals']),rendering
+    page.locator('#counter').click();assert page.evaluate("Math.abs(VisitStudy.state().seconds-VisitWorld.counterTime)<.2 && VisitStudy.state().focus==='ramen'")
+    page.locator('#meal').click();assert page.evaluate("Math.abs(VisitStudy.state().seconds-(VisitWorld.windowTime+2))<.2")
     page.locator('#ramen').click();assert page.evaluate("VisitStudy.state().focus==='ramen' && !VisitStudy.state().paused")
     page.locator('#pause').click();t=page.evaluate('VisitStudy.state().seconds');page.wait_for_timeout(150);assert page.evaluate('VisitStudy.state().seconds')==t
     page.locator('#flowers').click();assert page.evaluate("VisitStudy.state().focus==='flowers'");page.locator('#pause').click()
     page.locator('#wide').click();assert page.evaluate("VisitStudy.state().focus==='' && VisitStudy.state().paused")
     page.locator('#slow').click();assert page.evaluate('VisitStudy.state().slow');page.locator('#slow').click()
     page.locator('#restart').click();assert page.evaluate('VisitStudy.state().seconds')==0
-    for action in ['open-door','enter','inside-walk','at-counter','exit','close-door']:
+    for action in ['open-door','enter','auto-close','inside-walk','at-counter','auto-open-exit','exit','auto-close-exit']:
         t=page.evaluate("a=>{let s=VisitWorld.ramen.segments.find(s=>s.action===a);return s.start+s.duration*.5-VisitWorld.ramen.offset}",action)
         page.evaluate("t=>VisitStudy.inspect(t,'ramen')",t);page.locator('#world').screenshot(path=str(out/(action+'.png')))
+    for offset in [1.5,3.5,6]:
+        page.evaluate("t=>VisitStudy.inspect(VisitWorld.mealTime+t,'ramen')",offset);page.locator('#world').screenshot(path=str(out/f'counter-meal-{offset}.png'))
     page.evaluate("VisitStudy.inspect(VisitWorld.flowerTime+5,'flowers')");page.locator('#world').screenshot(path=str(out/'browse.png'))
     page.evaluate("VisitStudy.inspect(15,'')");page.locator('#world').screenshot(path=str(out/'town.png'))
     mobile=browser.new_page(viewport={'width':390,'height':844},reduced_motion='reduce');mobile.goto('http://127.0.0.1:8031/painted/visits/');mobile.wait_for_function('VisitStudy.state().loaded')

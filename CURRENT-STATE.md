@@ -12,14 +12,14 @@ Updated October 22, 2026. Read this in a fresh chat; update it after a meaningfu
 
 - Latest: https://little-world-window.racing-dog-8718.chatgpt.site/painted/visits/
 - The relaxed walk, coherent alley/diagonal movement and population study were accepted. The initial ramen/window visit and flower turn were well received.
-- Latest refinement is implemented for review: stand near the door's center with planted feet and slide it with one hand across the body, roughly twice as fast; bend at the waist to smell flowers while preserving the turn.
-- Opening/closing now take 1.47 seconds each, with a 0.4-second reach and 0.28-second release. Palm contact follows the handle. From the rear camera angle the arm passes behind the torso as it crosses the chest.
-- The flower stop bends about 23 degrees, eases into/out of the pose, keeps feet fixed and lets arms hang. Window/interior behavior is preserved.
-- Await visual review of this refinement. Proposed next steps: a few distinct people sharing these actions, then Seattle lighting/weather. Purchases, seated eating, live weather and AI planning are not implemented.
+- The user liked the planted door gesture and flower bend. Latest request: close the door automatically after entry, show a roughly one-minute seated meal, and support both open-counter dining and walking into the interior. Both options are implemented together for review (Study 12).
+- The interior visitor opens manually with the accepted 1.47-second planted slide, clears the doorway, then the closer shuts it in 1.1 seconds. It stays closed during her 60-second meal, reopens for exit, and closes again after she leaves. There is no manual closing gesture now.
+- A second diner walks to an existing outside stool, settles into a bent-leg sitting pose and eats for 60 seconds. Both diners lift noodles, taste and pause, with separate timing. UI: Counter meal, Interior visit, Inside meal, Smell flowers and Whole street. Three visitors plus five passersby preserve eight active residents.
+- The accepted flower stop keeps its turn and roughly 23-degree waist bend. Await visual review of seating/eating and automatic-door timing. Pulling/moving a stool, ordering/purchases, a varied cast, live weather and AI planning are not implemented. Proposed next steps remain cast variation, then Seattle lighting/weather.
 
 ## Implementation and constraints
 
-- `dist/painted/visits/`: two authored shop visits and six passersby. Ramen/flower buttons jump to close-ups; Whole street preserves time. `world.js` supplies action timelines/route anchors, `pose.js` contact IK/bending, `renderer.js` door and indoor/window masks.
+- `dist/painted/visits/`: authored counter/interior dining and flower visits. Close-up buttons jump to each action; Whole street preserves time. `world.js` supplies timelines/route anchors and automatic-door phases, `pose.js` contact IK/bending/seating/eating, `renderer.js` indoor masks and composited bowl/chopsticks/noodles/steam.
 - `/painted/crowd/`: preserved five/eight walking-only comparison. `/painted/alley/`: shared directional actor/depth study, with four diagonals. `/painted/walking/`: accepted gait in `walking/gaits.js` and `layered.js`. Preserve these and the original `/` prototype.
 - `alley/actor.js` accepts optional pose/lean inputs; default rendering is preserved. The torso painting includes the head and resting sleeves. Avoid destructive torso cutouts or sorting individual limb triangles.
 - Keep body-width offsets in the route's camera plane. Full off-axis perspective previously caused a growing left-side limp. Garment coverage is separate from anatomical depth: jacket over trouser roots.

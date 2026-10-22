@@ -5,7 +5,7 @@ async()=>{
   function pixels(s){draw([s],'');return ctx.getImageData(0,0,1600,900).data;}
   function diff(a,b,x,y,w,h){let n=0;for(let row=y;row<y+h;row++)for(let col=x;col<x+w;col++){let i=(row*1600+col)*4;if(Math.abs(a[i]-b[i])+Math.abs(a[i+1]-b[i+1])+Math.abs(a[i+2]-b[i+2])>15)n++;}return n;}
   let result={door:[],interior:[]};
-  for(let action of ['open-door','close-door'])for(let progress of [.15,.5,.85]){
+  for(let action of ['open-door'])for(let progress of [.15,.5,.85]){
     let segment=VisitWorld.ramen.segments.find(s=>s.action===action),state=VisitWorld.sample(VisitWorld.ramen,segment.start+segment.duration*progress),normal=pixels(state),hidden=pixels({...state,hidden:true});
     result.door.push({action,progress,visiblePixels:diff(normal,hidden,0,470,240,265),handPixels:diff(normal,hidden,Math.floor(state.handle.x)-6,586,12,12)});
   }
@@ -29,6 +29,13 @@ async()=>{
     result.interior.push({action,progress,outsidePixels:outside,windowPixels:diff(normal,hidden,154,531,218,66),counterPixels:diff(normal,hidden,154,598,218,104),doorPixels:diff(normal,hidden,61,474,80,231)});
   }
   let flower=VisitWorld.browser.segments.find(s=>s.action==='browse'),state=VisitWorld.sample(VisitWorld.browser,flower.start+3),normal=pixels(state),hidden=pixels({...state,hidden:true});result.browsePixels=diff(normal,hidden,540,530,160,220);
+  let closed={...VisitWorld.sample(VisitWorld.ramen,VisitWorld.ramen.segments.find(s=>s.action==='at-counter').start+3),...VisitWorld.ground(133,671),phase:'street-turn',heading:0,seat:0,meal:false,counter:false,table:undefined,door:0};
+  result.closedDoorBodyPixels=diff(pixels(closed),pixels({...closed,hidden:true}),59,472,86,232);
+  let dining=VisitWorld.counter.segments.find(s=>s.options.meal);result.meals=[];
+  for(let t of [1.5,3.5,55]){
+    let s=VisitWorld.sample(VisitWorld.counter,dining.start+t),eating=pixels(s),rest=pixels({...s,meal:false}),standing=pixels({...s,meal:false,seat:0});
+    result.meals.push({t,bowlPixels:diff(eating,rest,203,586,28,15),eatingPixels:diff(eating,rest,198,545,60,65),seatedLegPixels:diff(rest,standing,185,625,80,80)});
+  }
   draw(VisitWorld.population(8,8),'');let first=ctx.getImageData(0,0,1600,900).data;draw(VisitWorld.population(8,8).reverse(),'');let second=ctx.getImageData(0,0,1600,900).data;result.orderChanged=diff(first,second,0,0,1600,900);
   draw([],'');let empty=ctx.getImageData(0,0,1600,900).data;draw(VisitWorld.population(8,8),'');draw([],'');result.stalePixels=diff(empty,ctx.getImageData(0,0,1600,900).data,0,0,1600,900);
   return result;
