@@ -9,6 +9,19 @@ async()=>{
     let segment=VisitWorld.ramen.segments.find(s=>s.action===action),state=VisitWorld.sample(VisitWorld.ramen,segment.start+segment.duration*progress),normal=pixels(state),hidden=pixels({...state,hidden:true});
     result.door.push({action,progress,visiblePixels:diff(normal,hidden,0,470,240,265),handPixels:diff(normal,hidden,Math.floor(state.handle.x)-6,586,12,12)});
   }
+  // Color only the existing arm pixels in a diagnostic atlas. Unlike a plain
+  // difference near the handle, this distinguishes a visible hand from the
+  // torso covering that same area during the across-body portion of the slide.
+  let atlas=document.createElement('canvas');atlas.width=images.rear45.width;atlas.height=images.rear45.height;
+  let brush=atlas.getContext('2d');brush.drawImage(images.rear45,0,0);brush.globalCompositeOperation='source-atop';brush.fillStyle='#ff00ff';
+  for(let box of AlleyFrames.rear45.slice(1,3))brush.fillRect(box.x,box.y,box.width,box.height);
+  let fixture=VisitRenderer.renderer(c,{...images,rear45:atlas});result.handLayering=[];
+  for(let progress of [.15,.5,.85]){
+    let seg=VisitWorld.ramen.segments.find(s=>s.action==='open-door'),state=VisitWorld.sample(VisitWorld.ramen,seg.start+seg.duration*progress);fixture([state],'');
+    let data=ctx.getImageData(Math.floor(state.handle.x)-6,586,12,12).data,count=0;
+    for(let i=0;i<data.length;i+=4)if(data[i]>220&&data[i+1]<60&&data[i+2]>180)count++;
+    result.handLayering.push({progress,coloredHandPixels:count});
+  }
   for(let action of ['enter','inside-walk','at-counter','inside-return','exit'])for(let progress of [.1,.5,.9]){
     let segment=VisitWorld.ramen.segments.find(s=>s.action===action),state=VisitWorld.sample(VisitWorld.ramen,segment.start+segment.duration*progress),normal=pixels(state),hidden=pixels({...state,hidden:true}),outside=0;
     function aperture(x,y){return x>=70&&x<141&&y>=474&&y<705 || x>=155&&x<259&&y>=531&&y<597 || x>=269&&x<371&&y>=531&&y<597;}

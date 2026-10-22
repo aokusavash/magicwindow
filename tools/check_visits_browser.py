@@ -8,6 +8,8 @@ with sync_playwright() as p:
     page.goto('http://127.0.0.1:8031/painted/visits/');page.wait_for_function('VisitStudy.state().loaded');page.evaluate('VisitStudy.inspect(0)')
     rendering=page.evaluate((root/'tools/visit_render_checks.js').read_text())
     assert all(x['visiblePixels']>1000 and x['handPixels']>8 for x in rendering['door']),rendering
+    assert all(x['coloredHandPixels']>8 for x in rendering['handLayering'] if x['progress']!=.5),rendering
+    assert next(x['coloredHandPixels'] for x in rendering['handLayering'] if x['progress']==.5)<3,rendering
     assert all(x['outsidePixels']==0 and x['counterPixels']==0 for x in rendering['interior']),rendering
     assert all(x['windowPixels']>250 for x in rendering['interior'] if x['action']=='at-counter'),rendering
     assert rendering['browsePixels']>1500 and rendering['orderChanged']==0 and rendering['stalePixels']==0,rendering

@@ -11,7 +11,7 @@ for(const plan of [VisitWorld.ramen,VisitWorld.browser]){
     if(last){
       assert(Math.hypot(s.ground.x-last.s.ground.x,s.ground.y-last.s.ground.y)<3,'visit position jumped');
       const turn=Math.atan2(Math.sin(s.heading-last.s.heading),Math.cos(s.heading-last.s.heading));assert(Math.abs(turn)<.12,`visit facing snapped: ${plan.id} ${s.action} t=${t} delta=${turn}`);
-      if(Math.abs(s.door-last.s.door)>1e-6)assert(s.grip===1&&last.s.grip===1,'door moved without hand contact');
+      if(Math.abs(s.door-last.s.door)>1e-6)assert(s.grip>.999&&last.s.grip>.999,'door moved without hand contact');
       if(s.action===last.s.action&&s.walkWeight===1&&last.s.walkWeight===1)a.local.legs.forEach((l,i)=>{
         const prior=last.a.local.legs[i],forward=s.action!=='close-door',phaseMoved=forward?l.phase>prior.phase:l.phase<prior.phase;
         if(l.stance&&prior.stance&&phaseMoved&&Math.abs(l.phase-prior.phase)<.1&&Math.sign(l.pitch)===Math.sign(prior.pitch)){
@@ -31,5 +31,22 @@ for(const plan of [VisitWorld.ramen,VisitWorld.browser]){
 }
 for(const action of ['enter','exit']){const seg=VisitWorld.ramen.segments.find(s=>s.action===action),s=VisitWorld.sample(VisitWorld.ramen,seg.start+seg.duration*.5);assert(Math.abs(Math.sin(s.heading))<.6,'doorway must show back/front rather than a sliding profile');}
 for(let t=0;t<180;t+=.25){const p=VisitWorld.population(t,8);assert.equal(p.length,8);assert.equal(new Set(p.map(s=>s.id)).size,8);assert.equal(p.filter(s=>s.zone!==undefined).length,2);}
-assert(contacts>300&&plants>3000);
-console.log(JSON.stringify({poses,handleContacts:contacts,plantedContacts:plants,smoothRoutesAndTurns:true,offscreenLoops:true,stationaryBrowsingAndWindowVisit:true,eightResidents:true}));
+for(const action of ['open-door','close-door']){
+  const seg=VisitWorld.ramen.segments.find(s=>s.action===action);assert(seg.duration<=1.5,'door slide should be about twice as fast as the first attempt');
+  let first;
+  for(let f=0;f<=60;f++){
+    const s=VisitWorld.sample(VisitWorld.ramen,seg.start+seg.duration*f/61),a=VisitPose.pose(s);
+    assert.equal(s.walkWeight,0,'opening the door must not involve walking sideways');
+    if(!first)first={s,a};
+    assert.equal(s.distance,first.s.distance);assert(Math.hypot(s.ground.x-first.s.ground.x,s.ground.y-first.s.ground.y)<1e-8);
+    a.q.legs.forEach((l,i)=>['foot','heel','ball','toe'].forEach(k=>assert(Math.hypot(l[k].x-first.a.q.legs[i][k].x,l[k].y-first.a.q.legs[i][k].y)<1e-8,'door gesture moved a planted foot')));
+  }
+  const start=VisitWorld.sample(VisitWorld.ramen,seg.start+.001),end=VisitWorld.sample(VisitWorld.ramen,seg.start+seg.duration-.001);
+  assert((start.handle.x-start.ground.x)*(end.handle.x-end.ground.x)<0,'the hand should slide across her stationary body');
+}
+const flower=VisitWorld.browser.segments.find(s=>s.action==='browse'),smelling=VisitWorld.sample(VisitWorld.browser,flower.start+flower.duration*.5);
+const bent=VisitPose.pose(smelling),upright=AlleyActor.pose(smelling);
+assert(bent.q.head.x<upright.q.head.x-15&&bent.q.head.y>upright.q.head.y+5,'flower stop must include a visible bend toward the blossoms');
+bent.q.legs.forEach((l,i)=>['ankle','foot','heel','ball','toe'].forEach(k=>assert(Math.hypot(l[k].x-upright.q.legs[i][k].x,l[k].y-upright.q.legs[i][k].y)<1e-8,'smelling flowers moved her support')));
+assert(contacts>160&&plants>3000);
+console.log(JSON.stringify({poses,handleContacts:contacts,plantedContacts:plants,smoothRoutesAndTurns:true,offscreenLoops:true,stationaryDoorGesture:true,visibleFlowerBend:true,stationaryBrowsingAndWindowVisit:true,eightResidents:true}));

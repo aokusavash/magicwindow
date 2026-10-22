@@ -31,18 +31,20 @@
     }
     function wait(duration,action,options){
       options=options||{};var s={start:clock,duration:duration,position:position,distance:distance,heading:heading,action:action,options:options,door:open};segments.push(s);clock+=duration;
-      if(options.heading!==undefined)heading=options.heading;return s.start;
+      if(options.heading!==undefined)heading=options.heading;if(options.doorTo!==undefined)open=options.doorTo;return s.start;
     }
     return {id:id,move:move,wait:wait,segments:segments,get duration(){return clock;}};
   }
   var ramen=build('ramen-visitor',[1780,746]);
-  ramen.move([[690,746],[370,746],[224,746],[161,731],[161,703]],73,'approach');
-  ramen.wait(.75,'turn-to-door',{heading:-Math.PI/2});
-  var entrance=ramen.wait(.8,'reach-open',{gripTo:1});
-  ramen.move([[87,703]],45,'open-door',{heading:-Math.PI/2,doorTo:1,grip:1,fixedFacing:true});
-  ramen.wait(.55,'release-open',{gripFrom:1});
-  ramen.wait(.75,'turn-in',{heading:0});
-  ramen.move([[97,692],[102,671]],58,'enter',{zone:'interior'});
+  ramen.move([[690,746],[370,746],[224,746],[139,725],[104,703]],73,'approach');
+  ramen.wait(.45,'turn-to-door',{heading:-Math.PI/4});
+  var entrance=ramen.wait(.4,'reach-open',{gripTo:1});
+  // Stay centered with both feet planted. The hand sweeps across the torso;
+  // the person no longer walks sideways to carry the sliding panel along.
+  ramen.wait(1.47,'open-door',{doorTo:1,grip:1});
+  ramen.wait(.28,'release-open',{gripFrom:1});
+  ramen.wait(.45,'turn-in',{heading:0});
+  ramen.move([[104,692],[102,671]],58,'enter',{zone:'interior'});
   ramen.wait(.7,'turn-counter',{heading:Math.PI/2,zone:'interior'});
   ramen.move([[310,671]],58,'inside-walk',{zone:'interior'});
   ramen.wait(.85,'turn-window',{heading:Math.PI*.78,zone:'interior'});
@@ -50,12 +52,12 @@
   ramen.wait(.8,'turn-return',{heading:-Math.PI/2,zone:'interior'});
   ramen.move([[102,671]],58,'inside-return',{zone:'interior'});
   ramen.wait(.7,'turn-out',{heading:Math.PI,zone:'interior'});
-  ramen.move([[97,692],[87,703]],58,'exit',{zone:'interior'});
-  ramen.wait(.75,'turn-close',{heading:-Math.PI/2});
-  ramen.wait(.8,'reach-close',{gripTo:1});
-  ramen.move([[161,703]],45,'close-door',{heading:-Math.PI/2,doorTo:0,grip:1,fixedFacing:true,backward:true});
-  ramen.wait(.55,'release-close',{gripFrom:1});
-  ramen.wait(.7,'turn-street',{heading:Math.PI});
+  ramen.move([[104,692],[104,703]],58,'exit',{zone:'interior'});
+  ramen.wait(.7,'turn-close',{heading:-Math.PI/4});
+  ramen.wait(.4,'reach-close',{gripTo:1});
+  ramen.wait(1.47,'close-door',{doorTo:0,grip:1});
+  ramen.wait(.28,'release-close',{gripFrom:1});
+  ramen.wait(.9,'turn-street',{heading:Math.PI});
   ramen.move([[161,731],[224,746],[380,746],[1780,746]],73,'leave');
   var browser=build('flower-browser',[1780,753]);
   browser.move([[790,753],[674,747],[632,734]],66,'approach-flowers');
@@ -71,7 +73,7 @@
       var run=W.travel(t-s.start,s.route.length,s.speed);arc=run.s;travel=arc/s.route.length;point=s.route.sample(arc);weight=run.speed/s.speed;
       heading=o.heading===undefined?Math.atan2(point.dx,point.dz):o.heading;
     }else{point=s.position;if(o.heading!==undefined)heading=angle(s.heading,o.heading,u);}
-    var openness=o.doorTo===undefined?s.door:s.door+(o.doorTo-s.door)*travel;
+    var openness=o.doorTo===undefined?s.door:s.door+(o.doorTo-s.door)*(s.route?travel:progress);
     var grip=o.grip||0;if(o.gripTo)grip=progress;if(o.gripFrom)grip=1-progress;
     var p=W.project(point.x,point.z),height=182*p.scale;
     // Reverse both gait travel and joint sampling for the deliberate backward

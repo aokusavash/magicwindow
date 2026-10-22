@@ -2,6 +2,8 @@
 
 A persistent window into a small living pixel world. An artistic experiment for a living-room TV or monitor, developed through conversation and small visual iterations.
 
+Starting a fresh chat? Read [CURRENT-STATE.md](CURRENT-STATE.md) for the accepted baseline, latest review and implementation entry points.
+
 ## Current prototype
 
 Live: https://little-world-window.racing-dog-8718.chatgpt.site

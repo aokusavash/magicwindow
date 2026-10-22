@@ -1,6 +1,6 @@
 # Working on magicwindow
 
-Read README.md and ROADMAP.md first. This is a casual artistic experiment; favor visible progress and simple code. The user prefers describing changes by voice and having the agent handle implementation.
+Read CURRENT-STATE.md, README.md and ROADMAP.md first. Keep CURRENT-STATE.md concise and current so a fresh chat can recover the accepted baseline, pending review, relevant code and checks without replaying the full history. This is a casual artistic experiment; favor visible progress and simple code. The user prefers describing changes by voice and having the agent handle implementation.
 
 The original prototype lives in dist/index.html; separate studies live in dist/studies/ and dist/painted/. Read PAINTED-FEASIBILITY.md before changing the current painted study. Preserve its working visual character. Avoid adding a framework or build pipeline without a concrete need. Phase one prioritizes beautiful ambient activity; recurring identities and evolving stories are later goals. Respect local time and the overnight quiet period. Distinguish implemented behavior from future AI-director ideas.
 

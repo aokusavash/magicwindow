@@ -65,6 +65,8 @@ Next review: how populated/cozy the street feels over a minute, and whether pass
 
 ### Current checkpoint: shop-visit review
 
+Latest refinement ready: the user liked the first visits, then requested stationary centered door operation at about twice the speed and a bend to smell flowers. Both are implemented and checked; await visual review. The doorway/window sequence and flower turn are preserved. CURRENT-STATE.md provides the concise entry for another chat; update it as this review advances.
+
 The user selected two interactions: ramen entry with a visible window/counter pause, and stopping to look at flowers/produce. No purchase is needed. Study 11 `/painted/visits/` now supplies both, alongside six passersby. It reuses the accepted character with handle IK, doorway/window occlusion and short stationary browsing; the ramen visitor returns and closes the door. Buttons jump to close-ups of either action. Node/browser checks cover contact, fixed support, smooth routes, correct indoor clipping, controls and mobile/reduced motion. The walking-only population comparison is preserved.
 
 Next review: does the hand clearly operate the door, does entering/being inside read convincingly, and does the browsing pause feel natural? Iterate on observed defects before adding purchases or a large action library. Cast variation, physical-TV performance, live Seattle lighting/weather and director behavior remain later work.
