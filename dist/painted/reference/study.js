@@ -14,7 +14,7 @@
   function point(k){var v=ReferenceWalk.sample(k,u),x=v[0]+(k==='hips'?0:hip[0]),z=v[2]+(k==='hips'?0:hip[2]);return {x:250+(s*z+co*x)*330,y:395-v[1]*330};}
   rawLinks.forEach(function(names,i){line(sourceCtx,names.map(point),i===1||i===3?'#246e71':i===2||i===4?'#ad5b50':'#343b3b',4);});sourceCtx.fillStyle='#665c50';sourceCtx.font='18px system-ui';sourceCtx.textAlign='center';sourceCtx.fillText('Recorded skeleton · '+Math.round(u*100)+'%',250,30);
  }
- function panel(index,state){var a=state.variant==='reference'?ReferenceWalk.actor(state):VisitPose.pose(state),g=AlleyWorld.project(state.x,state.z),zoom=2.8;
+ function panel(index,state){state.silhouette=style==='silhouette';var a=state.variant==='reference'?ReferenceWalk.actor(state):VisitPose.pose(state),g=AlleyWorld.project(state.x,state.z),zoom=2.8;
   ctx.save();ctx.beginPath();ctx.rect(index*800,0,800,900);ctx.clip();ctx.fillStyle='#f5efe5';ctx.fillRect(index*800,0,800,900);ctx.translate(index*800+400-zoom*g.x,820-zoom*g.y);ctx.scale(zoom,zoom);
   if(style!=='skeleton'){ctx.globalAlpha=.72;ctx.drawImage(images.background,0,0,1600,900);ctx.globalAlpha=1;}
   else {ctx.fillStyle='#f5efe5';ctx.fillRect(g.x-400,g.y-500,800,600);}
@@ -24,7 +24,7 @@
   ctx.strokeStyle=style==='skeleton'?'#c4b8a5':'rgba(78,64,42,.45)';ctx.lineWidth=.7;
   for(var x=g.x-220-offset;x<g.x+240;x+=22){ctx.beginPath();ctx.moveTo(x,g.y+4);ctx.lineTo(x+9,g.y+4);ctx.stroke();}
   if(style!=='skeleton')renderers[person](state);
-  if(style!=='painted')skeleton(ctx,a);
+  if(style==='overlay'||style==='skeleton')skeleton(ctx,a);
   ctx.restore();ctx.fillStyle='rgba(248,244,235,.94)';ctx.fillRect(index*800+20,20,760,67);ctx.fillStyle='#40372f';ctx.textAlign='center';ctx.font='600 28px system-ui';ctx.fillText(index?'Reference-adapted':'Current walk',index*800+400,62);
  }
  function draw(){if(!loaded)return;ctx.clearRect(0,0,1600,900);var s=ReferenceWalk.state(seconds,person,angle);panel(0,s);panel(1,Object.assign({},s,{variant:'reference'}));line(ctx,[{x:800,y:0},{x:800,y:900}],'#e0d7c9',3);var u=ReferenceWalk.phase(s.distance,182*s.bodyScale);drawSource(u);document.getElementById('phase').value=Math.round(u*1000);document.getElementById('phase-text').value=Math.round(u*100)+'%';var event=WalkCapture.events.slice().reverse().find(function(e){return u>=e.phase;});document.getElementById('status').textContent=CastWorld.profiles[person].name+' · '+event.name+(paused?' · Paused':'')+(slow?' · Half speed':'');dirty=false;}

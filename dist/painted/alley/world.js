@@ -13,14 +13,14 @@
     function sample(s){var edge=Math.max(0,Math.min(length,s)),a=inside(Math.max(0,edge-.05)),b=inside(Math.min(length,edge+.05)),d=Math.hypot(b.x-a.x,b.z-a.z)||1,v=inside(edge);v.dx=(b.x-a.x)/d;v.dz=(b.z-a.z)/d;if(s!==edge){v.x+=v.dx*(s-edge);v.z+=v.dz*(s-edge);}return v;}
     return {length:length,sample:sample};
   }
-  var path=spline([{x:750,z:0},{x:1030,z:0},{x:1110,z:0},{x:1200,z:100},{x:1207,z:220},{x:1207,z:550},{x:1125,z:810},{x:970,z:960}]);
+  var path=spline([{x:750,z:72},{x:1030,z:72},{x:1110,z:75},{x:1200,z:130},{x:1207,z:220},{x:1207,z:550},{x:1125,z:810},{x:970,z:960}]);
   function integral(t){return 2.5*Math.pow(t,4)-3*Math.pow(t,5)+Math.pow(t,6);}
   function travel(t,length,speed){var ramp=.9,duration=length/speed+ramp;t=Math.max(0,Math.min(duration,t));if(t<ramp)return {s:speed*ramp*integral(t/ramp),speed:speed*ease(t/ramp),duration:duration};if(t>duration-ramp){var u=(duration-t)/ramp;return {s:length-speed*ramp*integral(u),speed:speed*ease(u),duration:duration};}return {s:speed*(t-ramp*.5),speed:speed,duration:duration};}
   function angleMix(a,b,t){var delta=Math.atan2(Math.sin(b-a),Math.cos(b-a));return a+delta*ease(t);}
   function at(seconds,mode){
     var speed=79.2,ramp=.9,route=path,out=travel(0,path.length,speed).duration,total=out*2+4.4,sign=1,s=0,distance=0,weight=0,heading,phase='street',finished=false;
     if(typeof mode==='number'){
-      var angle=mode*Math.PI/180,dx=Math.sin(angle),dz=Math.cos(angle);route={length:140,sample:function(d){return {x:900+dx*d,z:-60+dz*d,dx:dx,dz:dz};}};
+      var angle=mode*Math.PI/180,dx=Math.sin(angle),dz=Math.cos(angle);route={length:140,sample:function(d){return {x:900+dx*d,z:72+dz*d,dx:dx,dz:dz};}};
       var run=travel(seconds,140,speed);s=run.s;distance=run.s;weight=run.speed/speed;heading=angle;phase='direction';finished=seconds>=run.duration;
     }else{
       var t=((seconds%total)+total)%total;

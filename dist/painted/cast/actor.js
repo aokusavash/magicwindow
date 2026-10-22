@@ -13,7 +13,7 @@
       f.legs.forEach(function(b,i){
         var anchors=f.legAnchors[i],mesh=root.AlleyActor.buildMesh(b,'leg',i,name,anchors),cut=anchors.ankleY,texture=crop(image,b);mesh.widthScale=profile.legWidth||(profile.id==='child'?.60:profile.id==='yukata'?.65:.9);
         texture.getContext('2d').clearRect(0,b.height*cut,b.width,b.height);
-        data.legs.push({mesh:mesh,texture:texture,shoe:{image:image,box:b,ankleY:cut,ankleX:anchors.ankleX,widthScale:profile.shoeWidth||(profile.id==='child'?.55:profile.id==='yukata'?.55:.83),heightScale:.05*(cut-.06)/(.48*(1-cut))}});
+        data.legs.push({mesh:mesh,texture:texture,shoe:{image:image,box:b,ankleY:cut,ankleX:anchors.ankleX,contactRoll:profile.contactFeet&&name==='side',widthScale:profile.shoeWidth||(profile.id==='child'?.55:profile.id==='yukata'?.55:.83),heightScale:.05*(cut-.06)/(.48*(1-cut))}});
       });
       if(f.garment)data.garment={image:image,box:f.garment};out[name]=data;
     });return out;

@@ -53,7 +53,7 @@ GitHub is the source home for ongoing work; keep the Sites source synchronized w
 
 ## Painted animation feasibility preview
 
-Latest walking review: [recorded-reference comparison](https://little-world-window.racing-dog-8718.chatgpt.site/painted/reference/). Study 17 compares current and capture-informed walks on the original and blue women, with skeleton/painted views, a recorded source skeleton and phase controls. It is a separate in-place candidate using a CMU slow-walk excerpt; cast/shop behavior is retained. [Provenance and limits](dist/painted/reference/SOURCES.md).
+Latest walking review: [recorded-reference comparison](https://little-world-window.racing-dog-8718.chatgpt.site/painted/reference/). Study 17 compares current and capture-informed walks on the original and blue women, with skeleton/silhouette/painted views, a recorded source skeleton and phase controls. Current street routes sit on the actual sidewalk, and the newer women’s shoe contact/roll is fitted to their artwork. It is a separate in-place candidate using a CMU slow-walk excerpt; cast/shop behavior is retained. [Provenance and limits](dist/painted/reference/SOURCES.md).
 
 Study 02 is now built at `/painted/`: two painted characters share a reusable rig with planted-foot walking, persistent bags, rear/front turns, hand-to-handle door contact, a warm interior, and a flower-smelling interaction. Entrance, flower, and close-up controls make those behaviors easy to review. A cook, steam, and manual lighting/rain studies remain. It is a review preview, separate from the original prototype. See [PAINTED-FEASIBILITY.md](PAINTED-FEASIBILITY.md) for findings and limits. The original style survey is preserved at [art/reference/style-survey.png](art/reference/style-survey.png).
 

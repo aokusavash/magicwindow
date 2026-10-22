@@ -41,8 +41,8 @@
   a.referencePhase=u;return a;
  }
  function state(seconds,id,degrees){
-  var angle=degrees*Math.PI/180,dx=Math.sin(angle),dz=Math.cos(angle),route={sample:function(s){return {x:900+dx*s,z:-60+dz*s,dx:dx,dz:dz};}};
-  var raw={id:'reference-'+id,x:900,z:-60,s:0,sign:1,distance:seconds*65,heading:angle,walkWeight:1,phase:'direction',route:route,inFrame:true};return root.CastWorld.dress(raw,id);
+  var angle=degrees*Math.PI/180,dx=Math.sin(angle),dz=Math.cos(angle),baseZ=72+24*Math.abs(dz),route={sample:function(s){return {x:900+dx*s,z:baseZ+dz*s,dx:dx,dz:dz};}};
+  var raw={id:'reference-'+id,x:900,z:baseZ,s:0,sign:1,distance:seconds*65,heading:angle,walkWeight:1,phase:'direction',route:route,inFrame:true};return root.CastWorld.dress(raw,id);
  }
  root.ReferenceWalk={sample:sample,phase:phase,localPose:localPose,actor:actor,state:state,means:means};
 })(typeof window!=='undefined'?window:globalThis);

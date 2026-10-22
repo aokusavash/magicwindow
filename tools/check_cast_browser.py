@@ -9,7 +9,7 @@ with sync_playwright() as p:
  assert all(s['pixels']>(180 if s['id']=='child' else 800) for s in result['directions']),result
  assert all(s['pixels']>(35 if s['id']=='child' else 130) for s in result['standingHeads']),result
  # Affine triangle edges and a direct blit have slightly different filtering.
- assert all(3<s['headBack']<7 and s['waistAlphaError']<.003 for s in result['blousePosture']),result
+ assert all(3<s['headBack']<7 and s['waistAlphaError']<.003 and s['waistCenterShift']<.05 for s in result['blousePosture']),result
  assert result['heights']['tall']>result['heights']['original']*1.05 and .44<result['heights']['child']/result['heights']['original']<.62,result
  assert all(s['pixels']>(50 if s['id']=='child' else 100) for s in result['seatedHeads']),result
  assert result['robe']['covered']>100 and result['robe']['changedPixels']>150,result

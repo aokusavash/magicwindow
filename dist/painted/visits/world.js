@@ -35,8 +35,8 @@
     }
     return {id:id,move:move,wait:wait,segments:segments,get duration(){return clock;}};
   }
-  var ramen=build('ramen-visitor',[1780,746]);
-  ramen.move([[690,746],[370,746],[224,746],[139,725],[104,703]],73,'approach');
+  var ramen=build('ramen-visitor',[1780,722]);
+  ramen.move([[690,722],[370,722],[224,722],[139,725],[104,703]],73,'approach');
   ramen.wait(.45,'turn-to-door',{heading:-Math.PI/4});
   var entrance=ramen.wait(.4,'reach-open',{gripTo:1});
   // Stay centered with both feet planted. The hand sweeps across the torso;
@@ -61,21 +61,21 @@
   ramen.move([[104,692],[104,703]],58,'exit',{zone:'interior'});
   ramen.wait(1.1,'auto-close-exit',{doorTo:0});
   ramen.wait(.9,'turn-street',{heading:Math.PI});
-  ramen.move([[161,731],[224,746],[380,746],[1780,746]],73,'leave');
-  var counter=build('counter-diner',[-180,746]);
-  counter.move([[90,746],[195,735],[232,703]],68,'approach-counter');
+  ramen.move([[161,719],[224,722],[380,722],[1780,722]],73,'leave');
+  var counter=build('counter-diner',[-180,722]);
+  counter.move([[90,722],[195,719],[232,703]],68,'approach-counter');
   counter.wait(.85,'turn-stool',{heading:0});
   var counterTime=counter.wait(1.3,'sit-counter',{seatTo:1,table:'outside'});
   var mealTime=counter.wait(60,'counter-meal',{seat:1,meal:true,table:'outside'});
   counter.wait(1.3,'stand-counter',{seatFrom:1,table:'outside'});
   counter.wait(.85,'turn-leave-counter',{heading:Math.PI*.65});
-  counter.move([[280,732],[380,746],[1780,746]],68,'leave-counter');
-  var browser=build('flower-browser',[1780,753]);
-  browser.move([[790,753],[674,747],[632,734]],66,'approach-flowers');
+  counter.move([[280,719],[380,722],[1780,722]],68,'leave-counter');
+  var browser=build('flower-browser',[1780,725]);
+  browser.move([[790,725],[674,724],[632,722]],66,'approach-flowers');
   browser.wait(.8,'turn-flowers',{heading:-Math.PI/4});
   var flowerTime=browser.wait(8.5,'browse',{idle:true,browse:true});
   browser.wait(.8,'turn-leave-flowers',{heading:Math.PI*.665});
-  browser.move([[674,747],[790,753],[1760,753]],66,'leave-flowers');
+  browser.move([[674,724],[790,725],[1760,725]],66,'leave-flowers');
   function sample(plan,seconds){
     var t=((seconds%plan.duration)+plan.duration)%plan.duration,s=plan.segments[plan.segments.length-1];
     for(var i=0;i<plan.segments.length;i++)if(t<plan.segments[i].start+plan.segments[i].duration){s=plan.segments[i];break;}

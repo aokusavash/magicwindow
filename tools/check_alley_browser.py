@@ -36,7 +36,8 @@ with sync_playwright() as p:
     # At the former bad cutoff, hair beside the pole stays visible while the
     # pole face itself matches the untouched background. This catches a mask
     # displaced left as well as an over-wide mask that simply hides the head.
-    page.evaluate('AlleyStudy.inspect(16)')
+    # Raised sidewalk lane reaches the same pole-edge view slightly earlier.
+    page.evaluate('AlleyStudy.inspect(15.6)')
     pole=page.evaluate('''async()=>{
       const img=new Image();img.src='../assets/street.png';await img.decode();
       const c=document.createElement('canvas');c.width=1600;c.height=900;c.getContext('2d').drawImage(img,0,0,1600,900);

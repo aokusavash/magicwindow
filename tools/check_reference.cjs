@@ -1,5 +1,5 @@
 const assert=require('node:assert/strict');global.window=global;
-for(const n of ['rig','walking/gaits','walking/layered','alley/world','alley/actor','crowd/world','visits/world','visits/pose','cast/world','reference/capture','reference/motion'])require('../dist/painted/'+n+'.js');
+for(const n of ['rig','walking/gaits','walking/layered','alley/world','alley/actor','crowd/world','visits/world','visits/pose','cast/world','cast/frames','reference/capture','reference/motion'])require('../dist/painted/'+n+'.js');
 let poses=0,contacts=0,swings=0,armChanges=0,maxJoin=0;
 assert.equal(WalkCapture.sourceFrames[0],56);assert.equal(WalkCapture.count,176);assert(WalkCapture.duration>1.4&&WalkCapture.duration<1.6);
 for(const points of Object.values(WalkCapture.samples)){assert.equal(points.length,176);assert(points.flat().every(Number.isFinite));}

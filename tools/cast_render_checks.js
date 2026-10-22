@@ -21,7 +21,8 @@ async()=>{
   let raw=AlleyActor.renderer(ctx,{},AlleyFrames,{compact:true,pose:VisitPose.pose,hideBag:true,views:CastActor.views(images.blouse,CastFrames.blouse,{...CastWorld.profiles.blouse,headBack:null})}),before=pixels(s,raw);
   function center(data){let sum=0,n=0;for(let y=Math.floor(a.q.hips.y-a.p.height*.52);y<a.q.hips.y-a.p.height*.31;y++)for(let x=Math.floor(a.q.hips.x-a.p.height*.3);x<a.q.hips.x+a.p.height*.3;x++){let alpha=data[(y*1600+x)*4+3]/255;sum+=x*alpha;n+=alpha;}return sum/n;}
   let waistChange=0;for(let y=Math.floor(a.q.hips.y-2);y<a.q.hips.y+2;y++)for(let x=Math.floor(a.q.hips.x-20);x<a.q.hips.x+20;x++){let i=(y*1600+x)*4;waistChange+=Math.abs(fitted[i+3]-before[i+3]);}
-  result.blousePosture.push({angle,headBack:(center(before)-center(fitted))*Math.sign(angle),waistAlphaError:waistChange/(160*255)});
+  function waistCenter(data){let mass=0,sum=0;for(let y=Math.floor(a.q.hips.y-2);y<a.q.hips.y+2;y++)for(let x=Math.floor(a.q.hips.x-20);x<a.q.hips.x+20;x++){let alpha=data[(y*1600+x)*4+3];mass+=alpha;sum+=alpha*x;}return sum/mass;}
+  result.blousePosture.push({angle,headBack:(center(before)-center(fitted))*Math.sign(angle),waistAlphaError:waistChange/(160*255),waistCenterShift:Math.abs(waistCenter(before)-waistCenter(fitted))});
  }
  let s=CastWorld.dress({...AlleyWorld.at(.2,0),walkWeight:0,phase:'street-turn'},'yukata'),a=VisitPose.pose(s),withRobe=pixels(s);
  let bare=AlleyActor.renderer(ctx,{},AlleyFrames,{compact:true,pose:VisitPose.pose,hideBag:true,views:CastActor.views(images.yukata,CastFrames.yukata,CastWorld.profiles.yukata)}),without=pixels(s,bare);

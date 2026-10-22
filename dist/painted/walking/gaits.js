@@ -23,7 +23,8 @@
       var pitch=stance?(-g.heel*(1-smooth(t/.18))+g.push*smooth((t-.72)/.28)):(g.push+( -g.heel-g.push)*smooth(t));
       pitch*=Math.PI/180;
       var m=meshes[i],scale=h/m.referenceHeight,w=m.box.width;
-      var heelLength=w*.37*scale,ballLength=w*.30*scale,toeLength=w*.28*scale,ankleHeight=m.box.height*.09*scale;
+      var metrics=p.footMetrics&&p.footMetrics[i];
+      var heelLength=metrics?h*metrics.heel:w*.37*scale,ballLength=metrics?h*metrics.ball:w*.30*scale,toeLength=metrics?h*metrics.toe:w*.28*scale,ankleHeight=metrics?h*metrics.height:m.box.height*.09*scale;
       var anchor={x:rootX+dir*offset+(i?-2:2),y:p.y-clearance};
       var pivot=stance?(pitch<0?-heelLength:ballLength):-heelLength+(ballLength+heelLength)*smooth((pitch+.06)/.12);
       var foot={x:anchor.x+dir*pivot*(1-Math.cos(pitch)),y:anchor.y-pivot*Math.sin(pitch)};

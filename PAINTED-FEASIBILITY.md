@@ -1,5 +1,16 @@
 # Study 17: walking against a recorded reference
 
+**Latest family review — paving and painted feet:** the user and daughter find the current/adapted walks close but see a landing hesitation in both paintings. Their screenshot shows the separate recorded-source skeleton. That viewer does not share our full adapted stance mechanics, so its smoothness alone cannot isolate a painting defect.
+
+The horizontal crowd lanes, alley street approaches, shop approach/leave paths and reference stage now use the paved sidewalk. Front/back reference views include extra depth clearance for the stride. Raised routes also reduce apparent character size through the existing projection. Route ends extend offscreen to prevent visible wrap jumps after the depth change. Door, seat and indoor anchors stay fixed. The pole-edge raster fixture moves from 16 to 15.6 seconds to test the same overlap on the revised route; its occlusion thresholds remain.
+
+A concrete fitting mismatch was found in the newer women: their posed feet inherited the original shoe dimensions, while their separately rendered shoes used only 35% of the foot roll. Alpha-measured heel/toe bounds now define each shoe’s heel/ball/toe distances at its actual rendered scale; ankle height matches the sole registration. Side shoes use the complete posed roll. A 1,250-sample registration check reports maximum sole-target discrepancy .188 scene pixels, compared with 3.485 pixels from reduced roll using the fitted dimensions. This measures registered points, not every curved alpha contour. The original, man and child retain their foot models.
+
+Silhouette mode uses the same sprite geometry/alpha without painted texture, alongside the fitted skeleton and separate recorded skeleton. It also exposed fine internal seams from undersized source-space padding in the blue portrait warp; the overlap now remains .7 scene pixels after scaling. This is a raster repair, not generated replacement art. The latest work avoids another speculative timing change. Whether these repairs remove the perceived pause still requires human motion review.
+
+Sidewalk support checks cover 777 samples across three lanes/five bodies, maximum support y=727.955 with curb top around y=732. Existing gait, projection, crowd, cast, visit and reference checks protect surrounding behavior. No background replacement or new interaction is included.
+
+
 The user approved a reference-based study after reviewing established walk-cycle practice. `/painted/reference/` compares the current original/blue-woman gait against a separate capture-informed adaptation, at matched speed and cycle distance. It retains the existing street/paintings and leaves the cast, dining and accepted standalone walking motion unchanged.
 
 The source is CMU Graphics Lab subject 07, trial 04 (slow walk), downloaded as a BVH conversion from a pinned cmubvh mirror because direct CMU data downloads returned HTTP 403. A 176-sample cycle is aligned, drift-corrected and periodically smoothed into tracked joint curves. The source skeleton viewer exposes this loop-prepared recording. [SOURCES.md](dist/painted/reference/SOURCES.md) records attribution, SHA-256, source frames, permitted use, reproduction and teaching references.

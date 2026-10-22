@@ -2,11 +2,11 @@
   'use strict';
   var W=root.AlleyWorld;
   var routes={
-    sidewalk:W.spline([{x:-140,z:-3},{x:350,z:0},{x:850,z:3},{x:1340,z:0},{x:1740,z:-3}]),
-    near:W.spline([{x:35,z:-65},{x:360,z:-77},{x:950,z:-65},{x:1640,z:-73}]),
-    returnLane:W.spline([{x:-65,z:-32},{x:500,z:-35},{x:1050,z:-28},{x:1720,z:-32}]),
-    alley:W.spline([{x:-240,z:-2},{x:700,z:0},{x:1030,z:0},{x:1110,z:0},{x:1194,z:100},{x:1197,z:220},{x:1197,z:550},{x:1117,z:810},{x:962,z:960}]),
-    rightAlley:W.spline([{x:1810,z:-24},{x:1460,z:-20},{x:1300,z:0},{x:1220,z:100},{x:1217,z:220},{x:1217,z:550},{x:1133,z:810},{x:978,z:960}])
+    sidewalk:W.spline([{x:-320,z:69},{x:350,z:72},{x:850,z:75},{x:1340,z:72},{x:1900,z:69}]),
+    near:W.spline([{x:-320,z:65},{x:360,z:65},{x:950,z:69},{x:1900,z:65}]),
+    returnLane:W.spline([{x:-320,z:88},{x:500,z:91},{x:1050,z:85},{x:1900,z:88}]),
+    alley:W.spline([{x:-360,z:72},{x:700,z:72},{x:1030,z:72},{x:1110,z:75},{x:1194,z:130},{x:1197,z:220},{x:1197,z:550},{x:1117,z:810},{x:962,z:960}]),
+    rightAlley:W.spline([{x:1900,z:82},{x:1460,z:82},{x:1300,z:85},{x:1220,z:130},{x:1217,z:220},{x:1217,z:550},{x:1133,z:810},{x:978,z:960}])
   };
   // Phase offsets spread people around the block from the first frame. Shared
   // lane speeds preserve spacing; route speed drives cadence via distance.

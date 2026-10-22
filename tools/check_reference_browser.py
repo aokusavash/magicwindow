@@ -9,7 +9,7 @@ with sync_playwright() as p:
   page.locator(f'[data-person="{person}"]').click();assert page.evaluate('ReferenceStudy.state().person')==person
   for angle in [90,-90,180,0,135]:
    page.locator(f'[data-angle="{angle}"]').click();assert page.evaluate('ReferenceStudy.state().angle')==angle
-   for style in ['painted','overlay','skeleton']:
+   for style in ['painted','silhouette','overlay','skeleton']:
     page.locator(f'[data-style="{style}"]').click();assert page.evaluate('ReferenceStudy.state().style')==style
     page.evaluate('(v)=>ReferenceStudy.inspect(.25,v.person,v.angle,v.style)',{'person':person,'angle':angle,'style':style});renders+=1
     if angle in [90,180]:page.locator('#world').screenshot(path=str(out/f'{person}-{angle}-{style}.png'))
@@ -17,6 +17,7 @@ with sync_playwright() as p:
  # both comparison panes. A non-empty background alone is insufficient.
  pixels=page.evaluate('''()=>{let c=document.getElementById('world'),ctx=c.getContext('2d');function frame(u,style){ReferenceStudy.inspect(u,'blouse',90,style);return ctx.getImageData(0,0,1600,900).data;}function diff(a,b,x0,x1){let n=0;for(let y=150;y<840;y++)for(let x=x0;x<x1;x++){let i=(y*1600+x)*4;if(Math.abs(a[i]-b[i])+Math.abs(a[i+1]-b[i+1])+Math.abs(a[i+2]-b[i+2])>40)n++;}return n;}let a=frame(.02,'painted'),b=frame(.3,'painted'),s=frame(.3,'skeleton');return {leftMotion:diff(a,b,150,650),rightMotion:diff(a,b,950,1450),skeletonChange:diff(b,s,950,1450)};}''')
  assert pixels['leftMotion']>1000 and pixels['rightMotion']>1000 and pixels['skeletonChange']>1000,pixels
+ silhouette=page.evaluate("()=>{ReferenceStudy.inspect(.25,'blouse',90,'silhouette');let d=document.getElementById('world').getContext('2d').getImageData(800,100,800,740).data,n=0;for(let i=0;i<d.length;i+=4)if(d[i]===52&&d[i+1]===76&&d[i+2]===77)n++;return n;}");assert silhouette>1000,silhouette
  for phase in [0,.1,.25,.4,.5]:
   page.locator(f'[data-phase="{phase if phase==0 else str(phase)[1:]}"]').click();assert page.evaluate('ReferenceStudy.state().paused')
  page.locator('#phase').evaluate("el=>{el.value='730';el.dispatchEvent(new Event('input',{bubbles:true}));}");assert page.locator('#phase-text').text_content()=='73%'

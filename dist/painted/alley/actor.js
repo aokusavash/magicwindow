@@ -5,7 +5,7 @@
   function pose(state){
     var H=182*(state.bodyScale||1),proportions=state.proportions||{};
     var gaitPose=state.gaitPose||root.PaintedGaits.pose;
-    var local=gaitPose({id:'resident',gait:'relaxed',gaitTuning:state.gaitTuning,x:0,y:0,height:H,baseHeight:H,direction:1,distance:state.distance,travelX:1,travelY:0,view:'side',turnScale:1,walkWeight:1,bend:0,breath:0,grip:0,armSwing:state.walkWeight>.01},root.PaintedLayered.meshes);
+    var local=gaitPose({id:'resident',gait:'relaxed',gaitTuning:state.gaitTuning,footMetrics:state.footMetrics,x:0,y:0,height:H,baseHeight:H,direction:1,distance:state.distance,travelX:1,travelY:0,view:'side',turnScale:1,walkWeight:1,bend:0,breath:0,grip:0,armSwing:state.walkWeight>.01},root.PaintedLayered.meshes);
     var w=state.walkWeight,dy=(-H*.525-local.hips.y)*(1-w);local.hips.y+=dy;
     [local.shoulders,local.head,local.nose,local.bag].forEach(function(p){p.y+=dy;});
     local.legs.forEach(function(l,i){
@@ -189,14 +189,16 @@
         function portraitPoint(x,t){return {x:x-bodyBox.width*body.pivot-offset*(1-root.AlleyWorld.ease((t-.45)/.19)),y:bodyBox.height*(t-1)};}
         for(var row=1;row<bands.length;row++){
           var top=bands[row-1],bottom=bands[row],source=[[bodyBox.x,bodyBox.y+bodyBox.height*top],[bodyBox.x+bodyBox.width,bodyBox.y+bodyBox.height*top],[bodyBox.x+bodyBox.width,bodyBox.y+bodyBox.height*bottom],[bodyBox.x,bodyBox.y+bodyBox.height*bottom]],target=[portraitPoint(0,top),portraitPoint(bodyBox.width,top),portraitPoint(bodyBox.width,bottom),portraitPoint(0,bottom)];
-          [[0,1,2],[0,2,3]].forEach(function(t){root.PaintedSkin.triangle(torsoBrush,body.image,t.map(function(i){return source[i];}),t.map(function(i){return target[i];}),.15);});
+          // Padding is in source coordinates here. Keep a subpixel overlap
+          // after scaling, so the internal diagonal never becomes a seam.
+          [[0,1,2],[0,2,3]].forEach(function(t){root.PaintedSkin.triangle(torsoBrush,body.image,t.map(function(i){return source[i];}),t.map(function(i){return target[i];}),.7/bodyScale);});
         }
       }else torsoBrush.drawImage(body.image,bodyBox.x,bodyBox.y,bodyBox.width,bodyBox.height,-bodyBox.width*body.pivot,-bodyBox.height,bodyBox.width,bodyBox.height);
       torsoBrush.restore();
       if(options&&options.paintGarment&&data.garment){torsoBrush.save();torsoBrush.globalCompositeOperation='destination-over';options.paintGarment(torsoBrush,data.garment,actor,state,name);torsoBrush.restore();}
       [far,near].forEach(function(i){
         var source=name==='side'?(i===near?0:1):(i===0?source0:1-source0),item=data.legs[source];mesh(item,p,q,i);
-        if(item.shoe){var shoe=item.shoe,b=shoe.box,cut=shoe.ankleY-.025,scale=p.height/item.mesh.referenceHeight,ankle=q.legs[i].ankle,roll=actor.local.legs[i].pitch*state.walkWeight*Math.sin(Math.abs(state.heading))*.35;
+        if(item.shoe){var shoe=item.shoe,b=shoe.box,cut=shoe.ankleY-.025,scale=p.height/item.mesh.referenceHeight,ankle=q.legs[i].ankle,roll=actor.local.legs[i].pitch*state.walkWeight*Math.sin(Math.abs(state.heading))*(shoe.contactRoll?1:.35);
           commands.push({depth:ankle.depth,paint:function(){brush.save();brush.translate(ankle.x,ankle.y);brush.rotate(p.direction*roll);brush.scale(p.direction*scale*(shoe.widthScale||1),scale*(shoe.heightScale||1));brush.drawImage(shoe.image,b.x,b.y+b.height*cut,b.width,b.height*(1-cut),-b.width*shoe.ankleX,-b.height*(shoe.ankleY-cut),b.width,b.height*(1-cut));brush.restore();}});
         }
       });
@@ -220,7 +222,8 @@
       [brush,torsoBrush,legBrush].forEach(function(c){c.setTransform(1,0,0,1,-ox,-oy);});
       composite.clearRect(0,0,width,height);composite.globalCompositeOperation='lighter';
       facing(state.heading).forEach(function(v){brush.clearRect(ox,oy,width,height);view(v.name,actor,state);composite.globalAlpha=v.weight;composite.drawImage(piece,0,0);});
-      composite.globalAlpha=1;ctx.drawImage(blend,ox,oy);actor.bounds={x:ox,y:oy,width:width,height:height};return actor;
+      composite.globalAlpha=1;if(state.silhouette){composite.globalCompositeOperation='source-in';composite.fillStyle='#344c4d';composite.fillRect(0,0,width,height);}
+      ctx.drawImage(blend,ox,oy);actor.bounds={x:ox,y:oy,width:width,height:height};return actor;
     };
   }
   var api={pose:pose,facing:facing,renderer:renderer,buildMesh:buildMesh};root.AlleyActor=api;

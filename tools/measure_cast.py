@@ -40,6 +40,14 @@ for name,cuts in settings.items():
   ankle={'blouse':.85,'child':.77,'yukata':.78,'tall':.86}[name]
   frame['legAnchors']=[{'hipX':center(b,.06),'kneeX':center(b,(ankle+.06)/2),'ankleX':center(b,ankle),'ankleY':ankle} for b in parts[2]]
   frame['armAnchors']=[{'shoulderX':center(b,.10),'elbowX':center(b,.50),'handX':center(b,.78),'tipX':center(b,.97)} for b in parts[1]]
+  if name in ['blouse','tall'] and view=='side':
+   foot=[]
+   for b,anchors in zip(parts[2],frame['legAnchors']):
+    strip=alpha[b['y']+round(b['height']*.94):b['y']+b['height'],b['x']:b['x']+b['width']]>128
+    _,xx=np.where(strip);heel=float(xx.min()/b['width']);toe=float(xx.max()/b['width']);ball=heel+(toe-heel)*.70
+    ref_height=b['height']*(ankle-.06)/.48;width_scale=.83 if name=='blouse' else .73;unit=b['width']/ref_height*width_scale
+    foot.append({'heelX':heel,'ballX':ball,'toeX':toe,'heel':(anchors['ankleX']-heel)*unit,'ball':(ball-anchors['ankleX'])*unit,'toe':(toe-ball)*unit,'height':.05})
+   frame['footMetrics']=foot
   if len(parts)>3:frame['garment']=parts[3]
   frames[view]=frame
  result[name]=frames
