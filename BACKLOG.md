@@ -49,6 +49,8 @@ The user accepted the walking quality and requested moving on, including all fou
 
 First-review repairs are implemented for the shared directional problems: whole-component atlas bounds restore cropped heads/bodies; calibrated torso/shoulder attachments and depth-sorted surfaces correct arm/trouser/bag overlap; the foreground edge follows the actual pole and foliage. Source-bound, mirrored hand-overlap and pole-edge raster regression checks pass alongside existing movement/browser checks. Next: user review of the repaired alley preview before restaurant entry. The painted view blends and hand-calibrated masks are still visual-review items.
 
+Second-review regression repair: restore full jacket coverage (remove torso sleeve-cutout polygons), keep each limb's triangles together, align arms to the painted torso's camera plane, lower rear shoulders, and preserve the ground between the pole and pots. The right-facing/far-sleeve regression was checked against left-facing motion as well. Multi-phase overlap and eight-heading body-coverage fixtures pass. Next remains user review; future larger arm gestures may require properly underpainted torso assets, not another destructive trim.
+
 ## Next build-session kickoff
 
 At the end of the October 19 walk, the user asked how to begin work from their computer. No further product decision is needed before starting the ready items above.

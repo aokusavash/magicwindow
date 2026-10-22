@@ -16,17 +16,9 @@ with sync_playwright() as p:
         assert page.evaluate('AlleyStudy.state().mode')==heading
         page.evaluate('(h)=>AlleyStudy.inspect(1.4,h)',heading)
         page.locator('#world').screenshot(path=str(out/('direction-'+str(heading)+'.png')))
-    # Flat colored art isolates the overlap rule from texture details. At this
-    # stride phase the far hand lies behind the near trouser in both profiles.
-    # The former fixed arm-after-legs order paints these pixels red.
-    overlap=page.evaluate('''()=>{
- let images={};function atlas(key,boxes,colors){let c=document.createElement('canvas');c.width=2400;c.height=1200;let ctx=c.getContext('2d');boxes.forEach((b,i)=>{ctx.fillStyle=colors[i]||colors[0];ctx.fillRect(b.x,b.y,b.width,b.height);});images[key]=c;}
- atlas('sideUpper',[{x:205,y:31,width:429,height:819},...PaintedLayered.arms.map(a=>a.box)],['blue','red','red']);atlas('sideLegs',PaintedLayered.meshes.map(a=>a.box),['lime']);atlas('props',[PaintedRigFrames.parts.resident[7]],['purple']);
- for(let name of ['front','rear','front45','rear45'])atlas(name,AlleyFrames[name],['blue','red','red','lime','lime']);atlas('legs',AlleyFrames.legs,['lime']);
- let c=document.createElement('canvas');c.width=1600;c.height=900;let ctx=c.getContext('2d'),render=AlleyActor.renderer(ctx,images,AlleyFrames),out=[];
- for(let h of [-90,90])for(let t of [.8]){ctx.clearRect(0,0,1600,900);let actor=render(AlleyWorld.at(t,h)),far=h===90?1:0,a=actor.q.arms[far],x=(a.hand.x+a.tip.x)/2,y=(a.hand.y+a.tip.y)/2;out.push({h,t,xy:[x,y],pixel:[...ctx.getImageData(Math.round(x),Math.round(y),1,1).data]});}return out;
- }''')
-    assert all(sample['pixel']==[0,255,0,255] for sample in overlap),overlap
+    rendering=page.evaluate((Path(__file__).parent/'alley_render_checks.js').read_text())
+    assert all(s['covered']>50 and s['bad']==0 for s in rendering['overlaps']),rendering
+    assert rendering['chest']['missing']==0,rendering
     before=page.evaluate('AlleyStudy.state().seconds');page.wait_for_timeout(120)
     assert page.evaluate('AlleyStudy.state().seconds')==before
     for button,state in [('closeup','closeup'),('slow','slow'),('guides','guides')]:
@@ -71,5 +63,5 @@ with sync_playwright() as p:
     missing.goto(url);missing.wait_for_function('AlleyStudy.state().failed')
     assert missing.locator('#loading').is_visible()
     assert not errors,errors
-    report=dict(browserErrors=errors,eightDirections=True,handBehindNearTrouserBothProfiles=True,controls=True,pause=True,endReplay=True,buildingOcclusion=True,poleEdge=pole,hiddenCornerChangedPixels=changed,mobile=True,reducedMotion=True,missingArtwork=True)
+    report=dict(browserErrors=errors,eightDirections=True,surfaceRendering=rendering,controls=True,pause=True,endReplay=True,buildingOcclusion=True,poleEdge=pole,hiddenCornerChangedPixels=changed,mobile=True,reducedMotion=True,missingArtwork=True)
     (out/'browser-checks.json').write_text(json.dumps(report,indent=2));print(json.dumps(report));browser.close()

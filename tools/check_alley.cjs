@@ -38,6 +38,12 @@ for(const heading of [-135,-90,-45,0,45,90,135,180]){
   if(Math.abs(heading)===90){
     const near=heading>0?0:1,far=1-near;
     assert(a.q.arms[far].shoulder.depth>a.q.arms[near].shoulder.depth);
+    a.q.arms.forEach(arm=>assert(Math.abs(arm.shoulder.x-a.q.hips.x)/a.p.height<.065,'profile sleeve drifted outside the torso'));
+  }
+  if(heading===0){
+    const shoulderHeight=(a.q.hips.y-a.q.arms[0].shoulder.y)/(182*a.q.hips.scale);
+    assert(shoulderHeight>.20&&shoulderHeight<.23,'rear shoulders are hunched up');
+    assert(Math.abs(a.q.arms[0].shoulder.y-a.q.arms[1].shoulder.y)<.01);
   }
   if(heading===0||heading===180)assert((a.q.arms[0].shoulder.x-a.q.hips.x)*(a.q.arms[1].shoulder.x-a.q.hips.x)<0,'front/rear arms must attach to opposite sides');
   if(Math.abs(heading)===45||Math.abs(heading)===135)diagonals.add(heading);
@@ -52,4 +58,8 @@ assert(covered(1156,550),'the actual pole face must cover the actor, including t
 assert(!covered(1170,550),'open alley beside the pole must not become a clipping wall');
 assert(covered(1163,645),'foreground leaf extends beyond the pole');
 assert(!covered(1168,620),'gap outside the foliage must remain open');
+assert(covered(1120,700),'terracotta pot still hides the actor');
+assert(covered(1148,695),'pole base still hides the actor');
+assert(!covered(1142,712),'pavement below the pole must not amputate a trouser leg');
+assert(!covered(1141,705),'gap between pole and pot must remain open');
 console.log(`Alley checks pass: eight directions, four diagonals, continuous curved turns/loop, finite projected poses, perspective depth, stopping, and ${locked} planted-foot checks.`);
