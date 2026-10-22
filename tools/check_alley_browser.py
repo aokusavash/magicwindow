@@ -19,6 +19,7 @@ with sync_playwright() as p:
     rendering=page.evaluate((Path(__file__).parent/'alley_render_checks.js').read_text())
     assert all(s['covered']>50 and s['bad']==0 for s in rendering['overlaps']),rendering
     assert rendering['chest']['missing']==0,rendering
+    assert all(s['covered']>50 and s['bad']==0 and s['exposed']>50 and s['missing']==0 for s in rendering['waist']),rendering['waist']
     before=page.evaluate('AlleyStudy.state().seconds');page.wait_for_timeout(120)
     assert page.evaluate('AlleyStudy.state().seconds')==before
     for button,state in [('closeup','closeup'),('slow','slow'),('guides','guides')]:

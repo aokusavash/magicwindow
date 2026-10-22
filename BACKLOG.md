@@ -51,6 +51,8 @@ First-review repairs are implemented for the shared directional problems: whole-
 
 Second-review regression repair: restore full jacket coverage (remove torso sleeve-cutout polygons), keep each limb's triangles together, align arms to the painted torso's camera plane, lower rear shoulders, and preserve the ground between the pole and pots. The right-facing/far-sleeve regression was checked against left-facing motion as well. Multi-phase overlap and eight-heading body-coverage fixtures pass. Next remains user review; future larger arm gestures may require properly underpainted torso assets, not another destructive trim.
 
+Garment overlap refinement: the jacket/blouse silhouette now covers trouser roots throughout the stride, independently of anatomical limb depth. Added eight-heading/full-stride raster checks for covered and exposed trouser regions; existing hand/gait checks pass. Await visual review of the waist overlap before advancing the interaction study.
+
 ## Next build-session kickoff
 
 At the end of the October 19 walk, the user asked how to begin work from their computer. No further product decision is needed before starting the ready items above.

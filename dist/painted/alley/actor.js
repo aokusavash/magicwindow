@@ -64,8 +64,9 @@
     return {box:box,bones:bones,vertices:vertices,triangles:triangles,referenceHeight:kind==='arm'?h*.90/.35:h*(ankleY-.06)/.48};
   }
   function renderer(ctx,images,frames){
-    var piece=document.createElement('canvas'),blend=document.createElement('canvas');piece.width=blend.width=1600;piece.height=blend.height=900;
-    var brush=piece.getContext('2d'),composite=blend.getContext('2d'),cache={},commands=[];
+    var piece=document.createElement('canvas'),blend=document.createElement('canvas'),torso=document.createElement('canvas'),legLayer=document.createElement('canvas');
+    [piece,blend,torso,legLayer].forEach(function(c){c.width=1600;c.height=900;});
+    var brush=piece.getContext('2d'),composite=blend.getContext('2d'),torsoBrush=torso.getContext('2d'),legBrush=legLayer.getContext('2d'),cache={},commands=[];
     // Keep the source torso coverage beneath moving sleeves. Trimming away
     // baked sleeves without underpaint exposed the scenery through her jacket.
     function crop(image,box){var c=document.createElement('canvas');c.width=box.width;c.height=box.height;c.getContext('2d').drawImage(image,box.x,box.y,box.width,box.height,0,0,box.width,box.height);return c;}
@@ -93,13 +94,28 @@
       // A painted limb is one continuous surface. Sorting its individual
       // triangles through the torso produced horizontal holes and stripes.
       var depth=isArm?(limb.shoulder.depth+limb.elbow.depth+limb.hand.depth)/3:(limb.hip.depth+limb.knee.depth+limb.ankle.depth)/3;
-      commands.push({depth:depth,paint:function(){item.mesh.triangles.forEach(function(t){root.PaintedSkin.triangle(brush,item.texture,t.map(function(i){return item.mesh.vertices[i];}),t.map(function(i){return points[i];}),.65);});}});
+      commands.push({depth:depth,paint:function(){
+        var targetBrush=isArm?brush:legBrush;
+        if(!isArm)legBrush.clearRect(0,0,1600,900);
+        item.mesh.triangles.forEach(function(t){root.PaintedSkin.triangle(targetBrush,item.texture,t.map(function(i){return item.mesh.vertices[i];}),t.map(function(i){return points[i];}),.65);});
+        if(!isArm){
+          // Cloth coverage is not anatomical depth: the jacket stays over the
+          // trouser roots even when a stepping leg comes nearer the camera.
+          // Use its actual alpha silhouette, preserving holes/open space and
+          // keeping arm/leg/bag depth ordering unchanged everywhere else.
+          legBrush.globalCompositeOperation='destination-out';legBrush.drawImage(torso,0,0);legBrush.globalCompositeOperation='source-over';
+          brush.drawImage(legLayer,0,0);
+        }
+      }});
     }
     function bag(p,q){var b=root.PaintedRigFrames.parts.resident[7],h=p.height,w=h*.18;brush.drawImage(images.props,b.x,b.y,b.width,b.height,q.bag.x-w/2,q.bag.y,w,h*.14);}
     function view(name,actor,state){
       var p=actor.p,q=actor.q,data=cache[name],back=Math.cos(state.heading)>0,mirror=p.direction<0,source0=(back?1:0)^(mirror?1:0);
       var near=Math.sin(state.heading)>=0?0:1,far=1-near;
       commands=[];
+      var bodyBox=data.body.box,bodyScale=p.height*.54/bodyBox.height;
+      torsoBrush.clearRect(0,0,1600,900);torsoBrush.save();torsoBrush.translate(q.hips.x,q.hips.y+p.height*.02);torsoBrush.scale(p.direction*bodyScale,bodyScale);
+      torsoBrush.drawImage(data.body.image,bodyBox.x,bodyBox.y,bodyBox.width,bodyBox.height,-bodyBox.width*data.body.pivot,-bodyBox.height,bodyBox.width,bodyBox.height);torsoBrush.restore();
       [far,near].forEach(function(i){
         var source=name==='side'?(i===near?0:1):(i===0?source0:1-source0),item=data.legs[source];mesh(item,p,q,i);
         if(item.shoe){var shoe=item.shoe,b=shoe.box,cut=shoe.ankleY-.025,scale=p.height/item.mesh.referenceHeight,ankle=q.legs[i].ankle,roll=actor.local.legs[i].pitch*state.walkWeight*Math.sin(Math.abs(state.heading))*.35;
@@ -108,9 +124,7 @@
       });
       mesh(data.arms[name==='side'?1:(far===0?source0:1-source0)],p,q,far);
       commands.push({depth:q.hips.depth,paint:function(){
-        var b=data.body.box,scale=p.height*.54/b.height;
-        brush.save();brush.translate(q.hips.x,q.hips.y+p.height*.02);brush.scale(p.direction*scale,scale);
-        brush.drawImage(data.body.image,b.x,b.y,b.width,b.height,-b.width*data.body.pivot,-b.height,b.width,b.height);brush.restore();
+        brush.drawImage(torso,0,0);
         // Front/quarter/side paintings already carry the shoulder strap. Only
         // add the absent rear strap, rather than drawing a second one from the
         // middle of her neck over every view.
